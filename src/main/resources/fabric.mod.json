@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "modelshifter",
+  "version": "${version}",
+  "name": "ModelShifter",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/modelshifter/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.codingcat.modelshifter.client.ModelShifterClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "modelshifter.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
