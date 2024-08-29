@@ -4,7 +4,15 @@
   "package": "com.codingcat.modelshifter.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "HeldItemFeatureRendererMixin"
+    "ArmorFeatureRendererMixin",
+    "CapeFeatureRendererMixin",
+    "Deadmau5FeatureRendererMixin",
+    "ElytraFeatureRendererMixin",
+    "HeldItemFeatureRendererMixin",
+    "ShoulderParrotFeatureRendererMixin",
+    "StuckArrowsFeatureRendererMixin",
+    "StuckStingersFeatureRendererMixin",
+    "TridentRiptideFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
