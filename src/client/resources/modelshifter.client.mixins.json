@@ -4,8 +4,12 @@
   "package": "com.codingcat.modelshifter.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "HeldItemFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+    "PlayerEntityRendererMixin"
+  ]
 }
