@@ -14,9 +14,9 @@ public abstract class PlayerModel {
         this.disabledFeatureRenderers = disabledFeatureRenderers;
     }
 
-    public void modifyHeldItemRendering(MatrixStack matrixStack) {}
+    public abstract void modifyHeldItemRendering(MatrixStack matrixStack);
 
-    public void modifyElytraRendering(MatrixStack matrixStack) {}
+    public abstract void modifyElytraRendering(MatrixStack matrixStack);
 
     public Identifier getModelDataIdentifier() {
         return this.identifier;
