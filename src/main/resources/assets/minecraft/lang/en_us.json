@@ -1,4 +1,6 @@
 {
-
+  "modelshifter.model.cat": "Cat",
+  "modelshifter.model.among_us": "Among Us",
+  "modelshifter.model.wither": "Wither",
   "modelshifter.button.open_screen": "ModelShifter...",
 }

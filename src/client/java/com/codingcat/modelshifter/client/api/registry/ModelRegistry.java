@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class ModelRegistry {
@@ -14,13 +15,22 @@ public class ModelRegistry {
     private final static HashMap<Identifier, PlayerModel> data;
 
     @Nullable
-    public static PlayerModel register(Identifier id, @NotNull PlayerModel model) {
+    public static PlayerModel register(@NotNull Identifier id, @NotNull PlayerModel model) {
         return data.put(id, model);
     }
 
-    @Nullable
-    public static PlayerModel get(Identifier id) {
-        return data.get(id);
+    @NotNull
+    public static Optional<PlayerModel> get(@NotNull Identifier id) {
+        PlayerModel model = data.get(id);
+        return model != null ? Optional.of(model) : Optional.empty();
+    }
+
+    @NotNull
+    public static Optional<Identifier> findId(@NotNull PlayerModel model) {
+        return data.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(model))
+                .map(Map.Entry::getKey)
+                .findFirst();
     }
 
     @NotNull
