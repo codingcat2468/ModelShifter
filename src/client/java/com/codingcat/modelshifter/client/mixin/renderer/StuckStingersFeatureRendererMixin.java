@@ -12,8 +12,8 @@ public class StuckStingersFeatureRendererMixin<T extends LivingEntity> {
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getStingerCount()I"),
             method = "getObjectCount")
     public int insertObjectCount(T instance) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()
-                || ModelShifterClient.additionalRendererState.getDisabledFeatureRenderers().disableStuckStingers())
+        if (!ModelShifterClient.state.isRendererEnabled()
+                || ModelShifterClient.state.accessDisabledFeatureRenderers().disableStuckStingers())
             return instance.getStingerCount();
 
         return 0;

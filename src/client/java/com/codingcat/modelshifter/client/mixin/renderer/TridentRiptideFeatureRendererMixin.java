@@ -16,8 +16,8 @@ public class TridentRiptideFeatureRendererMixin<T extends PlayerEntity> {
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/player/PlayerEntity;FFFFFF)V",
             cancellable = true)
     public void insertModifyRendering(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()
-                || !ModelShifterClient.additionalRendererState.getDisabledFeatureRenderers().disableTridentRiptide())
+        if (!ModelShifterClient.state.isRendererEnabled()
+                || !ModelShifterClient.state.accessDisabledFeatureRenderers().disableTridentRiptide())
             return;
 
         ci.cancel();

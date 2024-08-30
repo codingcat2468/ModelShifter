@@ -20,17 +20,18 @@ public class HeldItemFeatureRendererMixin<T extends LivingEntity> {
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
             cancellable = true)
     public void insertModifyRendering(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()
-                || !ModelShifterClient.additionalRendererState.getDisabledFeatureRenderers().disableHeldItem()) return;
+        if (!ModelShifterClient.state.isRendererEnabled()
+                || !ModelShifterClient.state.accessDisabledFeatureRenderers().disableHeldItem()) return;
 
         ci.cancel();
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"), method = "renderItem")
     public void insertModifyRendering(LivingEntity entity, ItemStack stack, ModelTransformationMode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()) return;
-        PlayerModel model = ModelShifterClient.additionalRendererState.model().get();
+        if (!ModelShifterClient.state.isRendererEnabled()) return;
+        PlayerModel model = ModelShifterClient.state.getPlayerModel();
 
-        model.modifyHeldItemRendering(matrices);
+        if (model != null)
+            model.modifyHeldItemRendering(matrices);
     }
 }

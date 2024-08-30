@@ -1,6 +1,6 @@
 package com.codingcat.modelshifter.client.api.model;
 
-import com.codingcat.modelshifter.client.api.state.DisabledFeatureRenderers;
+import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;

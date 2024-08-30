@@ -17,8 +17,8 @@ public class ElytraFeatureRendererMixin<T extends LivingEntity> {
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
             cancellable = true)
     public void insertModifyRendering(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()
-                || !ModelShifterClient.additionalRendererState.getDisabledFeatureRenderers().disableElytra()) return;
+        if (!ModelShifterClient.state.isRendererEnabled()
+                || !ModelShifterClient.state.accessDisabledFeatureRenderers().disableElytra()) return;
 
         ci.cancel();
     }
@@ -26,9 +26,10 @@ public class ElytraFeatureRendererMixin<T extends LivingEntity> {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"),
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V")
     public void insertModifyRendering2(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()) return;
-        PlayerModel model = ModelShifterClient.additionalRendererState.model().get();
+        if (!ModelShifterClient.state.isRendererEnabled()) return;
+        PlayerModel model = ModelShifterClient.state.getPlayerModel();
 
-        model.modifyElytraRendering(matrixStack);
+        if (model != null)
+            model.modifyElytraRendering(matrixStack);
     }
 }

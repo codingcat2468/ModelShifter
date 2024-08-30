@@ -1,4 +1,4 @@
-package com.codingcat.modelshifter.client.api.state;
+package com.codingcat.modelshifter.client.api.renderer;
 
 public record DisabledFeatureRenderers(
         boolean disableArmor,

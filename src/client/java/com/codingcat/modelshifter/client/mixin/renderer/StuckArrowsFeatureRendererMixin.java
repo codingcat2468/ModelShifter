@@ -12,8 +12,8 @@ public class StuckArrowsFeatureRendererMixin {
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getStuckArrowCount()I"),
             method = "getObjectCount")
     public int insertObjectCount(LivingEntity instance) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()
-                || ModelShifterClient.additionalRendererState.getDisabledFeatureRenderers().disableStuckArrows())
+        if (!ModelShifterClient.state.isRendererEnabled()
+                || ModelShifterClient.state.accessDisabledFeatureRenderers().disableStuckArrows())
             return instance.getStuckArrowCount();
 
         return 0;

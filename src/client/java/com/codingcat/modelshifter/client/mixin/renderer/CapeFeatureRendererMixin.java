@@ -16,8 +16,8 @@ public class CapeFeatureRendererMixin {
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/client/network/AbstractClientPlayerEntity;FFFFFF)V",
             cancellable = true)
     public void insertModifyRendering(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()
-                || !ModelShifterClient.additionalRendererState.getDisabledFeatureRenderers().disableCape()) return;
+        if (!ModelShifterClient.state.isRendererEnabled()
+                || !ModelShifterClient.state.accessDisabledFeatureRenderers().disableCape()) return;
 
         ci.cancel();
     }
