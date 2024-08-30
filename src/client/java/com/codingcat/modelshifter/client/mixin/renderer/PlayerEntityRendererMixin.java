@@ -1,7 +1,7 @@
 package com.codingcat.modelshifter.client.mixin.renderer;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
-import com.codingcat.modelshifter.client.api.state.AdditionalRendererState;
+import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.render.ReplacedPlayerEntityRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -17,9 +17,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin
@@ -40,13 +37,14 @@ public abstract class PlayerEntityRendererMixin
     @Inject(at = @At("RETURN"), method = "<init>")
     public void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         this.context = ctx;
-        ModelShifterClient.additionalRendererState = new AdditionalRendererState(new AtomicBoolean(false), new AtomicReference<>(),
-                model -> setAdditionalRenderModel(model.getModelDataIdentifier()));
+        ModelShifterClient.additionalRendererState.setRecreateRendererCallback(this::setAdditionalRenderModel);
+        if (ModelShifterClient.additionalRendererState.rendererEnabled().get())
+            ModelShifterClient.additionalRendererState.callRecreateAdditionalRenderer();
     }
 
     @Unique
-    private void setAdditionalRenderModel(Identifier modelIdentifier) {
-        this.additionalRenderer = new ReplacedPlayerEntityRenderer(context, modelIdentifier);
+    private void setAdditionalRenderModel(PlayerModel model) {
+        this.additionalRenderer = new ReplacedPlayerEntityRenderer(context, model.getModelDataIdentifier());
     }
 
     @Inject(at = @At("HEAD"),
@@ -65,6 +63,7 @@ public abstract class PlayerEntityRendererMixin
         if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()
                 || clientPlayer.isSpectator()) return;
 
-        additionalRenderer.render(clientPlayer, getTexture(clientPlayer), g, g, matrixStack, vertexConsumerProvider, i);
+        if (this.additionalRenderer != null)
+            additionalRenderer.render(clientPlayer, getTexture(clientPlayer), g, g, matrixStack, vertexConsumerProvider, i);
     }
 }
