@@ -29,6 +29,6 @@ public class ElytraFeatureRendererMixin<T extends LivingEntity> {
         if (!ModelShifterClient.additionalRendererState.rendererEnabled().get()) return;
         PlayerModel model = ModelShifterClient.additionalRendererState.model().get();
 
-        model.modifyHeldItemRendering(matrixStack);
+        model.modifyElytraRendering(matrixStack);
     }
 }

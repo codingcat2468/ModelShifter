@@ -5,12 +5,24 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public interface PlayerModel {
-    Identifier getModelDataIdentifier();
+public abstract class PlayerModel {
+    private final Identifier identifier;
+    private final DisabledFeatureRenderers disabledFeatureRenderers;
 
-    void modifyHeldItemRendering(MatrixStack matrixStack);
+    public PlayerModel(Identifier identifier, DisabledFeatureRenderers disabledFeatureRenderers) {
+        this.identifier = identifier;
+        this.disabledFeatureRenderers = disabledFeatureRenderers;
+    }
 
-    void modifyElytraRendering(MatrixStack matrixStack);
+    public void modifyHeldItemRendering(MatrixStack matrixStack) {}
 
-    @NotNull DisabledFeatureRenderers getDisabledFeatureRenderers();
+    public void modifyElytraRendering(MatrixStack matrixStack) {}
+
+    public Identifier getModelDataIdentifier() {
+        return this.identifier;
+    }
+
+    public @NotNull DisabledFeatureRenderers getDisabledFeatureRenderers() {
+        return this.disabledFeatureRenderers;
+    }
 }
