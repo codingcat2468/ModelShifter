@@ -4,15 +4,6 @@
   "package": "com.codingcat.modelshifter.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ArmorFeatureRendererMixin",
-    "CapeFeatureRendererMixin",
-    "Deadmau5FeatureRendererMixin",
-    "ElytraFeatureRendererMixin",
-    "HeldItemFeatureRendererMixin",
-    "ShoulderParrotFeatureRendererMixin",
-    "StuckArrowsFeatureRendererMixin",
-    "StuckStingersFeatureRendererMixin",
-    "TridentRiptideFeatureRendererMixin"
     "renderer.PlayerEntityRendererMixin",
     "renderer.ArmorFeatureRendererMixin",
     "renderer.CapeFeatureRendererMixin",
@@ -23,6 +14,7 @@
     "renderer.StuckArrowsFeatureRendererMixin",
     "renderer.StuckStingersFeatureRendererMixin",
     "renderer.TridentRiptideFeatureRendererMixin",
+    "screen.SkinOptionsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
