@@ -1,4 +1,4 @@
-package com.codingcat.modelshifter.client.mixin;
+package com.codingcat.modelshifter.client.mixin.renderer;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import net.minecraft.client.render.VertexConsumerProvider;

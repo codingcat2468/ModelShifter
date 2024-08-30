@@ -13,11 +13,18 @@
     "StuckArrowsFeatureRendererMixin",
     "StuckStingersFeatureRendererMixin",
     "TridentRiptideFeatureRendererMixin"
+    "renderer.PlayerEntityRendererMixin",
+    "renderer.ArmorFeatureRendererMixin",
+    "renderer.CapeFeatureRendererMixin",
+    "renderer.Deadmau5FeatureRendererMixin",
+    "renderer.ElytraFeatureRendererMixin",
+    "renderer.HeldItemFeatureRendererMixin",
+    "renderer.ShoulderParrotFeatureRendererMixin",
+    "renderer.StuckArrowsFeatureRendererMixin",
+    "renderer.StuckStingersFeatureRendererMixin",
+    "renderer.TridentRiptideFeatureRendererMixin",
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": [
-    "PlayerEntityRendererMixin"
-  ]
+  }
 }
