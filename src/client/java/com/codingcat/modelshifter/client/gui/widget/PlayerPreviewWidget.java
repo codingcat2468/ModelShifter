@@ -123,7 +123,7 @@ public class PlayerPreviewWidget extends TextWidget {
             matrices.multiply(new Quaternionf().rotateZ((float) Math.PI));
             VertexConsumerProvider.Immediate vertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
             int overlay = OverlayTexture.packUv(OverlayTexture.getU(0), OverlayTexture.getV(false));
-            //? if <1.21 {
+            //? <1.21 {
             /*playerEntityModel.render(matrices,
                     vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinTexture)),
                     LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,

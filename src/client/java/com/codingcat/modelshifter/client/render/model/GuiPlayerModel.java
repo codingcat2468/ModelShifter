@@ -10,12 +10,10 @@ public class GuiPlayerModel extends DefaultedEntityGeoModel<ReplacedPlayerEntity
         super(assetSubpath);
     }
 
-    //? if <1.21 {
-    //@SuppressWarnings("removal")
-    //@Override
-    //public void applyMolangQueries(ReplacedPlayerEntity animatable, double animTime) {
-    //}
-    //?} else {
+    //? <1.21 {
+    /*@SuppressWarnings("removal")
+    public void applyMolangQueries(ReplacedPlayerEntity animatable, double animTime) {}
+    *///?} else {
     @Override
     public void applyMolangQueries(AnimationState<ReplacedPlayerEntity> animationState, double animTime) {}
     //?}

@@ -20,10 +20,10 @@ import java.util.List;
 
 @Mixin(SkinOptionsScreen.class)
 public abstract class SkinOptionsScreenMixin extends GameOptionsScreen {
-    //? if <1.21 {
-    //@Shadow
-    //private @Nullable OptionListWidget optionListWidget;
-    //?}
+    //? <1.21 {
+    /*private @Nullable OptionListWidget optionListWidget;
+
+    *///?}
 
     @Unique
     private static final Text MODEL_SHIFTER_BTN = Text.translatable("modelshifter.button.open_screen");
@@ -39,19 +39,19 @@ public abstract class SkinOptionsScreenMixin extends GameOptionsScreen {
                 this.client.setScreen(new ModelSelectionScreen(this, gameOptions))).build();
     }
 
-    //? if <1.21 {
-//    @Inject(
-//            at = @At(value = "INVOKE",
-//                    target = "Lnet/minecraft/client/gui/screen/option/GameOptionsScreen;init()V"
-//            ),
-//            method = "init"
-//    )
-//    public void injectButton(CallbackInfo ci) {
-//        if (this.optionListWidget == null || this.client == null) return;
-//
-//        this.optionListWidget.addAll(List.of(getButton()));
-//    }
-    //?} else {
+    //? <1.21 {
+    /*@Inject(
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screen/option/GameOptionsScreen;init()V"
+            ),
+            method = "init"
+    )
+    public void injectButton(CallbackInfo ci) {
+        if (this.optionListWidget == null || this.client == null) return;
+
+        this.optionListWidget.addAll(List.of(getButton()));
+    }
+    *///?} else {
     @Inject(at = @At(value = "RETURN"),
             method = "addOptions")
     public void injectButton(CallbackInfo ci) {
