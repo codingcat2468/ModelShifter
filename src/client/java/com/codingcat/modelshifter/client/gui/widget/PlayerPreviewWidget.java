@@ -11,7 +11,15 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.TextWidget;
+import net.minecraft.client.model.Dilation;
+import net.minecraft.client.model.ModelData;
+import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.LightmapTextureManager;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -23,11 +31,15 @@ public class PlayerPreviewWidget extends TextWidget {
     @Nullable
     private GuiPlayerEntityRenderer renderer;
     private final Identifier skinTexture;
+    private final Identifier capeTexture;
+    private final PlayerEntityModel<?> playerEntityModel;
 
     public PlayerPreviewWidget(int x, int y, int width, int height) {
         super(x, y, width, height, Text.empty(), MinecraftClient.getInstance().textRenderer);
         MinecraftClient client = MinecraftClient.getInstance();
         this.skinTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).texture();
+        this.capeTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).capeTexture();
+        this.playerEntityModel = createModel();
         this.update();
     }
 
@@ -50,8 +62,7 @@ public class PlayerPreviewWidget extends TextWidget {
     @Override
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context);
-        if (ModelShifterClient.state.isRendererEnabled())
-            this.renderModel(context);
+        this.renderModel(context);
         this.renderText(context);
     }
 
@@ -94,8 +105,6 @@ public class PlayerPreviewWidget extends TextWidget {
     }
 
     private void renderModel(DrawContext context) {
-        if (renderer == null) return;
-
         MatrixStack matrices = context.getMatrices();
         context.enableScissor(getX(), getY(), getX() + getWidth(), getY() + getHeight());
         matrices.push();
@@ -105,12 +114,42 @@ public class PlayerPreviewWidget extends TextWidget {
         quaternionf.mul(quaternionf2);
         matrices.multiply(quaternionf);
         float size = getHeight() / 4f;
-        matrices.scale(size, size, -size);
-        renderer.setRenderColor(255, 255, 255, 255);
-        renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
+        if (ModelShifterClient.state.isRendererEnabled() && renderer != null) {
+            matrices.scale(size, size, -size);
+            renderer.setRenderColor(255, 255, 255, 255);
+            renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
+        } else if (!ModelShifterClient.state.isRendererEnabled() && playerEntityModel != null) {
+            size /= 1.2f;
+            matrices.scale(size, size, -size);
+            matrices.translate(0, 1.4f, 0);
+            matrices.multiply(new Quaternionf().rotateZ((float) Math.PI));
+            VertexConsumerProvider.Immediate vertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+            int overlay = OverlayTexture.packUv(OverlayTexture.getU(0), OverlayTexture.getV(false));
+            playerEntityModel.render(matrices,
+                    vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinTexture)),
+                    LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
+                    overlay,
+                    1f, 1f, 1f, 1f);
+
+            if (this.capeTexture != null)
+                playerEntityModel.renderCape(matrices,
+                        vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(capeTexture)),
+                        LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
+                        overlay);
+        }
+
         context.draw();
         matrices.pop();
         context.disableScissor();
+    }
+
+    private PlayerEntityModel<?> createModel() {
+        ModelData data = PlayerEntityModel.getTexturedModelData(Dilation.NONE, false);
+        ModelPart root = TexturedModelData.of(data, 64, 64).createModel();
+        PlayerEntityModel<?> model = new PlayerEntityModel<>(root, false);
+        model.child = false;
+
+        return model;
     }
 
     @Override
