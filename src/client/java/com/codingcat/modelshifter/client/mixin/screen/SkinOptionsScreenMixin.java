@@ -1,6 +1,6 @@
 package com.codingcat.modelshifter.client.mixin.screen;
 
-import com.codingcat.modelshifter.client.screen.ModelSelectionScreen;
+import com.codingcat.modelshifter.client.gui.screen.ModelSelectionScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.screen.option.SkinOptionsScreen;

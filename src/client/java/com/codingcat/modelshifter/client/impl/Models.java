@@ -1,8 +1,11 @@
-package com.codingcat.modelshifter.client.impl.model;
+package com.codingcat.modelshifter.client.impl;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
+import com.codingcat.modelshifter.client.impl.model.AmongUsPlayerModel;
+import com.codingcat.modelshifter.client.impl.model.CatPlayerModel;
+import com.codingcat.modelshifter.client.impl.model.WitherPlayerModel;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
