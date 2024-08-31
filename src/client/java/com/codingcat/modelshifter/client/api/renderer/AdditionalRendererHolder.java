@@ -2,6 +2,7 @@ package com.codingcat.modelshifter.client.api.renderer;
 
 import com.codingcat.modelshifter.client.render.ReplacedPlayerEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,9 +23,13 @@ public class AdditionalRendererHolder {
             createRenderer();
     }
 
+    public ReplacedPlayerEntityRenderer createRendererInstance(Identifier modelIdentifier) {
+        return new ReplacedPlayerEntityRenderer(context, modelIdentifier);
+    }
+
     private void createRenderer() {
         if (state.getPlayerModel() != null)
-            this.additionalRenderer = new ReplacedPlayerEntityRenderer(context, state.getPlayerModel().getModelDataIdentifier());
+            this.additionalRenderer = createRendererInstance(state.getPlayerModel().getModelDataIdentifier());
     }
 
     @Nullable
