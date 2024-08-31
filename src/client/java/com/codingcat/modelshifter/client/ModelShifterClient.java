@@ -1,6 +1,8 @@
 package com.codingcat.modelshifter.client;
 
-import com.codingcat.modelshifter.client.impl.model.Models;
+import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererHolder;
+import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
+import com.codingcat.modelshifter.client.impl.Models;
 import net.fabricmc.api.ClientModInitializer;
 
 public class ModelShifterClient implements ClientModInitializer {
@@ -11,5 +13,6 @@ public class ModelShifterClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         Models.registerAll();
+        state = new AdditionalRendererState(false, null);
     }
 }

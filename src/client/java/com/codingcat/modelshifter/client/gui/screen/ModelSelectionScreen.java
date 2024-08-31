@@ -5,6 +5,7 @@ import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.PlayerPreviewWidget;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
@@ -85,6 +86,13 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
             widget.setSelected(false);
         }
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        super.resize(client, width, height);
+        this.clearChildren();
+        this.init();
     }
 
     @Override
