@@ -6,9 +6,11 @@ import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
+import java.util.Set;
+
 public class AmongUsPlayerModel extends PlayerModel {
     public AmongUsPlayerModel() {
-        super(new Identifier(ModelShifterClient.MOD_ID, "among_us_player"), new DisabledFeatureRenderers(
+        super(new Identifier(ModelShifterClient.MOD_ID, "among_us_player"), Set.of("EgertSUS"), new DisabledFeatureRenderers(
                 true,
                 false,
                 false,

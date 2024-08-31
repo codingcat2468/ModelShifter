@@ -6,13 +6,16 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class PlayerModel {
     private final Identifier identifier;
+    private final Set<String> creators;
     private final DisabledFeatureRenderers disabledFeatureRenderers;
 
-    public PlayerModel(Identifier identifier, DisabledFeatureRenderers disabledFeatureRenderers) {
+    public PlayerModel(Identifier identifier, Set<String> creators, DisabledFeatureRenderers disabledFeatureRenderers) {
         this.identifier = identifier;
+        this.creators = creators;
         this.disabledFeatureRenderers = disabledFeatureRenderers;
     }
 
@@ -22,6 +25,10 @@ public abstract class PlayerModel {
 
     public Identifier getModelDataIdentifier() {
         return this.identifier;
+    }
+
+    public Set<String> getCreators() {
+        return creators;
     }
 
     public @NotNull DisabledFeatureRenderers getDisabledFeatureRenderers() {

@@ -7,9 +7,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.joml.Quaternionf;
 
+import java.util.Set;
+
 public class CatPlayerModel extends PlayerModel {
     public CatPlayerModel() {
-        super(new Identifier(ModelShifterClient.MOD_ID, "cat_player"), new DisabledFeatureRenderers(
+        super(new Identifier(ModelShifterClient.MOD_ID, "cat_player"), Set.of("EgertSUS"), new DisabledFeatureRenderers(
                 true,
                 false,
                 false,

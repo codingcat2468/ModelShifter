@@ -6,9 +6,11 @@ import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
+import java.util.Set;
+
 public class WitherPlayerModel extends PlayerModel {
     public WitherPlayerModel() {
-        super(new Identifier(ModelShifterClient.MOD_ID, "wither_player"), new DisabledFeatureRenderers(
+        super(new Identifier(ModelShifterClient.MOD_ID, "wither_player"), Set.of("bug_finder"), new DisabledFeatureRenderers(
                 true,
                 true,
                 false,

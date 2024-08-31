@@ -74,8 +74,10 @@ public class PlayerPreviewWidget extends TextWidget {
                 getY() + getHeight() - (getHeight() / 3f),
                 2f);
         boolean active = ModelShifterClient.state.isRendererEnabled();
+        PlayerModel model = ModelShifterClient.state.getPlayerModel();
+        String creators = (active && model != null) ? String.join(", ", model.getCreators()) : "";
         this.renderScaledText(context,
-                Text.translatable(active ? "modelshifter.text.made_by" : "modelshifter.text.no_model_active", "test"),
+                Text.translatable(active ? "modelshifter.text.made_by" : "modelshifter.text.no_model_active", creators),
                 0xADADAD,
                 getX() + getWidth() - (getWidth() / 4f),
                 getY() + getHeight() - (getHeight() / 3f) + 24,
@@ -102,7 +104,7 @@ public class PlayerPreviewWidget extends TextWidget {
         Quaternionf quaternionf2 = new Quaternionf().rotateY((float) (Math.PI * 0.25f));
         quaternionf.mul(quaternionf2);
         matrices.multiply(quaternionf);
-        float size = getWidth() / 3f;
+        float size = getHeight() / 4f;
         matrices.scale(size, size, -size);
         renderer.setRenderColor(255, 255, 255, 255);
         renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
@@ -114,10 +116,5 @@ public class PlayerPreviewWidget extends TextWidget {
     @Override
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {
         builder.put(NarrationPart.TITLE, getModelName());
-    }
-
-    public enum Type {
-        NORMAL,
-        DISABLE_BUTTON
     }
 }
