@@ -40,6 +40,9 @@ public abstract class PlayerEntityRendererMixin
         if (!ModelShifterClient.state.isRendererEnabled()) return;
 
         this.getModel().setVisible(false);
+        if (player.isSpectator())
+            this.model.head.visible = true;
+
         ci.cancel();
     }
 

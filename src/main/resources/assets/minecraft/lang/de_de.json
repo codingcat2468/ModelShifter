@@ -4,7 +4,7 @@
   "modelshifter.model.wither": "Wither",
   "modelshifter.model.chest": "Truhe",
 
-  "modelshifter.button.open_screen": "ModelShifter...",
+  "modelshifter.button.open_screen": "ModelShifter-Einstellungen",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
   "modelshifter.message.model_changed": "Das Spieler-Modell wurde zu %s geändert"

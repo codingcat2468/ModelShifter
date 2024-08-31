@@ -21,7 +21,9 @@ public class AmongUsPlayerModel extends PlayerModel {
     }
 
     @Override
-    public void modifyHeldItemRendering(MatrixStack matrixStack) {}
+    public void modifyHeldItemRendering(MatrixStack matrixStack) {
+        matrixStack.translate(0.3f,0.2f,0f);
+    }
 
     @Override
     public void modifyElytraRendering(MatrixStack matrixStack) {}

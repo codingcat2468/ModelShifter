@@ -21,7 +21,9 @@ public class WitherPlayerModel extends PlayerModel {
     }
 
     @Override
-    public void modifyHeldItemRendering(MatrixStack matrixStack) {}
+    public void modifyHeldItemRendering(MatrixStack matrixStack) {
+        matrixStack.translate(-0.03f,0f,-0.1f);
+    }
 
     @Override
     public void modifyElytraRendering(MatrixStack matrixStack) {}

@@ -21,7 +21,9 @@ public class ChestPlayerModel extends PlayerModel {
     }
 
     @Override
-    public void modifyHeldItemRendering(MatrixStack matrixStack) {}
+    public void modifyHeldItemRendering(MatrixStack matrixStack) {
+        matrixStack.translate(0.44f,0.35f,-0.5f);
+    }
 
     @Override
     public void modifyElytraRendering(MatrixStack matrixStack) {}
