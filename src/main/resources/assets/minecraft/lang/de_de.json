@@ -3,6 +3,7 @@
   "modelshifter.model.among_us": "Among Us",
   "modelshifter.model.wither": "Wither",
   "modelshifter.button.open_screen": "ModelShifter...",
-  "modelshifter.screen.model_selection.title": "Spieler-Aussehen auswählen",
-  "modelshifter.message.model_changed": "Das Spieler-Aussehen wurde zu %s geändert"
+  "modelshifter.button.disable": "Modell Deaktivieren",
+  "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
+  "modelshifter.message.model_changed": "Das Spieler-Modell wurde zu %s geändert"
 }

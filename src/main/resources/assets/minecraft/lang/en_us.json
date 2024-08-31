@@ -3,6 +3,7 @@
   "modelshifter.model.among_us": "Among Us",
   "modelshifter.model.wither": "Wither",
   "modelshifter.button.open_screen": "ModelShifter...",
+  "modelshifter.button.disable": "Disable Model",
   "modelshifter.screen.model_selection.title": "Select player model",
   "modelshifter.message.model_changed": "The player model has been changed to %s"
 }

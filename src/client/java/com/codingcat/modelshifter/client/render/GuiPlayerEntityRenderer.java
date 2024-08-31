@@ -11,12 +11,25 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoObjectRenderer;
+import software.bernie.geckolib.util.Color;
 
 public class GuiPlayerEntityRenderer extends GeoObjectRenderer<ReplacedPlayerEntity> {
     private final ReplacedPlayerEntity replacedPlayerEntity;
+    private Color renderColor;
+
     public GuiPlayerEntityRenderer(Identifier modelIdentifier) {
         super(new GuiPlayerModel(modelIdentifier));
         this.replacedPlayerEntity = new ReplacedPlayerEntity(true);
+        this.renderColor = Color.WHITE;
+    }
+
+    @Override
+    public Color getRenderColor(ReplacedPlayerEntity animatable, float partialTick, int packedLight) {
+        return this.renderColor;
+    }
+
+    public void setRenderColor(int r, int g, int b, int a) {
+        this.renderColor = Color.ofRGBA(r, g, b, a);
     }
 
     public void render(Identifier skin, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
