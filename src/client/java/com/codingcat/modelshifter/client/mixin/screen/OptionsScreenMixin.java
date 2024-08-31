@@ -3,6 +3,7 @@ package com.codingcat.modelshifter.client.mixin.screen;
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.gui.screen.ModelSelectionScreen;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.screen.option.SkinOptionsScreen;
@@ -66,6 +67,12 @@ public abstract class OptionsScreenMixin extends Screen {
     public void injectButton(CallbackInfo ci, @Local(ordinal = 1) DirectionalLayoutWidget directionalLayoutWidget) {
         setButtonPos();
         this.addDrawableChild(BUTTON);
+    }
+
+    @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        super.resize(client, width, height);
+        setButtonPos();
     }
 
     @Unique

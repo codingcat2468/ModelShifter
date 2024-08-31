@@ -5,7 +5,7 @@
   "modelshifter.model.chest": "Truhe",
   "modelshifter.model.ghast": "Ghast",
 
-  "modelshifter.button.open_screen": "ModelShifter-Einstellungen",
+  "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
   "modelshifter.state.no_custom_model": "Spieler",
