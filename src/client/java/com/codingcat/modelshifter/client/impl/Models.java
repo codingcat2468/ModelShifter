@@ -5,6 +5,7 @@ import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.impl.model.AmongUsPlayerModel;
 import com.codingcat.modelshifter.client.impl.model.CatPlayerModel;
+import com.codingcat.modelshifter.client.impl.model.ChestPlayerModel;
 import com.codingcat.modelshifter.client.impl.model.WitherPlayerModel;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,7 @@ public class Models {
         register("cat", new CatPlayerModel());
         register("among_us", new AmongUsPlayerModel());
         register("wither", new WitherPlayerModel());
+        register("chest", new ChestPlayerModel());
     }
 
     private static void register(String id, PlayerModel playerModel) {

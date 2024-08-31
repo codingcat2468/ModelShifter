@@ -2,6 +2,8 @@
   "modelshifter.model.cat": "Cat",
   "modelshifter.model.among_us": "Among Us",
   "modelshifter.model.wither": "Wither",
+  "modelshifter.model.chest": "Chest",
+
   "modelshifter.button.open_screen": "ModelShifter...",
   "modelshifter.button.disable": "Disable Model",
   "modelshifter.screen.model_selection.title": "Select player model",

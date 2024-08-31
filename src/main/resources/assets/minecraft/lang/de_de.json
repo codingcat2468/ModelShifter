@@ -2,6 +2,8 @@
   "modelshifter.model.cat": "Katze",
   "modelshifter.model.among_us": "Among Us",
   "modelshifter.model.wither": "Wither",
+  "modelshifter.model.chest": "Truhe",
+
   "modelshifter.button.open_screen": "ModelShifter...",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
