@@ -27,6 +27,8 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
     @Override
     protected void init() {
+        if (client == null) return;
+
         this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, this));
         this.addButton(0, 0, null);
         int x = 1;
@@ -34,7 +36,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
         for (Map.Entry<Identifier, PlayerModel> model : ModelRegistry.entries()) {
             this.addButton(x, y, model.getValue());
             x++;
-            if (x > 3) {
+            if ((x * 80) + 24 > width / 2) {
                 x = 0;
                 y++;
             }

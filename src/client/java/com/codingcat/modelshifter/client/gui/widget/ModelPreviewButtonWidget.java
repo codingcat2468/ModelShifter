@@ -75,8 +75,10 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context);
-        if (this.model != null)
+        if (this.model != null) {
             this.renderModel(context);
+            this.renderText(context);
+        }
     }
 
     private void renderBackground(DrawContext context) {
@@ -89,13 +91,23 @@ public class ModelPreviewButtonWidget extends PressableWidget {
                 this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
+    private void renderText(DrawContext context) {
+        context.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        drawScrollableText(context,
+                MinecraftClient.getInstance().textRenderer,
+                getModelName(),
+                getX() + getWidth(),
+                getX(), getY() + getHeight() - 4, getX() + getWidth() - 4, getY() + getHeight() - 10,
+                this.selected ? 0xFFFFFF : 0x8F8F8F);
+    }
+
     private void renderModel(DrawContext context) {
         if (renderer == null) return;
 
         MatrixStack matrices = context.getMatrices();
         context.enableScissor(getX() + 2, getY() + 2, (getX() + getWidth()) - 2, (getY() + getHeight()) - 2);
         matrices.push();
-        matrices.translate(getX() + (getWidth() / 2f), getY() + (getHeight() / 1.2f), 50);
+        matrices.translate(getX() + (getWidth() / 2f), getY() + (getHeight() / 1.3f), 50);
         Quaternionf quaternionf = new Quaternionf().rotateZ((float) Math.PI);
         Quaternionf quaternionf2 = new Quaternionf().rotateY((float) (Math.PI * ((double) System.currentTimeMillis() / 2600f) % 360f));
         quaternionf.mul(quaternionf2);
