@@ -15,7 +15,7 @@
     "renderer.StuckArrowsFeatureRendererMixin",
     "renderer.StuckStingersFeatureRendererMixin",
     "renderer.TridentRiptideFeatureRendererMixin",
-    "screen.SkinOptionsScreenMixin"
+    "screen.OptionsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

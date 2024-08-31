@@ -22,6 +22,7 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
+    "geckolib": ">=${geckolib_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
   }
