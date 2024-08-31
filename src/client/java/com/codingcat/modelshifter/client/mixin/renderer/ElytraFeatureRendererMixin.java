@@ -4,6 +4,9 @@ import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +15,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ElytraFeatureRenderer.class)
-public class ElytraFeatureRendererMixin<T extends LivingEntity> {
+public abstract class ElytraFeatureRendererMixin<T extends LivingEntity, M extends EntityModel<T>>
+        extends FeatureRenderer<T, M> {
+
+    public ElytraFeatureRendererMixin(FeatureRendererContext<T, M> context) {
+        super(context);
+    }
+
     @Inject(at = @At(value = "HEAD"),
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
             cancellable = true)

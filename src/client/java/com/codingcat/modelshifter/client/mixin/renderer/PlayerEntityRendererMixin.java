@@ -27,6 +27,9 @@ public abstract class PlayerEntityRendererMixin
     @Shadow
     public abstract Identifier getTexture(AbstractClientPlayerEntity abstractClientPlayerEntity);
 
+    @Shadow
+    protected abstract void setupTransforms(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h, float i);
+
     @Inject(at = @At("RETURN"), method = "<init>")
     public void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         ModelShifterClient.holder = new AdditionalRendererHolder(ctx, ModelShifterClient.state);
@@ -43,6 +46,16 @@ public abstract class PlayerEntityRendererMixin
         if (player.isSpectator())
             this.model.head.visible = true;
 
+        ci.cancel();
+    }
+
+    @Inject(at = @At("HEAD"),
+            method = "setupTransforms(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/util/math/MatrixStack;FFFF)V",
+            cancellable = true)
+    public void injectSetupTransforms(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h, float i, CallbackInfo ci) {
+        if (!ModelShifterClient.state.isRendererEnabled()) return;
+
+        super.setupTransforms(abstractClientPlayerEntity, matrixStack, f, g, h, i);
         ci.cancel();
     }
 

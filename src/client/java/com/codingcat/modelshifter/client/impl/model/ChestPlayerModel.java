@@ -14,7 +14,7 @@ public class ChestPlayerModel extends PlayerModel {
                 false,
                 true,
                 true,
-                false,
+                true,
                 false,
                 true
         ));
@@ -26,5 +26,8 @@ public class ChestPlayerModel extends PlayerModel {
     }
 
     @Override
-    public void modifyElytraRendering(MatrixStack matrixStack) {}
+    public void modifyElytraRendering(MatrixStack matrixStack) {
+        matrixStack.scale(0.9f,0.65f,0.9f);
+        matrixStack.translate(0f,1f,0.35f);
+    }
 }
