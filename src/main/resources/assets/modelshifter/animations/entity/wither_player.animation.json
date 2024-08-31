@@ -59,7 +59,7 @@
 				}
 			}
 		},
-		"walk.run": {
+		"move.walk": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 0.3333,
 			"bones": {

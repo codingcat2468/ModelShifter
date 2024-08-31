@@ -4,12 +4,12 @@
   "package": "com.codingcat.modelshifter.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "renderer.PlayerEntityRendererMixin",
     "renderer.ArmorFeatureRendererMixin",
     "renderer.CapeFeatureRendererMixin",
     "renderer.Deadmau5FeatureRendererMixin",
     "renderer.ElytraFeatureRendererMixin",
     "renderer.HeldItemFeatureRendererMixin",
+    "renderer.PlayerEntityRendererMixin",
     "renderer.ShoulderParrotFeatureRendererMixin",
     "renderer.StuckArrowsFeatureRendererMixin",
     "renderer.StuckStingersFeatureRendererMixin",
