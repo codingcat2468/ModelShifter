@@ -1,6 +1,5 @@
 plugins {
     id 'fabric-loom' version '1.7-SNAPSHOT'
-    id 'maven-publish'
 }
 
 version = project.mod_version
@@ -19,6 +18,10 @@ loom {
             sourceSet sourceSets.client
         }
     }
+    runConfigs.all {
+        ideConfigGenerated true // Run configurations are not created for subprojects by default
+        runDir "../../run" // Use a shared run folder and just create separate worlds
+    }
 }
 
 repositories {
@@ -32,12 +35,12 @@ repositories {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    minecraft "com.mojang:minecraft:${property('minecraft_version')}"
+    mappings "net.fabricmc:yarn:${property('yarn_mappings')}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${property('loader_version')}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${property('fabric_version')}"
 
-    modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${property('minecraft_version')}:${property('geckolib_version')}"
 }
 
 processResources {
@@ -74,19 +77,5 @@ java {
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
-// configure the maven publication
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            artifactId = project.archives_base_name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
     }
 }
