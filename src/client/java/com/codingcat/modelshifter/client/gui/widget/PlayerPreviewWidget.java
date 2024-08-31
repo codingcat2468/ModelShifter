@@ -31,14 +31,12 @@ public class PlayerPreviewWidget extends TextWidget {
     @Nullable
     private GuiPlayerEntityRenderer renderer;
     private final Identifier skinTexture;
-    private final Identifier capeTexture;
     private final PlayerEntityModel<?> playerEntityModel;
 
     public PlayerPreviewWidget(int x, int y, int width, int height) {
         super(x, y, width, height, Text.empty(), MinecraftClient.getInstance().textRenderer);
         MinecraftClient client = MinecraftClient.getInstance();
         this.skinTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).texture();
-        this.capeTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).capeTexture();
         this.playerEntityModel = createModel();
         this.update();
     }
@@ -130,12 +128,6 @@ public class PlayerPreviewWidget extends TextWidget {
                     LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
                     overlay,
                     1f, 1f, 1f, 1f);
-
-            if (this.capeTexture != null)
-                playerEntityModel.renderCape(matrices,
-                        vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(capeTexture)),
-                        LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
-                        overlay);
         }
 
         context.draw();
