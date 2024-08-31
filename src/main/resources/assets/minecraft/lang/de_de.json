@@ -7,5 +7,7 @@
   "modelshifter.button.open_screen": "ModelShifter-Einstellungen",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
-  "modelshifter.message.model_changed": "Das Spieler-Modell wurde zu %s geändert"
+  "modelshifter.state.no_custom_model": "Spieler",
+  "modelshifter.text.made_by": "Modell erstellt von %s",
+  "modelshifter.text.no_model_active": "Kein Modell aktiv"
 }

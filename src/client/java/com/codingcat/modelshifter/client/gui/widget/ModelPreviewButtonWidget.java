@@ -39,7 +39,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         this.type = type;
         this.model = model;
         if (model != null)
-            this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier());
+            this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), true);
         MinecraftClient client = MinecraftClient.getInstance();
         this.skinTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).texture();
         this.onPressConsumer = onPress;

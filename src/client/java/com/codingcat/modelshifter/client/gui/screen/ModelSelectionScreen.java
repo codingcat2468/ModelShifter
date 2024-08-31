@@ -4,6 +4,7 @@ import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
+import com.codingcat.modelshifter.client.gui.widget.PlayerPreviewWidget;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
@@ -20,6 +21,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     private static final Text TITLE = Text.translatable("modelshifter.screen.model_selection.title");
 
     private OptionListWidget listWidget;
+    private PlayerPreviewWidget previewWidget;
 
     public ModelSelectionScreen(Screen parent, GameOptions gameOptions) {
         super(parent, gameOptions, TITLE);
@@ -30,18 +32,27 @@ public class ModelSelectionScreen extends GameOptionsScreen {
         if (client == null) return;
 
         this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, this));
+        this.previewWidget = this.addPlayerPreview();
         this.addButton(0, 0, null);
         int x = 1;
         int y = 0;
         for (Map.Entry<Identifier, PlayerModel> model : ModelRegistry.entries()) {
             this.addButton(x, y, model.getValue());
             x++;
-            if ((x * 80) + 24 > width / 2) {
+            if ((x * 80) + 24 > width / 1.8) {
                 x = 0;
                 y++;
             }
         }
         super.init();
+    }
+
+    private PlayerPreviewWidget addPlayerPreview() {
+        PlayerPreviewWidget previewWidget = new PlayerPreviewWidget(
+                width / 2, 0,
+                width / 2, height);
+
+        return this.addDrawableChild(previewWidget);
     }
 
     private void addButton(int posX, int posY, @Nullable PlayerModel model) {
@@ -65,6 +76,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
         buttonWidget.setSelected(true);
         ModelShifterClient.state.setState(buttonWidget.getModel() != null, buttonWidget.getModel());
         ModelShifterClient.holder.applyState();
+        previewWidget.update();
     }
 
     private void unselectAll() {

@@ -7,5 +7,7 @@
   "modelshifter.button.open_screen": "ModelShifter Settings",
   "modelshifter.button.disable": "Disable Model",
   "modelshifter.screen.model_selection.title": "Select player model",
-  "modelshifter.message.model_changed": "The player model has been changed to %s"
+  "modelshifter.state.no_custom_model": "Player",
+  "modelshifter.text.made_by": "Model created by %s",
+  "modelshifter.text.no_model_active": "No model active"
 }
