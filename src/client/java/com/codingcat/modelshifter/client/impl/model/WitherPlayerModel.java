@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class WitherPlayerModel extends PlayerModel {
     public WitherPlayerModel() {
-        super(new Identifier(ModelShifterClient.MOD_ID, "wither_player"), Set.of("bug_finder"), new DisabledFeatureRenderers(
+        super(Identifier.of(ModelShifterClient.MOD_ID, "wither_player"), Set.of("bug_finder"), new DisabledFeatureRenderers(
                 true,
                 true,
                 false,

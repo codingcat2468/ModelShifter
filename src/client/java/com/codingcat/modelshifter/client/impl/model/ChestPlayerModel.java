@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class ChestPlayerModel extends PlayerModel {
     public ChestPlayerModel() {
-        super(new Identifier(ModelShifterClient.MOD_ID, "chest_player"), Set.of("bug_finder"), new DisabledFeatureRenderers(
+        super(Identifier.of(ModelShifterClient.MOD_ID, "chest_player"), Set.of("bug_finder"), new DisabledFeatureRenderers(
                 true,
                 false,
                 false,

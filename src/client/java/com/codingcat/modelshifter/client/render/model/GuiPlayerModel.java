@@ -2,6 +2,7 @@ package com.codingcat.modelshifter.client.render.model;
 
 import com.codingcat.modelshifter.client.render.entity.ReplacedPlayerEntity;
 import net.minecraft.util.Identifier;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
 public class GuiPlayerModel extends DefaultedEntityGeoModel<ReplacedPlayerEntity> {
@@ -9,7 +10,13 @@ public class GuiPlayerModel extends DefaultedEntityGeoModel<ReplacedPlayerEntity
         super(assetSubpath);
     }
 
-    @SuppressWarnings("removal")
+    //? if <1.21 {
+    //@SuppressWarnings("removal")
+    //@Override
+    //public void applyMolangQueries(ReplacedPlayerEntity animatable, double animTime) {
+    //}
+    //?} else {
     @Override
-    public void applyMolangQueries(ReplacedPlayerEntity animatable, double animTime) {}
+    public void applyMolangQueries(AnimationState<ReplacedPlayerEntity> animationState, double animTime) {}
+    //?}
 }

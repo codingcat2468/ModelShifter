@@ -21,7 +21,9 @@ import java.util.Objects;
 public class ModelSelectionScreen extends GameOptionsScreen {
     private static final Text TITLE = Text.translatable("modelshifter.screen.model_selection.title");
 
-    private OptionListWidget listWidget;
+    //? if <1.21 {
+    //private OptionListWidget listWidget;
+    //?}
     private PlayerPreviewWidget previewWidget;
 
     public ModelSelectionScreen(Screen parent, GameOptions gameOptions) {
@@ -30,9 +32,16 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
     @Override
     protected void init() {
+        initialize();
+        super.init();
+    }
+
+    private void initialize() {
         if (client == null) return;
 
-        this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, this));
+        //? if <1.21 {
+        //this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, this));
+        //?}
         this.previewWidget = this.addPlayerPreview();
         this.addButton(0, 0, null);
         int x = 1;
@@ -45,8 +54,13 @@ public class ModelSelectionScreen extends GameOptionsScreen {
                 y++;
             }
         }
-        super.init();
     }
+
+    //? if >=1.21 {
+    @Override
+    protected void addOptions() {
+    }
+    //?}
 
     private PlayerPreviewWidget addPlayerPreview() {
         PlayerPreviewWidget previewWidget = new PlayerPreviewWidget(
@@ -91,14 +105,21 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     @Override
     public void resize(MinecraftClient client, int width, int height) {
         super.resize(client, width, height);
-        this.clearChildren();
+        //? if <1.21 {
+        /*this.clearChildren();
         this.init();
+        *///?} else {
+        if (this.client != null)
+            this.client.setScreen(new ModelSelectionScreen(parent, gameOptions));
+        //?}
     }
 
-    @Override
-    protected void initTabNavigation() {
-        super.initTabNavigation();
-        if (this.listWidget != null)
-            this.listWidget.position(this.width, this.layout);
-    }
+    //? if <1.21 {
+    //@Override
+    //protected void initTabNavigation() {
+    //    super.initTabNavigation();
+    //    if (this.listWidget != null)
+    //        this.listWidget.position(this.width, this.layout);
+    //}
+    //?}
 }

@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class CatPlayerModel extends PlayerModel {
     public CatPlayerModel() {
-        super(new Identifier(ModelShifterClient.MOD_ID, "cat_player"), Set.of("EgertSUS"), new DisabledFeatureRenderers(
+        super(Identifier.of(ModelShifterClient.MOD_ID, "cat_player"), Set.of("EgertSUS"), new DisabledFeatureRenderers(
                 true,
                 false,
                 false,

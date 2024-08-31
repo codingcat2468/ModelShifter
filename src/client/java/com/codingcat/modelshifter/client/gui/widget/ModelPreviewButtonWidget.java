@@ -48,7 +48,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     }
 
     private static Identifier id(String id) {
-        return new Identifier(ModelShifterClient.MOD_ID, String.format("widget/%s", id));
+        return Identifier.of(ModelShifterClient.MOD_ID, String.format("widget/%s", id));
     }
 
     private Text getModelName() {

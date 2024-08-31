@@ -23,7 +23,7 @@ public class Models {
     }
 
     private static void register(String id, PlayerModel playerModel) {
-        ModelRegistry.register(new Identifier(ModelShifterClient.MOD_ID, id), playerModel);
+        ModelRegistry.register(Identifier.of(ModelShifterClient.MOD_ID, id), playerModel);
     }
 
     @Nullable

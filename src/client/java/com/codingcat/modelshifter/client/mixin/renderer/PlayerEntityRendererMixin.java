@@ -49,13 +49,18 @@ public abstract class PlayerEntityRendererMixin
 
         ci.cancel();
     }
+
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/PlayerEntityModel;setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V"),
             method = "renderArm")
     public void injectRenderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci) {
-        if (arm == model.leftArm)
+        if (arm == model.leftArm) {
             model.leftArm.visible = true;
-        if (arm == model.rightArm)
+            model.leftSleeve.visible = true;
+        }
+        if (arm == model.rightArm) {
             model.rightArm.visible = true;
+            model.rightSleeve.visible = true;
+        }
     }
 
 

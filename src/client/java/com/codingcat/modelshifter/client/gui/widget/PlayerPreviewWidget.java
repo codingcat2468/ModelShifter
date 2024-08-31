@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
 public class PlayerPreviewWidget extends TextWidget {
-    private static final Identifier BACKGROUND = new Identifier(ModelShifterClient.MOD_ID, "widget/preview_background");
+    private static final Identifier BACKGROUND = Identifier.of(ModelShifterClient.MOD_ID, "widget/preview_background");
     @Nullable
     private GuiPlayerEntityRenderer renderer;
     private final Identifier skinTexture;
@@ -123,11 +123,18 @@ public class PlayerPreviewWidget extends TextWidget {
             matrices.multiply(new Quaternionf().rotateZ((float) Math.PI));
             VertexConsumerProvider.Immediate vertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
             int overlay = OverlayTexture.packUv(OverlayTexture.getU(0), OverlayTexture.getV(false));
-            playerEntityModel.render(matrices,
+            //? if <1.21 {
+            /*playerEntityModel.render(matrices,
                     vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinTexture)),
                     LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
                     overlay,
                     1f, 1f, 1f, 1f);
+            *///?} else {
+            playerEntityModel.render(matrices,
+                    vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinTexture)),
+                    LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
+                    overlay, -1);
+            //?}
         }
 
         context.draw();
