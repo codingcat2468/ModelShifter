@@ -3,7 +3,6 @@ package com.codingcat.modelshifter.client.mixin.screen;
 import com.codingcat.modelshifter.client.gui.screen.ModelSelectionScreen;
 import com.codingcat.modelshifter.client.gui.widget.ModelShifterButtonWidget;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -54,12 +53,6 @@ public abstract class OptionsScreenMixin extends Screen {
             method = "initTabNavigation"
     )
     public void injectButton(CallbackInfo ci) {
-        setButtonPos();
-    }
-
-    @Override
-    public void resize(MinecraftClient client, int width, int height) {
-        super.resize(client, width, height);
         setButtonPos();
     }
 
