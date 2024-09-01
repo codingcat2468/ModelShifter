@@ -41,7 +41,7 @@ public class ReplacedPlayerEntity implements GeoReplacedEntity {
 
             if (!(state.getData(DataTickets.ENTITY) instanceof AbstractClientPlayerEntity player))
                 return PlayState.STOP;
-            if (player.isSneaking())
+            if (player.isInSneakingPose())
                 return state.setAndContinue(SNEAK);
             if (player.isSprinting())
                 return state.setAndContinue(DefaultAnimations.RUN);

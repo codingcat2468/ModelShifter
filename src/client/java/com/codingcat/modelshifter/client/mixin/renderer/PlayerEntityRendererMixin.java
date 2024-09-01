@@ -11,11 +11,13 @@ import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin
@@ -35,6 +37,16 @@ public abstract class PlayerEntityRendererMixin
     public void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         ModelShifterClient.holder = new AdditionalRendererHolder(ctx, ModelShifterClient.state);
         ModelShifterClient.holder.applyState();
+    }
+
+    @Inject(at = @At("HEAD"),
+            method = "getPositionOffset(Lnet/minecraft/client/network/AbstractClientPlayerEntity;F)Lnet/minecraft/util/math/Vec3d;",
+            cancellable = true)
+    public void injectSetModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, CallbackInfoReturnable<Vec3d> cir) {
+        if (!ModelShifterClient.state.isRendererEnabled()) return;
+
+        cir.setReturnValue(super.getPositionOffset(abstractClientPlayerEntity, f));
+        cir.cancel();
     }
 
     @Inject(at = @At("HEAD"),
