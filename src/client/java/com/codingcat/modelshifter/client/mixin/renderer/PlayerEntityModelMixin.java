@@ -19,8 +19,8 @@ public class PlayerEntityModelMixin<T extends LivingEntity> {
     @Shadow @Final private ModelPart ear;
 
     @Inject(at = @At(value = "HEAD"),
-            method = "setVisible")
-    public void insertVisibility(boolean visible, CallbackInfo ci) {
+            method = "setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V")
+    public void insertVisibility(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (!ModelShifterClient.state.isRendererEnabled()) return;
 
         DisabledFeatureRenderers renderers = ModelShifterClient.state.accessDisabledFeatureRenderers();
