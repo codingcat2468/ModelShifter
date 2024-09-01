@@ -48,6 +48,6 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
         PlayerModel model = ModelShifterClient.state.getPlayerModel();
 
         if (model != null)
-            model.modifyHeldItemRendering(matrices);
+            model.modifyHeldItemRendering(entity, matrices);
     }
 }

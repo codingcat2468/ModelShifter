@@ -39,6 +39,6 @@ public abstract class ElytraFeatureRendererMixin<T extends LivingEntity, M exten
         PlayerModel model = ModelShifterClient.state.getPlayerModel();
 
         if (model != null)
-            model.modifyElytraRendering(matrixStack);
+            model.modifyElytraRendering(livingEntity, matrixStack);
     }
 }

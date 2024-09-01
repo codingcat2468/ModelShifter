@@ -2,6 +2,7 @@ package com.codingcat.modelshifter.client.api.model;
 
 import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,9 +20,9 @@ public abstract class PlayerModel {
         this.disabledFeatureRenderers = disabledFeatureRenderers;
     }
 
-    public abstract void modifyHeldItemRendering(MatrixStack matrixStack);
+    public abstract void modifyHeldItemRendering(LivingEntity entity, MatrixStack matrixStack);
 
-    public abstract void modifyElytraRendering(MatrixStack matrixStack);
+    public abstract void modifyElytraRendering(LivingEntity entity, MatrixStack matrixStack);
 
     public Identifier getModelDataIdentifier() {
         return this.identifier;
