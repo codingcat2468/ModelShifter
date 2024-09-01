@@ -24,8 +24,13 @@
 					"pivot": [0, 24, 0]
 				},
 				{
-					"name": "bone2",
+					"name": "bone11",
 					"parent": "body",
+					"pivot": [0, 11, 9]
+				},
+				{
+					"name": "bone2",
+					"parent": "bone11",
 					"pivot": [-4.5, 10.5, 15.75],
 					"rotation": [15, 0, 0],
 					"cubes": [
@@ -45,7 +50,7 @@
 				},
 				{
 					"name": "bone3",
-					"parent": "body",
+					"parent": "bone11",
 					"pivot": [-1.475, 11, 16.5],
 					"rotation": [37.5, 0, 0],
 					"cubes": [
@@ -132,11 +137,11 @@
 				{
 					"name": "bone5",
 					"parent": "body",
-					"pivot": [0, 8, 21],
+					"pivot": [0, 7, 1],
 					"rotation": [90, 0, 0],
 					"cubes": [
 						{
-							"origin": [-2, 20, 17],
+							"origin": [-2, -1, -2],
 							"size": [4, 16, 6],
 							"inflate": 0.25,
 							"uv": {

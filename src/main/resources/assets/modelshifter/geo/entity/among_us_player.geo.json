@@ -6,7 +6,7 @@
 				"identifier": "geometry.unknown",
 				"texture_width": 64,
 				"texture_height": 64,
-				"visible_bounds_width": 2,
+				"visible_bounds_width": 3,
 				"visible_bounds_height": 3.5,
 				"visible_bounds_offset": [0, 1.25, 0]
 			},
@@ -31,7 +31,12 @@
 				{
 					"name": "bone2",
 					"parent": "body",
-					"pivot": [0, 24, 0],
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "bone9",
+					"parent": "bone2",
+					"pivot": [0, 0, 0],
 					"cubes": [
 						{"origin": [-4, 14, -5], "size": [8, 8, 1], "uv": [7, 7]},
 						{
@@ -47,8 +52,6 @@
 								"down": {"uv": [27, 36], "uv_size": [9, -4]}
 							}
 						},
-						{"origin": [0, 9, 2], "size": [4, 12, 3], "uv": [33, 49]},
-						{"origin": [0, 9, 2], "size": [4, 12, 3], "inflate": 0.25, "uv": [49, 49]},
 						{
 							"origin": [-4, 14, -5],
 							"size": [8, 8, 0],
@@ -62,8 +65,6 @@
 								"down": {"uv": [48, 8], "uv_size": [8, 0]}
 							}
 						},
-						{"origin": [-4, 9, 2], "size": [4, 12, 3], "uv": [41, 17]},
-						{"origin": [-4, 9, 2], "size": [4, 12, 3], "inflate": 0.25, "uv": [41, 33]},
 						{
 							"origin": [-5, 7, -4],
 							"size": [10, 17, 6],
@@ -76,6 +77,24 @@
 								"down": {"uv": [28, 20], "uv_size": [8, -4]}
 							}
 						}
+					]
+				},
+				{
+					"name": "bone8",
+					"parent": "bone2",
+					"pivot": [-2, 20, 3.5],
+					"cubes": [
+						{"origin": [-4, 9, 2], "size": [4, 12, 3], "inflate": 0.25, "uv": [41, 33]},
+						{"origin": [-4, 9, 2], "size": [4, 12, 3], "uv": [41, 17]}
+					]
+				},
+				{
+					"name": "bone7",
+					"parent": "bone2",
+					"pivot": [2, 20, 3.5],
+					"cubes": [
+						{"origin": [0, 9, 2], "size": [4, 12, 3], "inflate": 0.25, "uv": [49, 49]},
+						{"origin": [0, 9, 2], "size": [4, 12, 3], "uv": [33, 49]}
 					]
 				},
 				{

@@ -1,22 +1,27 @@
 package com.codingcat.modelshifter.client.render.entity;
 
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.EntityType;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoReplacedEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class ReplacedPlayerEntity implements GeoReplacedEntity {
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    public static final RawAnimation SNEAK = RawAnimation.begin().thenPlayAndHold("move.sneak");
+    private final AnimatableInstanceCache cache;
     private final boolean alwaysWalk;
     private final boolean isUI;
 
     public ReplacedPlayerEntity(boolean isUI, boolean alwaysWalk) {
         this.alwaysWalk = alwaysWalk;
         this.isUI = isUI;
+        this.cache = GeckoLibUtil.createInstanceCache(this);
     }
 
     @Override
@@ -26,13 +31,25 @@ public class ReplacedPlayerEntity implements GeoReplacedEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        if (alwaysWalk) {
-            controllers.add(new AnimationController<GeoAnimatable>(this, "walk", state -> state.setAndContinue(DefaultAnimations.WALK)));
-            return;
-        }
+        controllers.add(new AnimationController<GeoReplacedEntity>(this, 2, state -> {
+            if (isUI) {
+                if (alwaysWalk)
+                    return state.setAndContinue(DefaultAnimations.RUN);
 
+                return state.setAndContinue(DefaultAnimations.IDLE);
+            }
 
-        controllers.add(DefaultAnimations.genericWalkIdleController(this));
+            if (!(state.getData(DataTickets.ENTITY) instanceof AbstractClientPlayerEntity player))
+                return PlayState.STOP;
+            if (player.isSneaking())
+                return state.setAndContinue(SNEAK);
+            if (player.isSprinting())
+                return state.setAndContinue(DefaultAnimations.RUN);
+            if (state.isMoving())
+                return state.setAndContinue(DefaultAnimations.WALK);
+
+            return state.setAndContinue(DefaultAnimations.IDLE);
+        }));
     }
 
     @Override
