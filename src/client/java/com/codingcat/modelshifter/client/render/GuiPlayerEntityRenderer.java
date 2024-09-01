@@ -19,7 +19,7 @@ public class GuiPlayerEntityRenderer extends GeoObjectRenderer<ReplacedPlayerEnt
 
     public GuiPlayerEntityRenderer(Identifier modelIdentifier, boolean alwaysWalk) {
         super(new GuiPlayerModel(modelIdentifier));
-        this.replacedPlayerEntity = new ReplacedPlayerEntity(alwaysWalk);
+        this.replacedPlayerEntity = new ReplacedPlayerEntity(true, alwaysWalk);
         this.renderColor = Color.WHITE;
     }
 

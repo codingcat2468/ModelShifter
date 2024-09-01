@@ -6,14 +6,13 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
-import net.minecraft.client.gui.screen.option.SkinOptionsScreen;
 import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.*;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
+import net.minecraft.client.gui.widget.TextIconButtonWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.Difficulty;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Mixin(OptionsScreen.class)
 public abstract class OptionsScreenMixin extends Screen {
@@ -34,16 +32,8 @@ public abstract class OptionsScreenMixin extends Screen {
     private GameOptions settings;
 
     @Shadow
-    protected abstract ButtonWidget createButton(Text message, Supplier<Screen> screenSupplier);
-
-    @Shadow
     @Final
     private static Text SKIN_CUSTOMIZATION_TEXT;
-    @Shadow
-    @Final
-    private ThreePartsLayoutWidget layout;
-    @Shadow
-    private @Nullable CyclingButtonWidget<Difficulty> difficultyButton;
     @Unique
     private static final Text MODEL_SHIFTER_BTN = Text.translatable("modelshifter.button.open_screen");
     @Unique

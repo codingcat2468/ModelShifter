@@ -12,9 +12,16 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class ReplacedPlayerEntity implements GeoReplacedEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final boolean alwaysWalk;
+    private final boolean isUI;
 
-    public ReplacedPlayerEntity(boolean alwaysWalk) {
+    public ReplacedPlayerEntity(boolean isUI, boolean alwaysWalk) {
         this.alwaysWalk = alwaysWalk;
+        this.isUI = isUI;
+    }
+
+    @Override
+    public boolean shouldPlayAnimsWhileGamePaused() {
+        return this.isUI;
     }
 
     @Override
@@ -23,6 +30,7 @@ public class ReplacedPlayerEntity implements GeoReplacedEntity {
             controllers.add(new AnimationController<GeoAnimatable>(this, "walk", state -> state.setAndContinue(DefaultAnimations.WALK)));
             return;
         }
+
 
         controllers.add(DefaultAnimations.genericWalkIdleController(this));
     }
