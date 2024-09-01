@@ -7,7 +7,7 @@
   "authors": [],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/modelshifter/icon.png",
+  "icon": "assets/modelshifter/textures/mod/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
