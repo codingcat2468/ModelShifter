@@ -14,14 +14,13 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class ReplacedPlayerEntity implements GeoReplacedEntity {
     public static final RawAnimation SNEAK = RawAnimation.begin().thenPlayAndHold("move.sneak");
-    private final AnimatableInstanceCache cache;
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final boolean alwaysWalk;
     private final boolean isUI;
 
     public ReplacedPlayerEntity(boolean isUI, boolean alwaysWalk) {
         this.alwaysWalk = alwaysWalk;
         this.isUI = isUI;
-        this.cache = GeckoLibUtil.createInstanceCache(this);
     }
 
     @Override

@@ -59,6 +59,14 @@ public abstract class OptionsScreenMixin extends Screen {
         this.addDrawableChild(BUTTON);
     }
 
+    @Inject(
+            at = @At(value = "RETURN"),
+            method = "initTabNavigation"
+    )
+    public void injectButton(CallbackInfo ci) {
+        setButtonPos();
+    }
+
     @Override
     public void resize(MinecraftClient client, int width, int height) {
         super.resize(client, width, height);
