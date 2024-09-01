@@ -3,9 +3,14 @@
   "id": "modelshifter",
   "version": "${version}",
   "name": "ModelShifter",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "description": "ModelShifter allows you to change all players into a custom model completely client-side, only visible to you!",
+  "authors": ["codingcat","bug_finder","EgertSUS"],
+  "contact": {
+    "homepage": "https://modrinth.com/project/model-shifter",
+    "discord": "https://discord.membercat.com",
+    "sources": "https://github.com/codingcat2468/ModelShifter",
+    "issues": "https://github.com/codingcat2468/ModelShifter/issues"
+  },
   "license": "MIT",
   "icon": "assets/modelshifter/textures/mod/icon.png",
   "environment": "client",
