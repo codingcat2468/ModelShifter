@@ -109,7 +109,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         matrices.push();
         matrices.translate(getX() + (getWidth() / 2f), getY() + (getHeight() / 1.3f), 50);
         Quaternionf quaternionf = new Quaternionf().rotateZ((float) Math.PI);
-        Quaternionf quaternionf2 = new Quaternionf().rotateY((float) (Math.PI * ((double) System.currentTimeMillis() / 2600f) % 360f));
+        Quaternionf quaternionf2 = new Quaternionf().rotateY((float) (Math.PI * ((double) System.currentTimeMillis() / 3500f) % 360f));
         quaternionf.mul(quaternionf2);
         matrices.multiply(quaternionf);
         float size = getHeight() / 2.5f;
