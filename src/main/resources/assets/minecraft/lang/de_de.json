@@ -5,6 +5,7 @@
   "modelshifter.model.chest": "Truhe",
   "modelshifter.model.ghast": "Ghast",
   "modelshifter.model.armadillo": "Gürteltier",
+  "modelshifter.model.enderman": "Enderman",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.disable": "Modell Deaktivieren",

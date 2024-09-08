@@ -5,6 +5,7 @@
   "modelshifter.model.chest": "Chest",
   "modelshifter.model.ghast": "Ghast",
   "modelshifter.model.armadillo": "Armadillo",
+  "modelshifter.model.enderman": "Enderman",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.disable": "Disable Model",

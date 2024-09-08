@@ -19,6 +19,7 @@ public class Models {
         register("chest", new ChestPlayerModel());
         register("ghast", new GhastPlayerModel());
         register("armadillo", new ArmadilloPlayerModel());
+        register("enderman", new EndermanPlayerModel());
     }
 
     private static void register(String id, PlayerModel playerModel) {
