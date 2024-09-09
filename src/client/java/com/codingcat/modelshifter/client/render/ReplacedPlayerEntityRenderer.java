@@ -12,10 +12,16 @@ import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 
 public class ReplacedPlayerEntityRenderer extends GeoReplacedEntityRenderer<AbstractClientPlayerEntity, ReplacedPlayerEntity> {
+    private final Identifier modelIdentifier;
     public ReplacedPlayerEntityRenderer(EntityRendererFactory.Context renderManager, Identifier modelIdentifier) {
         super(renderManager,
                 new DefaultedEntityGeoModel<ReplacedPlayerEntity>(modelIdentifier).withAltTexture(ModelShifterClient.EMPTY_TEXTURE),
                 new ReplacedPlayerEntity(null, false));
+        this.modelIdentifier = modelIdentifier;
+    }
+
+    public Identifier getModelIdentifier() {
+        return this.modelIdentifier;
     }
 
     public void render(AbstractClientPlayerEntity clientPlayer, Identifier skin, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {

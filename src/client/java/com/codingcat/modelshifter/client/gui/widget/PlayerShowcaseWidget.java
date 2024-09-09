@@ -4,6 +4,7 @@ import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.render.GuiPlayerEntityRenderer;
+import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -23,9 +24,11 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class PlayerShowcaseWidget extends TextWidget {
@@ -33,18 +36,26 @@ public class PlayerShowcaseWidget extends TextWidget {
     @Nullable
     private GuiPlayerEntityRenderer renderer;
     private final Identifier skinTexture;
+    @NotNull
+    private final UUID uuid;
     private final PlayerEntityModel<?> playerEntityModel;
 
-    public PlayerShowcaseWidget(int x, int y, int width, int height) {
+    public PlayerShowcaseWidget(@NotNull UUID player, int x, int y, int width, int height) {
         super(x, y, width, height, Text.empty(), MinecraftClient.getInstance().textRenderer);
         MinecraftClient client = MinecraftClient.getInstance();
-        this.skinTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).texture();
+        GameProfile profile = new GameProfile(player, "test");
+        this.skinTexture = client.getSkinProvider().getSkinTextures(profile).texture();
         this.playerEntityModel = createModel();
+        this.uuid = player;
         this.update();
     }
 
+    private PlayerModel getPlayerModel() {
+        return ModelShifterClient.state.getState(uuid).getPlayerModel();
+    }
+
     private Text getModelName() {
-        PlayerModel model = ModelShifterClient.state.getPlayerModel();
+        PlayerModel model = getPlayerModel();
         if (model == null)
             return Text.translatable("modelshifter.state.no_custom_model");
 
@@ -53,8 +64,8 @@ public class PlayerShowcaseWidget extends TextWidget {
     }
 
     public void update() {
-        PlayerModel model = ModelShifterClient.state.getPlayerModel();
-        if (model == null || !ModelShifterClient.state.isRendererEnabled()) return;
+        PlayerModel model = getPlayerModel();
+        if (model == null || !ModelShifterClient.state.isRendererEnabled(uuid)) return;
 
         this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getShowcaseAnimation());
     }
@@ -84,8 +95,8 @@ public class PlayerShowcaseWidget extends TextWidget {
                 getX() + getWidth() - (getWidth() / 4f),
                 getY() + getHeight() - (getHeight() / 3f),
                 2f);
-        boolean active = ModelShifterClient.state.isRendererEnabled();
-        PlayerModel model = ModelShifterClient.state.getPlayerModel();
+        boolean active = ModelShifterClient.state.isRendererEnabled(uuid);
+        PlayerModel model = getPlayerModel();
         String creators = (active && model != null) ? String.join(", ", model.getCreators()) : "";
         this.renderScaledText(context,
                 Text.translatable(active ? "modelshifter.text.made_by" : "modelshifter.text.no_model_active", creators),
@@ -114,8 +125,8 @@ public class PlayerShowcaseWidget extends TextWidget {
         quaternionf.mul(quaternionf2);
         matrices.multiply(quaternionf);
         float size = getHeight() / 4f;
-        if (ModelShifterClient.state.isRendererEnabled() && renderer != null) {
-            PlayerModel model = ModelShifterClient.state.getPlayerModel();
+        if (ModelShifterClient.state.isRendererEnabled(uuid) && renderer != null) {
+            PlayerModel model = getPlayerModel();
             assert model != null;
             Consumer<MatrixStack> tweakFunction = model.getGuiRenderInfo().getShowcaseRenderTweakFunction();
             matrices.scale(size, size, -size);
@@ -123,7 +134,7 @@ public class PlayerShowcaseWidget extends TextWidget {
                 tweakFunction.accept(matrices);
             renderer.setRenderColor(255, 255, 255, 255);
             renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
-        } else if (!ModelShifterClient.state.isRendererEnabled() && playerEntityModel != null) {
+        } else if (!ModelShifterClient.state.isRendererEnabled(uuid) && playerEntityModel != null) {
             size /= 1.2f;
             matrices.scale(size, size, -size);
             matrices.translate(0, 1.4f, 0);

@@ -1,7 +1,9 @@
 package com.codingcat.modelshifter.client.mixin.renderer;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererHolder;
+import com.codingcat.modelshifter.client.render.ReplacedPlayerEntityRenderer;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -43,7 +45,7 @@ public abstract class PlayerEntityRendererMixin
             method = "getPositionOffset(Lnet/minecraft/client/network/AbstractClientPlayerEntity;F)Lnet/minecraft/util/math/Vec3d;",
             cancellable = true)
     public void injectSetModelPose(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, CallbackInfoReturnable<Vec3d> cir) {
-        if (!ModelShifterClient.state.isRendererEnabled()) return;
+        if (!ModelShifterClient.state.isRendererEnabled(abstractClientPlayerEntity)) return;
 
         cir.setReturnValue(super.getPositionOffset(abstractClientPlayerEntity, f));
         cir.cancel();
@@ -53,7 +55,7 @@ public abstract class PlayerEntityRendererMixin
             method = "setModelPose",
             cancellable = true)
     public void injectSetModelPose(AbstractClientPlayerEntity player, CallbackInfo ci) {
-        if (!ModelShifterClient.state.isRendererEnabled()) return;
+        if (!ModelShifterClient.state.isRendererEnabled(player)) return;
 
         this.getModel().setVisible(false);
         if (player.isSpectator())
@@ -80,7 +82,7 @@ public abstract class PlayerEntityRendererMixin
             method = "setupTransforms(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/util/math/MatrixStack;FFFF)V",
             cancellable = true)
     public void injectSetupTransforms(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h, float i, CallbackInfo ci) {
-        if (!ModelShifterClient.state.isRendererEnabled()) return;
+        if (!ModelShifterClient.state.isRendererEnabled(abstractClientPlayerEntity)) return;
 
         super.setupTransforms(abstractClientPlayerEntity, matrixStack, f, g, h, i);
         ci.cancel();
@@ -89,10 +91,12 @@ public abstract class PlayerEntityRendererMixin
     @Inject(at = @At("HEAD"),
             method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
     public void render(AbstractClientPlayerEntity clientPlayer, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
-        if (!ModelShifterClient.state.isRendererEnabled()
+        if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)
                 || clientPlayer.isSpectator()) return;
 
-        if (ModelShifterClient.holder.getRenderer() != null)
-            ModelShifterClient.holder.getRenderer().render(clientPlayer, getTexture(clientPlayer), g, g, matrixStack, vertexConsumerProvider, i);
+        PlayerModel playerModel = ModelShifterClient.state.getState(clientPlayer.getUuid()).getPlayerModel();
+        ReplacedPlayerEntityRenderer renderer = ModelShifterClient.holder.getRenderer(playerModel);
+        if (renderer != null)
+            renderer.render(clientPlayer, getTexture(clientPlayer), g, g, matrixStack, vertexConsumerProvider, i);
     }
 }

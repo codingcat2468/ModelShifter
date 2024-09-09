@@ -35,7 +35,7 @@ public class AdditionalRendererState {
         this.playerModel = playerModel;
     }
 
-    public void setState(boolean rendererEnabled, PlayerModel model) {
+    public void setState(boolean rendererEnabled, @Nullable PlayerModel model) {
         setRendererEnabled(rendererEnabled);
         setPlayerModel(model);
     }

@@ -11,6 +11,7 @@
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
+  "modelshifter.screen.model_selection.title_player": "Wähle ein Spieler-Modell für %s aus",
   "modelshifter.state.no_custom_model": "Spieler",
   "modelshifter.text.made_by": "Modell erstellt von %s",
   "modelshifter.text.no_model_active": "Kein Modell aktiv"

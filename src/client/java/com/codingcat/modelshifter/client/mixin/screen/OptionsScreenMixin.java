@@ -37,7 +37,7 @@ public abstract class OptionsScreenMixin extends Screen {
 
     @Unique
     private final ModelShifterButtonWidget BUTTON = new ModelShifterButtonWidget(0, 0, button ->
-            Objects.requireNonNull(client).setScreen(new ModelSelectionScreen(this, this.settings)));
+            Objects.requireNonNull(client).setScreen(new ModelSelectionScreen(null, null, this, this.settings)));
 
     @Inject(
             at = @At(value = "RETURN"),

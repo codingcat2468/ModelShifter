@@ -3,8 +3,10 @@ package com.codingcat.modelshifter.client.gui.screen;
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
+import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
 import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.PlayerShowcaseWidget;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,16 +19,26 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ModelSelectionScreen extends GameOptionsScreen {
     private static final Text TITLE = Text.translatable("modelshifter.screen.model_selection.title");
+    private static final Function<String, Text> TITLE_PLAYER = name -> Text.translatable("modelshifter.screen.model_selection.title_player", name);
 
     //? <1.21 {
     /*private OptionListWidget listWidget;    *///?}
     private PlayerShowcaseWidget previewWidget;
+    @Nullable
+    private final UUID targetPlayer;
+    @Nullable
+    private final String playerName;
 
-    public ModelSelectionScreen(Screen parent, GameOptions gameOptions) {
-        super(parent, gameOptions, TITLE);
+    public ModelSelectionScreen(@Nullable UUID targetPlayer, @Nullable String playerName, Screen parent, GameOptions gameOptions) {
+        super(parent, gameOptions, targetPlayer != null ? TITLE_PLAYER.apply(playerName) : TITLE);
+        this.targetPlayer = targetPlayer;
+        this.playerName = playerName;
     }
 
     @Override
@@ -55,6 +67,19 @@ public class ModelSelectionScreen extends GameOptionsScreen {
         }
     }
 
+    private AdditionalRendererState obtainState() {
+        return this.targetPlayer != null ? ModelShifterClient.state.getState(this.targetPlayer) : ModelShifterClient.state.getGlobalState();
+    }
+
+    private void setState(boolean rendererEnabled, @Nullable PlayerModel model) {
+        if (this.targetPlayer != null)
+            ModelShifterClient.state.setPlayerState(this.targetPlayer, rendererEnabled, model);
+        else
+            ModelShifterClient.state.setGlobalState(rendererEnabled, model);
+
+        ModelShifterClient.holder.applyState();
+    }
+
     //? >=1.21 {
     @Override
     protected void addOptions() {
@@ -62,7 +87,9 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     //?}
 
     private PlayerShowcaseWidget addPlayerPreview() {
+        UUID player = MinecraftClient.getInstance().getGameProfile().getId();
         PlayerShowcaseWidget previewWidget = new PlayerShowcaseWidget(
+                targetPlayer != null ? targetPlayer : player,
                 width / 2, 0,
                 width / 2, height);
 
@@ -77,8 +104,8 @@ public class ModelSelectionScreen extends GameOptionsScreen {
                 model != null ? ModelPreviewButtonWidget.Type.NORMAL : ModelPreviewButtonWidget.Type.DISABLE_BUTTON,
                 model,
                 this::onButtonSelect);
-        if ((model != null && ModelShifterClient.state.isRendererEnabled() && Objects.requireNonNull(ModelShifterClient.state.getPlayerModel()).equals(model))
-                || (model == null && !ModelShifterClient.state.isRendererEnabled()))
+        if ((model != null && obtainState().isRendererEnabled() && Objects.requireNonNull(obtainState().getPlayerModel()).equals(model))
+                || (model == null && !obtainState().isRendererEnabled()))
             buttonWidget.setSelected(true);
         this.addDrawableChild(buttonWidget);
     }
@@ -88,8 +115,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
         unselectAll();
         buttonWidget.setSelected(true);
-        ModelShifterClient.state.setState(buttonWidget.getModel() != null, buttonWidget.getModel());
-        ModelShifterClient.holder.applyState();
+        setState(buttonWidget.getModel() != null, buttonWidget.getModel());
         previewWidget.update();
     }
 
@@ -109,7 +135,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
         this.init();
         *///?} else {
         if (this.client != null)
-            this.client.setScreen(new ModelSelectionScreen(parent, gameOptions));
+            this.client.setScreen(new ModelSelectionScreen(targetPlayer, playerName, parent, gameOptions));
         //?}
     }
 
