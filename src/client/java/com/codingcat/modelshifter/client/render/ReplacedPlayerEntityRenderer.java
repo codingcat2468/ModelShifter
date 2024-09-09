@@ -12,7 +12,7 @@ import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 
 public class ReplacedPlayerEntityRenderer extends GeoReplacedEntityRenderer<AbstractClientPlayerEntity, ReplacedPlayerEntity> {
     public ReplacedPlayerEntityRenderer(EntityRendererFactory.Context renderManager, Identifier modelIdentifier) {
-        super(renderManager, new DefaultedEntityGeoModel<>(modelIdentifier), new ReplacedPlayerEntity(false, false));
+        super(renderManager, new DefaultedEntityGeoModel<>(modelIdentifier), new ReplacedPlayerEntity(null, false));
     }
 
     public void render(AbstractClientPlayerEntity clientPlayer, Identifier skin, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {

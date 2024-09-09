@@ -3,6 +3,7 @@ package com.codingcat.modelshifter.client.impl.model;
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
+import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -20,7 +21,12 @@ public class GhastPlayerModel extends PlayerModel {
                 true,
                 true,
                 true
-        ));
+        ), new GuiRenderInfo()
+                .setButtonRenderTweakFunction(GhastPlayerModel::modifyGuiButtonRendering));
+    }
+
+    private static void modifyGuiButtonRendering(MatrixStack matrixStack) {
+        matrixStack.translate(0f,-0.16f,0f);
     }
 
     @Override

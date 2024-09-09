@@ -3,6 +3,7 @@ package com.codingcat.modelshifter.client.impl.model;
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
+import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -21,7 +22,7 @@ public class CatPlayerModel extends PlayerModel {
                 true,
                 false,
                 true
-        ));
+        ), new GuiRenderInfo());
     }
 
     @Override

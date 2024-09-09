@@ -2,6 +2,7 @@ package com.codingcat.modelshifter.client.render.entity;
 
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.EntityType;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoReplacedEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -15,28 +16,24 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class ReplacedPlayerEntity implements GeoReplacedEntity {
     public static final RawAnimation SNEAK = RawAnimation.begin().thenPlayAndHold("move.sneak");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private final boolean alwaysWalk;
-    private final boolean isUI;
+    private final RawAnimation overrideAnimation;
+    private final boolean ignorePausedGame;
 
-    public ReplacedPlayerEntity(boolean isUI, boolean alwaysWalk) {
-        this.alwaysWalk = alwaysWalk;
-        this.isUI = isUI;
+    public ReplacedPlayerEntity(@Nullable RawAnimation overrideAnimation, boolean ignorePausedGame) {
+        this.overrideAnimation = overrideAnimation;
+        this.ignorePausedGame = ignorePausedGame;
     }
 
     @Override
     public boolean shouldPlayAnimsWhileGamePaused() {
-        return this.isUI;
+        return this.ignorePausedGame;
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<GeoReplacedEntity>(this, 2, state -> {
-            if (isUI) {
-                if (alwaysWalk)
-                    return state.setAndContinue(DefaultAnimations.RUN);
-
-                return state.setAndContinue(DefaultAnimations.IDLE);
-            }
+            if (this.overrideAnimation != null)
+                return state.setAndContinue(this.overrideAnimation);
 
             if (!(state.getData(DataTickets.ENTITY) instanceof AbstractClientPlayerEntity player))
                 return PlayState.STOP;

@@ -3,6 +3,7 @@ package com.codingcat.modelshifter.client.impl.model;
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
+import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -20,7 +21,17 @@ public class FlatPlayerModel extends PlayerModel {
                 false,
                 false,
                 true
-        ));
+        ), new GuiRenderInfo()
+                .setButtonRenderTweakFunction(FlatPlayerModel::modifyGuiButtonRendering)
+                .setShowcaseRenderTweakFunction(FlatPlayerModel::modifyGuiShowcaseRendering));
+    }
+
+    private static void modifyGuiButtonRendering(MatrixStack matrixStack) {
+        matrixStack.scale(0.8f, 0.8f, 0.8f);
+    }
+
+    private static void modifyGuiShowcaseRendering(MatrixStack matrixStack) {
+        matrixStack.scale(0.9f, 0.9f, 0.9f);
     }
 
     @Override
@@ -28,5 +39,6 @@ public class FlatPlayerModel extends PlayerModel {
     }
 
     @Override
-    public void modifyElytraRendering(LivingEntity entity, MatrixStack matrixStack) {}
+    public void modifyElytraRendering(LivingEntity entity, MatrixStack matrixStack) {
+    }
 }
