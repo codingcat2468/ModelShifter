@@ -20,6 +20,7 @@ public class Models {
         register("ghast", new GhastPlayerModel());
         register("armadillo", new ArmadilloPlayerModel());
         register("enderman", new EndermanPlayerModel());
+        register("flat_player", new FlatPlayerModel());
     }
 
     private static void register(String id, PlayerModel playerModel) {

@@ -6,6 +6,7 @@
   "modelshifter.model.ghast": "Ghast",
   "modelshifter.model.armadillo": "Gürteltier",
   "modelshifter.model.enderman": "Enderman",
+  "modelshifter.model.flat_player": "2D-Spieler",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.disable": "Modell Deaktivieren",
