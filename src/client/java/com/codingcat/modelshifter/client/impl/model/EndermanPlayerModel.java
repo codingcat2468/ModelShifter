@@ -36,9 +36,15 @@ public class EndermanPlayerModel extends PlayerModel {
 
     @Override
     public void modifyHeldItemRendering(LivingEntity entity, MatrixStack matrixStack) {
+        matrixStack.translate(0.35f, 0f, 1f);
+        if (entity.isInSneakingPose())
+            matrixStack.translate(0f, 0f, -0.7f);
     }
 
     @Override
     public void modifyElytraRendering(LivingEntity entity, MatrixStack matrixStack) {
+        matrixStack.translate(0f,-1.2f,-0.1f);
+        if (entity.isInSneakingPose())
+            matrixStack.translate(0f,0.5f,0f);
     }
 }

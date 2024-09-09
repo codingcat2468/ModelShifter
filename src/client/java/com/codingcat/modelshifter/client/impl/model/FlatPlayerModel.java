@@ -36,9 +36,13 @@ public class FlatPlayerModel extends PlayerModel {
 
     @Override
     public void modifyHeldItemRendering(LivingEntity entity, MatrixStack matrixStack) {
+        matrixStack.translate(0.35f,0f,0.05f);
+        if (entity.isInSneakingPose())
+            matrixStack.translate(0.05f,-0.2f,-0.3f);
     }
 
     @Override
     public void modifyElytraRendering(LivingEntity entity, MatrixStack matrixStack) {
+        matrixStack.translate(0f,0f,0f);
     }
 }

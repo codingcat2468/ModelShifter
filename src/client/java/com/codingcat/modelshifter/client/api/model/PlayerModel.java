@@ -17,7 +17,7 @@ public abstract class PlayerModel {
     @NotNull
     private final GuiRenderInfo guiRenderInfo;
 
-    public PlayerModel(Identifier identifier, Set<String> creators, DisabledFeatureRenderers disabledFeatureRenderers, GuiRenderInfo guiRenderInfo) {
+    public PlayerModel(Identifier identifier, Set<String> creators, DisabledFeatureRenderers disabledFeatureRenderers, @NotNull GuiRenderInfo guiRenderInfo) {
         this.identifier = identifier;
         this.creators = creators;
         this.disabledFeatureRenderers = disabledFeatureRenderers;
