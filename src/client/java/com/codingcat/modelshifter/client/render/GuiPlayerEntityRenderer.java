@@ -7,8 +7,10 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoObjectRenderer;
 import software.bernie.geckolib.util.Color;
@@ -17,9 +19,9 @@ public class GuiPlayerEntityRenderer extends GeoObjectRenderer<ReplacedPlayerEnt
     private final ReplacedPlayerEntity replacedPlayerEntity;
     private Color renderColor;
 
-    public GuiPlayerEntityRenderer(Identifier modelIdentifier, boolean alwaysWalk) {
+    public GuiPlayerEntityRenderer(Identifier modelIdentifier, @NotNull RawAnimation animation) {
         super(new GuiPlayerModel(modelIdentifier));
-        this.replacedPlayerEntity = new ReplacedPlayerEntity(true, alwaysWalk);
+        this.replacedPlayerEntity = new ReplacedPlayerEntity(animation, true);
         this.renderColor = Color.WHITE;
     }
 

@@ -4,12 +4,11 @@ import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
-import com.codingcat.modelshifter.client.gui.widget.PlayerPreviewWidget;
+import com.codingcat.modelshifter.client.gui.widget.PlayerShowcaseWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -23,7 +22,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
     //? <1.21 {
     /*private OptionListWidget listWidget;    *///?}
-    private PlayerPreviewWidget previewWidget;
+    private PlayerShowcaseWidget previewWidget;
 
     public ModelSelectionScreen(Screen parent, GameOptions gameOptions) {
         super(parent, gameOptions, TITLE);
@@ -61,8 +60,8 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     }
     //?}
 
-    private PlayerPreviewWidget addPlayerPreview() {
-        PlayerPreviewWidget previewWidget = new PlayerPreviewWidget(
+    private PlayerShowcaseWidget addPlayerPreview() {
+        PlayerShowcaseWidget previewWidget = new PlayerShowcaseWidget(
                 width / 2, 0,
                 width / 2, height);
 

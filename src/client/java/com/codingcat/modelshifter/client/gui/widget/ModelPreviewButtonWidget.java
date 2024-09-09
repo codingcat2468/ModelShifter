@@ -39,7 +39,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         this.type = type;
         this.model = model;
         if (model != null)
-            this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), true);
+            this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getButtonAnimation());
         MinecraftClient client = MinecraftClient.getInstance();
         this.skinTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).texture();
         this.onPressConsumer = onPress;
@@ -102,7 +102,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     }
 
     private void renderModel(DrawContext context) {
-        if (renderer == null) return;
+        if (model == null || renderer == null) return;
 
         MatrixStack matrices = context.getMatrices();
         context.enableScissor(getX() + 2, getY() + 2, (getX() + getWidth()) - 2, (getY() + getHeight()) - 2);
@@ -115,6 +115,9 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         float size = getHeight() / 2.5f;
         matrices.scale(size, size, -size);
         int color = this.selected ? 255 : 175;
+        Consumer<MatrixStack> tweakFunction = model.getGuiRenderInfo().getButtonRenderTweakFunction();
+        if (tweakFunction != null)
+            tweakFunction.accept(matrices);
         renderer.setRenderColor(color, color, color, color);
         renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
         context.draw();

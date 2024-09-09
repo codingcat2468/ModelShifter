@@ -26,14 +26,16 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
-public class PlayerPreviewWidget extends TextWidget {
+import java.util.function.Consumer;
+
+public class PlayerShowcaseWidget extends TextWidget {
     private static final Identifier BACKGROUND = Identifier.of(ModelShifterClient.MOD_ID, "widget/preview_background");
     @Nullable
     private GuiPlayerEntityRenderer renderer;
     private final Identifier skinTexture;
     private final PlayerEntityModel<?> playerEntityModel;
 
-    public PlayerPreviewWidget(int x, int y, int width, int height) {
+    public PlayerShowcaseWidget(int x, int y, int width, int height) {
         super(x, y, width, height, Text.empty(), MinecraftClient.getInstance().textRenderer);
         MinecraftClient client = MinecraftClient.getInstance();
         this.skinTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).texture();
@@ -54,7 +56,7 @@ public class PlayerPreviewWidget extends TextWidget {
         PlayerModel model = ModelShifterClient.state.getPlayerModel();
         if (model == null || !ModelShifterClient.state.isRendererEnabled()) return;
 
-        this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), false);
+        this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getShowcaseAnimation());
     }
 
     @Override
@@ -113,7 +115,12 @@ public class PlayerPreviewWidget extends TextWidget {
         matrices.multiply(quaternionf);
         float size = getHeight() / 4f;
         if (ModelShifterClient.state.isRendererEnabled() && renderer != null) {
+            PlayerModel model = ModelShifterClient.state.getPlayerModel();
+            assert model != null;
+            Consumer<MatrixStack> tweakFunction = model.getGuiRenderInfo().getShowcaseRenderTweakFunction();
             matrices.scale(size, size, -size);
+            if (tweakFunction != null)
+                tweakFunction.accept(matrices);
             renderer.setRenderColor(255, 255, 255, 255);
             renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
         } else if (!ModelShifterClient.state.isRendererEnabled() && playerEntityModel != null) {
