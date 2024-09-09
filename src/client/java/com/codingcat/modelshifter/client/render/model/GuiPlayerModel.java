@@ -1,5 +1,6 @@
 package com.codingcat.modelshifter.client.render.model;
 
+import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.render.entity.ReplacedPlayerEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.animation.AnimationState;
@@ -10,6 +11,7 @@ import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 public class GuiPlayerModel extends DefaultedEntityGeoModel<ReplacedPlayerEntity> {
     public GuiPlayerModel(Identifier assetSubpath) {
         super(assetSubpath);
+        this.withAltTexture(ModelShifterClient.EMPTY_TEXTURE);
     }
 
     //? <1.21 {

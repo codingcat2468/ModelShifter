@@ -14,6 +14,7 @@ import java.util.Optional;
 
 public class ModelShifterClient implements ClientModInitializer {
     public static final String MOD_ID = "modelshifter";
+    public static final Identifier EMPTY_TEXTURE = Identifier.of(MOD_ID, "empty");
     public static AdditionalRendererState state;
     public static AdditionalRendererHolder holder;
 

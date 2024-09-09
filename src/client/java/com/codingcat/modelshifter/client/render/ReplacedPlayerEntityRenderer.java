@@ -1,5 +1,6 @@
 package com.codingcat.modelshifter.client.render;
 
+import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.render.entity.ReplacedPlayerEntity;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -12,7 +13,9 @@ import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 
 public class ReplacedPlayerEntityRenderer extends GeoReplacedEntityRenderer<AbstractClientPlayerEntity, ReplacedPlayerEntity> {
     public ReplacedPlayerEntityRenderer(EntityRendererFactory.Context renderManager, Identifier modelIdentifier) {
-        super(renderManager, new DefaultedEntityGeoModel<>(modelIdentifier), new ReplacedPlayerEntity(null, false));
+        super(renderManager,
+                new DefaultedEntityGeoModel<ReplacedPlayerEntity>(modelIdentifier).withAltTexture(ModelShifterClient.EMPTY_TEXTURE),
+                new ReplacedPlayerEntity(null, false));
     }
 
     public void render(AbstractClientPlayerEntity clientPlayer, Identifier skin, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
