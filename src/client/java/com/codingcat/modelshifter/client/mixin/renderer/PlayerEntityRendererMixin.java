@@ -2,7 +2,7 @@ package com.codingcat.modelshifter.client.mixin.renderer;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
-import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererHolder;
+import com.codingcat.modelshifter.client.api.renderer.DynamicAdditionalRendererHolder;
 import com.codingcat.modelshifter.client.render.ReplacedPlayerEntityRenderer;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -37,7 +37,7 @@ public abstract class PlayerEntityRendererMixin
 
     @Inject(at = @At("RETURN"), method = "<init>")
     public void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
-        ModelShifterClient.holder = new AdditionalRendererHolder(ctx, ModelShifterClient.state);
+        ModelShifterClient.holder = new DynamicAdditionalRendererHolder(ctx, ModelShifterClient.state);
         ModelShifterClient.holder.applyState();
     }
 

@@ -1,6 +1,6 @@
 package com.codingcat.modelshifter.client.api.model;
 
-import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
+import com.codingcat.modelshifter.client.api.renderer.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -13,14 +13,14 @@ import java.util.Set;
 public abstract class PlayerModel {
     private final Identifier identifier;
     private final Set<String> creators;
-    private final DisabledFeatureRenderers disabledFeatureRenderers;
+    private final FeatureRendererStates featureRendererStates;
     @NotNull
     private final GuiRenderInfo guiRenderInfo;
 
-    public PlayerModel(Identifier identifier, Set<String> creators, DisabledFeatureRenderers disabledFeatureRenderers, @NotNull GuiRenderInfo guiRenderInfo) {
+    public PlayerModel(Identifier identifier, Set<String> creators, FeatureRendererStates featureRendererStates, @NotNull GuiRenderInfo guiRenderInfo) {
         this.identifier = identifier;
         this.creators = creators;
-        this.disabledFeatureRenderers = disabledFeatureRenderers;
+        this.featureRendererStates = featureRendererStates;
         this.guiRenderInfo = guiRenderInfo;
     }
 
@@ -41,8 +41,8 @@ public abstract class PlayerModel {
         return this.guiRenderInfo;
     }
 
-    public @NotNull DisabledFeatureRenderers getDisabledFeatureRenderers() {
-        return this.disabledFeatureRenderers;
+    public @NotNull FeatureRendererStates getDisabledFeatureRenderers() {
+        return this.featureRendererStates;
     }
 
     @Override

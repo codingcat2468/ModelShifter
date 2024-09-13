@@ -1,6 +1,6 @@
 package com.codingcat.modelshifter.client.api.renderer;
 
-public record DisabledFeatureRenderers(
+public record FeatureRendererStates(
         boolean disableArmor,
         boolean disableElytra,
         boolean disableHeldItem,

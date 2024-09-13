@@ -2,7 +2,7 @@ package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
-import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
+import com.codingcat.modelshifter.client.api.renderer.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class EndermanPlayerModel extends PlayerModel {
     public EndermanPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "enderman_player"), Set.of("bug_finder"), new DisabledFeatureRenderers(
+        super(Identifier.of(ModelShifterClient.MOD_ID, "enderman_player"), Set.of("bug_finder"), new FeatureRendererStates(
                 true,
                 false,
                 false,

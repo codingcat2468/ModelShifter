@@ -26,7 +26,7 @@ public class AdditionalRendererState {
         return playerModel;
     }
 
-    public DisabledFeatureRenderers accessDisabledFeatureRenderers() {
+    public FeatureRendererStates accessFeatureRendererStates() {
         if (getPlayerModel() == null) return null;
         return getPlayerModel().getDisabledFeatureRenderers();
     }

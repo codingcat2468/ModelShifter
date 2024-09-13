@@ -2,8 +2,7 @@ package com.codingcat.modelshifter.client;
 
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
-import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererHolder;
-import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
+import com.codingcat.modelshifter.client.api.renderer.DynamicAdditionalRendererHolder;
 import com.codingcat.modelshifter.client.api.renderer.PlayerDependentStateHolder;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
@@ -17,7 +16,7 @@ public class ModelShifterClient implements ClientModInitializer {
     public static final String MOD_ID = "modelshifter";
     public static final Identifier EMPTY_TEXTURE = Identifier.of(MOD_ID, "empty");
     public static PlayerDependentStateHolder state;
-    public static AdditionalRendererHolder holder;
+    public static DynamicAdditionalRendererHolder holder;
 
     @Override
     public void onInitializeClient() {

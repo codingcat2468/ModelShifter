@@ -1,7 +1,7 @@
 package com.codingcat.modelshifter.client.mixin.renderer;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
-import com.codingcat.modelshifter.client.api.renderer.DisabledFeatureRenderers;
+import com.codingcat.modelshifter.client.api.renderer.FeatureRendererStates;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
@@ -25,7 +25,7 @@ public class PlayerEntityModelMixin<T extends LivingEntity> {
         if (!(livingEntity instanceof AbstractClientPlayerEntity clientPlayer)) return;
         if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)) return;
 
-        DisabledFeatureRenderers renderers = ModelShifterClient.state.accessDisabledFeatureRenderers(clientPlayer);
+        FeatureRendererStates renderers = ModelShifterClient.state.accessDisabledFeatureRenderers(clientPlayer);
         if (!renderers.disableCape())
             this.cloak.visible = true;
         if (!renderers.disableDeadmau5Ears())

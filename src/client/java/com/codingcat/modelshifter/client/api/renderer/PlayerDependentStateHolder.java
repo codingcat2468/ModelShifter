@@ -34,8 +34,8 @@ public class PlayerDependentStateHolder {
         this.stateOverrideMap.remove(uuid);
     }
 
-    public DisabledFeatureRenderers accessDisabledFeatureRenderers(PlayerEntity entity) {
-        return getState(entity.getUuid()).accessDisabledFeatureRenderers();
+    public FeatureRendererStates accessDisabledFeatureRenderers(PlayerEntity entity) {
+        return getState(entity.getUuid()).accessFeatureRendererStates();
     }
 
     public boolean isRendererEnabled(UUID uuid) {

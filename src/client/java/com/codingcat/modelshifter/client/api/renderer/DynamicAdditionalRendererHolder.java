@@ -16,14 +16,14 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class AdditionalRendererHolder {
+public class DynamicAdditionalRendererHolder {
     private final EntityRendererFactory.Context context;
     @NotNull
     private final PlayerDependentStateHolder stateHolder;
     @NotNull
     private final Set<ReplacedPlayerEntityRenderer> additionalRendererSet;
 
-    public AdditionalRendererHolder(EntityRendererFactory.Context context, @NotNull PlayerDependentStateHolder stateHolder) {
+    public DynamicAdditionalRendererHolder(EntityRendererFactory.Context context, @NotNull PlayerDependentStateHolder stateHolder) {
         this.context = context;
         this.stateHolder = stateHolder;
         this.additionalRendererSet = new HashSet<>();
