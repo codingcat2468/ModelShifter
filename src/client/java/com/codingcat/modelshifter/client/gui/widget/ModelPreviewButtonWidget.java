@@ -92,13 +92,12 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     }
 
     private void renderText(DrawContext context) {
-        context.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        drawScrollableText(context,
-                MinecraftClient.getInstance().textRenderer,
+        PlayerShowcaseWidget.renderScaledText(context,
                 getModelName(),
-                getX() + getWidth(),
-                getX(), getY() + getHeight() - 4, getX() + getWidth() - 4, getY() + getHeight() - 10,
-                this.selected ? 0xFFFFFF : 0x8F8F8F);
+                this.selected ? 0xFFFFFF : 0x8F8F8F,
+                getX() + 5,
+                getY() + getHeight() - 11,
+                0.7f, false);
     }
 
     private void renderModel(DrawContext context) {

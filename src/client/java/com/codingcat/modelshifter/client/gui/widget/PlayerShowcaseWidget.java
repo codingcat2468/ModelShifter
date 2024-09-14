@@ -89,29 +89,32 @@ public class PlayerShowcaseWidget extends TextWidget {
     }
 
     private void renderText(DrawContext context) {
-        this.renderScaledText(context,
+        renderScaledText(context,
                 getModelName(),
                 0xFFFFFF,
                 getX() + getWidth() - (getWidth() / 4f),
                 getY() + getHeight() - (getHeight() / 3f),
-                2f);
+                2f, true);
         boolean active = ModelShifterClient.state.isRendererEnabled(uuid);
         PlayerModel model = getPlayerModel();
         String creators = (active && model != null) ? String.join(", ", model.getCreators()) : "";
-        this.renderScaledText(context,
+        renderScaledText(context,
                 Text.translatable(active ? "modelshifter.text.made_by" : "modelshifter.text.no_model_active", creators),
                 0xADADAD,
                 getX() + getWidth() - (getWidth() / 4f),
                 getY() + getHeight() - (getHeight() / 3f) + 24,
-                1f);
+                1f, true);
     }
 
-    private void renderScaledText(DrawContext context, Text text, int color, double x, double y, float scale) {
+    public static void renderScaledText(DrawContext context, Text text, int color, double x, double y, float scale, boolean centered) {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         context.getMatrices().push();
         context.getMatrices().translate(x, y, 0);
         context.getMatrices().scale(scale, scale, scale);
-        context.drawCenteredTextWithShadow(textRenderer, text, 0, 0, color);
+        if (centered)
+            context.drawCenteredTextWithShadow(textRenderer, text, 0, 0, color);
+        else
+            context.drawTextWithShadow(textRenderer, text, 0, 0, color);
         context.getMatrices().pop();
     }
 
