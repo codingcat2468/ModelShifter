@@ -29,6 +29,10 @@ public class PlayerDependentStateHolder {
         this.displayMode = displayMode;
     }
 
+    public @NotNull ModeOption getDisplayMode() {
+        return displayMode;
+    }
+
     public void setGlobalState(boolean rendererEnabled, @Nullable PlayerModel model) {
         this.globalState.setState(rendererEnabled, model);
     }

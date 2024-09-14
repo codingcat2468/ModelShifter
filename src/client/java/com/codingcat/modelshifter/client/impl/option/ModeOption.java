@@ -6,12 +6,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public enum ModeOption {
     ALL("all_players"),
     ONLY_ME("only_self"),
     ONLY_OTHERS("only_other_players");
+
     public static final List<ModeOption> OPTIONS = Arrays.stream(values()).toList();
     private final Text displayName;
     @NotNull
