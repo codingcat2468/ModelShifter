@@ -2,6 +2,7 @@ package com.codingcat.modelshifter.client.impl.config;
 
 import com.codingcat.modelshifter.client.api.config.JsonConfiguration;
 import com.codingcat.modelshifter.client.api.config.JsonConfigurationElement;
+import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.io.FileUtils;
@@ -9,18 +10,23 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Configuration implements JsonConfiguration {
     private final static String FILE_NAME = "modelshifter.json";
 
-    @JsonConfigurationElement(propertyName = "renderer_enabled")
-    private boolean rendererEnabled = false;
-
-    @JsonConfigurationElement(propertyName = "model_identifier")
-    private String modelIdentifier = null;
+    @JsonConfigurationElement(propertyName = "global_state")
+    private AdditionalRendererState globalState = new AdditionalRendererState(false, null);
 
     @JsonConfigurationElement(propertyName = "display_mode")
     private String displayMode = ModeOption.ALL.getId();
+
+    @JsonConfigurationElement(propertyName = "player_overrides")
+    private ArrayList<ConfigPlayerOverride> playerOverrides = new ArrayList<>();
 
     @Override
     public File getConfigFile() throws IOException {
@@ -32,21 +38,21 @@ public class Configuration implements JsonConfiguration {
         return file;
     }
 
-    public boolean isRendererEnabled() {
-        return rendererEnabled;
+    public AdditionalRendererState getGlobalState() {
+        return this.globalState;
     }
 
-    public Configuration setRendererEnabled(boolean rendererEnabled) {
-        this.rendererEnabled = rendererEnabled;
+    public Configuration setGlobalState(AdditionalRendererState globalState) {
+        this.globalState = globalState;
         return this;
     }
 
-    public String getModelIdentifier() {
-        return modelIdentifier;
+    public Set<ConfigPlayerOverride> getPlayerOverrides() {
+        return new HashSet<>(playerOverrides);
     }
 
-    public Configuration setModelIdentifier(String modelIdentifier) {
-        this.modelIdentifier = modelIdentifier;
+    public Configuration setPlayerOverrides(Set<ConfigPlayerOverride> playerOverrides) {
+        this.playerOverrides = new ArrayList<>(playerOverrides);
         return this;
     }
 

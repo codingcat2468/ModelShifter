@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.api.renderer;
 
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
+import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
@@ -8,9 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayerDependentStateHolder {
     @NotNull
@@ -19,10 +19,22 @@ public class PlayerDependentStateHolder {
     private final AdditionalRendererState globalState;
     private final HashMap<UUID, AdditionalRendererState> stateOverrideMap;
 
-    public PlayerDependentStateHolder(boolean globalRendererEnabled, @Nullable PlayerModel globalModel, @NotNull ModeOption displayMode) {
-        this.stateOverrideMap = new HashMap<>();
-        this.globalState = new AdditionalRendererState(globalRendererEnabled, globalModel);
+    public PlayerDependentStateHolder(@NotNull AdditionalRendererState globalState, Set<ConfigPlayerOverride> overrides, @NotNull ModeOption displayMode) {
+        this.stateOverrideMap = new HashMap<>(createFromOverrides(overrides));
+        this.globalState = globalState;
         this.displayMode = displayMode;
+    }
+
+    private Map<UUID, AdditionalRendererState> createFromOverrides(Set<ConfigPlayerOverride> overrides) {
+        return overrides.stream()
+                .collect(Collectors.toMap(ConfigPlayerOverride::player, ConfigPlayerOverride::state));
+    }
+
+    public Set<ConfigPlayerOverride> generateOverrides() {
+        return stateOverrideMap.entrySet()
+                .stream()
+                .map(entry -> new ConfigPlayerOverride(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toSet());
     }
 
     public void setDisplayMode(@NotNull ModeOption displayMode) {

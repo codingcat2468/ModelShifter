@@ -28,13 +28,9 @@ public class ModelShifterClient implements ClientModInitializer {
     private void loadConfig() {
         ConfigurationLoader loader = new ConfigurationLoader();
         Configuration config = loader.load(Configuration.class);
-        Identifier identifier = config.getModelIdentifier() != null ? Identifier.tryParse(config.getModelIdentifier()) : null;
-        Optional<PlayerModel> model = identifier != null ? ModelRegistry.get(identifier) : Optional.empty();
-        ModeOption displayMode = ModeOption.byId(config.getDisplayMode());
-        if (model.isEmpty())
-            config.setRendererEnabled(false);
 
-        state = new PlayerDependentStateHolder(config.isRendererEnabled(), model.orElse(null), displayMode != null ? displayMode : ModeOption.ALL);
+        ModeOption displayMode = ModeOption.byId(config.getDisplayMode());
+        state = new PlayerDependentStateHolder(config.getGlobalState(), config.getPlayerOverrides(), displayMode != null ? displayMode : ModeOption.ALL);
         loader.write(config);
     }
 }

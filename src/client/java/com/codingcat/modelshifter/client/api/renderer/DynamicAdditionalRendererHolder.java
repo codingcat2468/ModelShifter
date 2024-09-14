@@ -53,11 +53,10 @@ public class DynamicAdditionalRendererHolder {
     }
 
     private void writeConfig(AdditionalRendererState globalState) {
-        Optional<Identifier> modelId = globalState.getPlayerModel() != null ? ModelRegistry.findId(globalState.getPlayerModel()) : Optional.empty();
         new ConfigurationLoader().write(new Configuration()
-                .setDisplayMode(stateHolder.getDisplayMode().getId())
-                .setRendererEnabled(globalState.isRendererEnabled())
-                .setModelIdentifier(modelId.map(Identifier::toString).orElse(null)));
+                .setGlobalState(globalState)
+                .setPlayerOverrides(stateHolder.generateOverrides())
+                .setDisplayMode(stateHolder.getDisplayMode().getId()));
     }
 
     public ReplacedPlayerEntityRenderer createRendererInstance(Identifier modelIdentifier) {

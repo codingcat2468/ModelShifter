@@ -2,14 +2,21 @@ package com.codingcat.modelshifter.client.impl.config;
 
 import com.codingcat.modelshifter.client.api.config.JsonConfigurationElement;
 import com.codingcat.modelshifter.client.api.config.JsonConfigurationLoader;
+import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigurationLoader implements JsonConfigurationLoader<Configuration> {
 
@@ -28,12 +35,9 @@ public class ConfigurationLoader implements JsonConfigurationLoader<Configuratio
                 field.setAccessible(true);
                 if (element == null) continue;
 
-                if (field.getType() == int.class)
-                    field.set(config, element.getAsInt());
-                else if (field.getType() == boolean.class)
-                    field.set(config, element.getAsBoolean());
-                else if (field.getType() == String.class)
-                    field.set(config, element.getAsString());
+                Object data = deserialize(field.getType(), field.getGenericType(), element);
+                field.set(config, data);
+                field.setAccessible(false);
             }
 
             return config;
@@ -41,6 +45,66 @@ public class ConfigurationLoader implements JsonConfigurationLoader<Configuratio
                  IOException e) {
             throw new RuntimeException("Failed to load configuration", e);
         }
+    }
+
+    private static JsonElement serialize(Type type, Object data) {
+        Gson gson = new Gson();
+        Object object = null;
+        if (type == ArrayList.class)
+            object = serializeArrayList((ArrayList<?>) data);
+        else if (type == AdditionalRendererState.class)
+            object = ((AdditionalRendererState) data).serialize();
+        else if (type == ConfigPlayerOverride.class)
+            object = ((ConfigPlayerOverride) data).serialize();
+
+        return object != null ? gson.toJsonTree(object) : gson.toJsonTree(data);
+    }
+
+    private static ArrayList<Object> deserializeArrayList(Type listType, JsonArray array) {
+        if (!(listType instanceof ParameterizedType type)) throw new IllegalArgumentException();
+        Type elementType = type.getActualTypeArguments()[0];
+
+        List<Object> list = array.asList()
+                .stream()
+                .map(element -> deserialize(elementType, null, element))
+                .toList();
+        return new ArrayList<>(list);
+    }
+
+    private static JsonArray serializeArrayList(ArrayList<?> arrayList) {
+        JsonArray array = new JsonArray();
+        arrayList.forEach(element -> {
+            if (element == null) return;
+            array.add(serialize(element.getClass(), element));
+        });
+        return array;
+    }
+
+    @Nullable
+    private static Object deserialize(Type type, Type genericType, JsonElement element) {
+        if (type == int.class)
+            return element.getAsInt();
+        else if (type == boolean.class)
+            return element.getAsBoolean();
+        else if (type == String.class)
+            return element.getAsString();
+        else if (type == ArrayList.class) {
+            return deserializeArrayList(genericType, element.getAsJsonArray());
+        } else if (type == AdditionalRendererState.class) {
+            try {
+                return AdditionalRendererState.deserialize(element.getAsJsonObject());
+            } catch (IOException e) {
+                return new AdditionalRendererState(false, null);
+            }
+        } else if (type == ConfigPlayerOverride.class) {
+            try {
+                return ConfigPlayerOverride.deserialize(element.getAsJsonObject());
+            } catch (IOException e) {
+                return new ConfigPlayerOverride(null, null);
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -58,12 +122,7 @@ public class ConfigurationLoader implements JsonConfigurationLoader<Configuratio
                     continue;
                 }
 
-                if (field.getType() == int.class)
-                    object.addProperty(name, field.getInt(instance));
-                else if (field.getType() == boolean.class)
-                    object.addProperty(name, field.getBoolean(instance));
-                else if (field.getType() == String.class)
-                    object.addProperty(name, (String) field.get(instance));
+                object.add(name, serialize(field.getType(), field.get(instance)));
             }
 
             String json = gson.toJson(object, JsonObject.class);
