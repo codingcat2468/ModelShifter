@@ -7,6 +7,7 @@
   "modelshifter.model.armadillo": "Armadillo",
   "modelshifter.model.enderman": "Enderman",
   "modelshifter.model.flat_player": "Flat Player",
+  "modelshifter.model.armor_stand": "Armor Stand",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.disable": "Disable Model",

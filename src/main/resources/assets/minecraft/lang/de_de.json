@@ -7,6 +7,7 @@
   "modelshifter.model.armadillo": "Gürteltier",
   "modelshifter.model.enderman": "Enderman",
   "modelshifter.model.flat_player": "2D-Spieler",
+  "modelshifter.model.armor_stand": "Rüstungsständer",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.disable": "Modell Deaktivieren",
