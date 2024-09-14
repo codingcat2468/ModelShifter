@@ -17,9 +17,9 @@ import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Function;
@@ -59,7 +59,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
         this.addButton(0, 0, null);
         int x = 1;
         int y = 0;
-        for (Map.Entry<Identifier, PlayerModel> model : ModelRegistry.entries()) {
+        for (Pair<Identifier, PlayerModel> model : ModelRegistry.entriesSorted()) {
             this.addButton(x, y, model.getValue());
             x++;
             if ((x * 80) + 24 > width / 1.8) {
