@@ -22,6 +22,7 @@ public class Models {
         register("enderman", new EndermanPlayerModel());
         register("flat_player", new FlatPlayerModel());
         register("armor_stand", new ArmorStandPlayerModel());
+        register("frog", new FrogPlayerModel());
     }
 
     private static void register(String id, PlayerModel playerModel) {
