@@ -1,7 +1,6 @@
 package com.codingcat.modelshifter.client.api.renderer;
 
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
-import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
 import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
 import com.codingcat.modelshifter.client.render.ReplacedPlayerEntityRenderer;

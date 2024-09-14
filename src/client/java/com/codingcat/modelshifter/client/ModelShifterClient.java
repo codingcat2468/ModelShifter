@@ -1,7 +1,5 @@
 package com.codingcat.modelshifter.client;
 
-import com.codingcat.modelshifter.client.api.model.PlayerModel;
-import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.api.renderer.DynamicAdditionalRendererHolder;
 import com.codingcat.modelshifter.client.api.renderer.PlayerDependentStateHolder;
 import com.codingcat.modelshifter.client.impl.Models;
@@ -10,8 +8,6 @@ import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.Identifier;
-
-import java.util.Optional;
 
 public class ModelShifterClient implements ClientModInitializer {
     public static final String MOD_ID = "modelshifter";
