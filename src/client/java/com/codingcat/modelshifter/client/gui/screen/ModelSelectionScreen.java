@@ -132,7 +132,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     }
 
     private void onButtonSelect(ModelPreviewButtonWidget buttonWidget) {
-        if (client == null) return;
+        if (client == null || buttonWidget.isButtonSelected()) return;
 
         unselectAll();
         buttonWidget.setSelected(true);

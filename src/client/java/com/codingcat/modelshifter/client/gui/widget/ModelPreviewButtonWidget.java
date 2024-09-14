@@ -67,6 +67,10 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         this.selected = selected;
     }
 
+    public boolean isButtonSelected() {
+        return this.selected;
+    }
+
     @Override
     public void onPress() {
         this.onPressConsumer.accept(this);
