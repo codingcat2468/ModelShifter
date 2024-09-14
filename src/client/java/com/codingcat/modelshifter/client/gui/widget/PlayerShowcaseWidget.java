@@ -65,7 +65,7 @@ public class PlayerShowcaseWidget extends TextWidget {
 
     public void update() {
         PlayerModel model = getPlayerModel();
-        if (model == null || !ModelShifterClient.state.isRendererEnabled(uuid)) return;
+        if (model == null || !ModelShifterClient.state.isRendererStateEnabled(uuid)) return;
 
         this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getShowcaseAnimation());
     }
@@ -95,7 +95,7 @@ public class PlayerShowcaseWidget extends TextWidget {
                 getX() + getWidth() - (getWidth() / 4f),
                 getY() + getHeight() - (getHeight() / 3f),
                 2f, true);
-        boolean active = ModelShifterClient.state.isRendererEnabled(uuid);
+        boolean active = ModelShifterClient.state.isRendererStateEnabled(uuid);
         PlayerModel model = getPlayerModel();
         String creators = (active && model != null) ? String.join(", ", model.getCreators()) : "";
         renderScaledText(context,
@@ -128,7 +128,7 @@ public class PlayerShowcaseWidget extends TextWidget {
         quaternionf.mul(quaternionf2);
         matrices.multiply(quaternionf);
         float size = getHeight() / 4f;
-        if (ModelShifterClient.state.isRendererEnabled(uuid) && renderer != null) {
+        if (ModelShifterClient.state.isRendererStateEnabled(uuid) && renderer != null) {
             PlayerModel model = getPlayerModel();
             assert model != null;
             Consumer<MatrixStack> tweakFunction = model.getGuiRenderInfo().getShowcaseRenderTweakFunction();
@@ -137,7 +137,7 @@ public class PlayerShowcaseWidget extends TextWidget {
                 tweakFunction.accept(matrices);
             renderer.setRenderColor(255, 255, 255, 255);
             renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
-        } else if (!ModelShifterClient.state.isRendererEnabled(uuid) && playerEntityModel != null) {
+        } else if (!ModelShifterClient.state.isRendererStateEnabled(uuid) && playerEntityModel != null) {
             size /= 1.2f;
             matrices.scale(size, size, -size);
             matrices.translate(0, 1.4f, 0);

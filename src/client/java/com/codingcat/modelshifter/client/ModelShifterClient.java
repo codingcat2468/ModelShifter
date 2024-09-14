@@ -7,6 +7,7 @@ import com.codingcat.modelshifter.client.api.renderer.PlayerDependentStateHolder
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
 import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
+import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.Identifier;
 
@@ -29,10 +30,11 @@ public class ModelShifterClient implements ClientModInitializer {
         Configuration config = loader.load(Configuration.class);
         Identifier identifier = config.getModelIdentifier() != null ? Identifier.tryParse(config.getModelIdentifier()) : null;
         Optional<PlayerModel> model = identifier != null ? ModelRegistry.get(identifier) : Optional.empty();
+        ModeOption displayMode = ModeOption.byId(config.getDisplayMode());
         if (model.isEmpty())
             config.setRendererEnabled(false);
 
-        state = new PlayerDependentStateHolder(config.isRendererEnabled(), model.orElse(null));
+        state = new PlayerDependentStateHolder(config.isRendererEnabled(), model.orElse(null), displayMode != null ? displayMode : ModeOption.ALL);
         loader.write(config);
     }
 }

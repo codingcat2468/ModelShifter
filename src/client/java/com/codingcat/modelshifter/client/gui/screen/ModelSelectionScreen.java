@@ -81,6 +81,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
                 modeOption -> {
                     config.setDisplayMode(modeOption.getId());
                     loader.write(config);
+                    ModelShifterClient.state.setDisplayMode(modeOption);
 
                     return modeOption.getDisplayName();
                 });
