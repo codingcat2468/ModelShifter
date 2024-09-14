@@ -10,10 +10,15 @@
   "modelshifter.model.armor_stand": "Rüstungsständer",
 
   "modelshifter.button.open_screen": "ModelShifter",
+  "modelshifter.button.display_mode": "Modelle anzeigen auf",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
   "modelshifter.screen.model_selection.title_player": "Wähle ein Spieler-Modell für %s aus",
+  "modelshifter.screen.settings.title": "ModelShifter-Einstellungen",
   "modelshifter.state.no_custom_model": "Spieler",
+  "modelshifter.option.mode.all_players": "Jedem",
+  "modelshifter.option.mode.only_self": "Nur mir selbst",
+  "modelshifter.option.mode.only_other_players": "Nur andere Spieler",
   "modelshifter.text.made_by": "Modell erstellt von %s",
   "modelshifter.text.no_model_active": "Kein Modell aktiv"
 }

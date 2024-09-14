@@ -14,14 +14,15 @@ import net.minecraft.util.Identifier;
 import java.util.function.Consumer;
 
 public class ModelShifterButtonWidget extends PressableWidget {
-    private static final Text MODEL_SHIFTER_BTN = Text.translatable("modelshifter.button.open_screen");
     private static final ButtonTextures TEXTURES = new ButtonTextures(id("modelshifter_button"), id("modelshifter_button_focused"));
     private final Consumer<ModelShifterButtonWidget> onPress;
+    private final Text tooltip;
 
-    public ModelShifterButtonWidget(int x, int y, Consumer<ModelShifterButtonWidget> onPress) {
+    public ModelShifterButtonWidget(int x, int y, Text tooltip, Consumer<ModelShifterButtonWidget> onPress) {
         super(x, y, 20, 20, Text.empty());
         this.onPress = onPress;
-        this.setTooltip(Tooltip.of(MODEL_SHIFTER_BTN));
+        this.tooltip = tooltip;
+        this.setTooltip(Tooltip.of(tooltip));
     }
 
     private static Identifier id(String id) {
@@ -43,6 +44,6 @@ public class ModelShifterButtonWidget extends PressableWidget {
 
     @Override
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {
-        builder.put(NarrationPart.TITLE, MODEL_SHIFTER_BTN);
+        builder.put(NarrationPart.TITLE, this.tooltip);
     }
 }

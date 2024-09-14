@@ -5,13 +5,15 @@ import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
 import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
+import com.codingcat.modelshifter.client.gui.widget.MultiOptionButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.PlayerShowcaseWidget;
-import com.mojang.authlib.GameProfile;
+import com.codingcat.modelshifter.client.impl.config.Configuration;
+import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
+import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -20,11 +22,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ModelSelectionScreen extends GameOptionsScreen {
     private static final Text TITLE = Text.translatable("modelshifter.screen.model_selection.title");
+    private static final Text DISPLAY_MODE_BUTTON = Text.translatable("modelshifter.button.display_mode");
     private static final Function<String, Text> TITLE_PLAYER = name -> Text.translatable("modelshifter.screen.model_selection.title_player", name);
 
     //? <1.21 {
@@ -65,6 +67,24 @@ public class ModelSelectionScreen extends GameOptionsScreen {
                 y++;
             }
         }
+
+        ConfigurationLoader loader = new ConfigurationLoader();
+        Configuration config = loader.load(Configuration.class);
+        MultiOptionButtonWidget<ModeOption> settingsButton = new MultiOptionButtonWidget<>(
+                width - 205,
+                5,
+                200,
+                20,
+                DISPLAY_MODE_BUTTON,
+                ModeOption.OPTIONS,
+                () -> ModeOption.byId(config.getDisplayMode()),
+                modeOption -> {
+                    config.setDisplayMode(modeOption.getId());
+                    loader.write(config);
+
+                    return modeOption.getDisplayName();
+                });
+        this.addDrawableChild(settingsButton);
     }
 
     private AdditionalRendererState obtainState() {
