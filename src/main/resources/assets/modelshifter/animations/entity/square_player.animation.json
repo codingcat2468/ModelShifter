@@ -1,0 +1,79 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"move.run": {
+			"loop": true,
+			"animation_length": 0.9474,
+			"bones": {
+				"cube": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"0.4561": {
+							"vector": [1, 0.75, 1]
+						},
+						"0.9474": {
+							"vector": [1, 1, 1]
+						}
+					}
+				}
+			}
+		},
+		"move.walk": {
+			"loop": true,
+			"animation_length": 1.7193,
+			"bones": {
+				"cube": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"0.8772": {
+							"vector": [1, 0.9, 1]
+						},
+						"1.7193": {
+							"vector": [1, 1, 1]
+						}
+					}
+				}
+			}
+		},
+		"move.sneak": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.125,
+			"bones": {
+				"cube": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"0.125": {
+							"vector": [1, 0.6, 1]
+						}
+					}
+				}
+			}
+		},
+		"misc.idle": {
+			"loop": true,
+			"animation_length": 10,
+			"bones": {
+				"cube": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"4.1667": {
+							"vector": [1, 0.9, 1]
+						},
+						"7.5": {
+							"vector": [1, 1, 1]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

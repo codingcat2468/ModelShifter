@@ -23,6 +23,7 @@ public class Models {
         register(8, "armor_stand", new ArmorStandPlayerModel());
         register(9, "frog", new FrogPlayerModel());
         register(10, "croissant", new CroissantPlayerModel());
+        register(11, "square", new SquarePlayerModel());
     }
 
     private static void register(int ordinal, String id, PlayerModel playerModel) {
