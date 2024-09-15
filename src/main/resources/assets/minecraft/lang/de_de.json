@@ -9,6 +9,7 @@
   "modelshifter.model.flat_player": "2D-Spieler",
   "modelshifter.model.armor_stand": "Rüstungsständer",
   "modelshifter.model.frog": "Frosch",
+  "modelshifter.model.croissant": "Croissant",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.display_mode": "Modelle anzeigen auf",
