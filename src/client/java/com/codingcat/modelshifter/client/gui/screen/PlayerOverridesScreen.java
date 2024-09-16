@@ -76,6 +76,7 @@ public class PlayerOverridesScreen extends AbstractCustomGameOptionsScreen {
                     if (selectedPlayer == null) return;
                     modifyOverrides(overrides -> overrides.removeIf(override -> override.player().equals(selectedPlayer.getId())));
                     reloadOverrides();
+                    changeSelection(null);
                 })
                 .dimensions((width / 3) + (width / 6) + 23, 93, (width / 6) - 2, 20)
                 .build();
@@ -139,7 +140,12 @@ public class PlayerOverridesScreen extends AbstractCustomGameOptionsScreen {
             }
 
             playerNameWidget.setText("");
-            modifyOverrides(overrides -> overrides.add(new ConfigPlayerOverride(profile.get().getId(), new AdditionalRendererState())));
+            modifyOverrides(overrides -> {
+                if (overrides
+                        .stream()
+                        .noneMatch(override -> override.player().equals(profile.get().getId())))
+                    overrides.add(new ConfigPlayerOverride(profile.get().getId(), new AdditionalRendererState()));
+            });
             reloadOverrides();
         }, "Profile Fetcher Thread").start();
     }
@@ -172,6 +178,12 @@ public class PlayerOverridesScreen extends AbstractCustomGameOptionsScreen {
             playerNameWidget.setError(ERROR_OBTAIN_PLAYER);
             return Optional.empty();
         }
+    }
+
+    @Override
+    protected void initTabNavigation() {
+        super.initTabNavigation();
+        reloadOverrides();
     }
 
     @Override
