@@ -8,8 +8,6 @@ import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.ModelShifterButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.MultiOptionButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.PlayerShowcaseWidget;
-import com.codingcat.modelshifter.client.impl.config.Configuration;
-import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
@@ -82,8 +80,7 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                 btn -> client.setScreen(new PlayerOverridesScreen(this, gameOptions))
         );
 
-        ConfigurationLoader loader = new ConfigurationLoader();
-        Configuration config = loader.load(Configuration.class);
+
         MultiOptionButtonWidget<ModeOption> displayModeButton = new MultiOptionButtonWidget<>(
                 width - 205,
                 5,
@@ -91,11 +88,10 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                 20,
                 DISPLAY_MODE_BUTTON,
                 ModeOption.OPTIONS,
-                () -> ModeOption.byId(config.getDisplayMode()),
+                () -> ModelShifterClient.state.getDisplayMode(),
                 modeOption -> {
-                    config.setDisplayMode(modeOption.getId());
-                    loader.write(config);
                     ModelShifterClient.state.setDisplayMode(modeOption);
+                    ModelShifterClient.holder.applyState();
 
                     return modeOption.getDisplayName();
                 });

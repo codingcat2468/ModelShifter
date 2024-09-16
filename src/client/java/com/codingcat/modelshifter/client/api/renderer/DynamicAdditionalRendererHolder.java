@@ -31,7 +31,7 @@ public class DynamicAdditionalRendererHolder {
     public void applyState() {
         AdditionalRendererState globalState = stateHolder.getGlobalState();
         if (!globalState.isRendererEnabled()) {
-            writeConfig(globalState);
+            writeConfig();
             return;
         }
 
@@ -48,12 +48,12 @@ public class DynamicAdditionalRendererHolder {
                 tryAddRenderer(state.getPlayerModel());
         }
 
-        writeConfig(globalState);
+        writeConfig();
     }
 
-    private void writeConfig(AdditionalRendererState globalState) {
+    private void writeConfig() {
         new ConfigurationLoader().write(new Configuration()
-                .setGlobalState(globalState)
+                .setGlobalState(stateHolder.getGlobalState())
                 .setPlayerOverrides(stateHolder.generateOverrides())
                 .setDisplayMode(stateHolder.getDisplayMode().getId()));
     }
