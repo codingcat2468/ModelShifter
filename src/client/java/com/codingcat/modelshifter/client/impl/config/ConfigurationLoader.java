@@ -94,7 +94,7 @@ public class ConfigurationLoader implements JsonConfigurationLoader<Configuratio
             try {
                 return AdditionalRendererState.deserialize(element.getAsJsonObject());
             } catch (IOException e) {
-                return new AdditionalRendererState(false, null);
+                return new AdditionalRendererState();
             }
         } else if (type == ConfigPlayerOverride.class) {
             try {

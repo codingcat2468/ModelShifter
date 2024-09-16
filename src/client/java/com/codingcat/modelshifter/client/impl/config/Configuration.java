@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class Configuration implements JsonConfiguration {
@@ -45,8 +44,8 @@ public class Configuration implements JsonConfiguration {
         return this;
     }
 
-    public Set<ConfigPlayerOverride> getPlayerOverrides() {
-        return new HashSet<>(playerOverrides);
+    public ArrayList<ConfigPlayerOverride> getPlayerOverrides() {
+        return playerOverrides;
     }
 
     public Configuration setPlayerOverrides(Set<ConfigPlayerOverride> playerOverrides) {

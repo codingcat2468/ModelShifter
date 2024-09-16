@@ -14,6 +14,9 @@ public class AdditionalRendererState {
     @Nullable
     private PlayerModel playerModel;
 
+    public AdditionalRendererState() {
+    }
+
     public AdditionalRendererState(boolean rendererEnabled, @Nullable PlayerModel playerModel) {
         this.rendererEnabled = rendererEnabled;
         this.playerModel = playerModel;
@@ -59,7 +62,9 @@ public class AdditionalRendererState {
     public static AdditionalRendererState deserialize(JsonObject object) throws IOException {
         try {
             boolean rendererEnabled = object.get("renderer_enabled").getAsBoolean();
-            Identifier modelId = Identifier.tryParse(object.get("player_model").getAsString());
+            Identifier modelId = null;
+            if (object.has("player_model"))
+                modelId = Identifier.tryParse(object.get("player_model").getAsString());
             Optional<PlayerModel> model = modelId != null ? ModelRegistry.get(modelId) : Optional.empty();
 
             return new AdditionalRendererState(rendererEnabled, model.orElse(null));
