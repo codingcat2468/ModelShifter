@@ -36,6 +36,7 @@ public class PlayerShowcaseWidget extends TextWidget {
     private GameProfile gameProfile;
     private final PlayerEntityModel<?> playerEntityModel;
     private final TextMode textMode;
+    private boolean contentVisible;
 
     public PlayerShowcaseWidget(@NotNull GameProfile player, TextMode textMode, int x, int y, int width, int height) {
         super(x, y, width, height, Text.empty(), MinecraftClient.getInstance().textRenderer);
@@ -44,7 +45,12 @@ public class PlayerShowcaseWidget extends TextWidget {
         this.playerEntityModel = createModel();
         this.gameProfile = player;
         this.textMode = textMode;
+        this.contentVisible = true;
         this.update();
+    }
+
+    public void setContentVisible(boolean contentVisible) {
+        this.contentVisible = contentVisible;
     }
 
     public void setPlayer(GameProfile player) {
@@ -74,6 +80,8 @@ public class PlayerShowcaseWidget extends TextWidget {
     @Override
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context);
+        if (!this.contentVisible) return;
+
         this.renderModel(context);
         this.renderText(context);
     }

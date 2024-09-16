@@ -27,7 +27,7 @@ public class ErrorTextFieldWidget extends TextFieldWidget {
             setEditable(true);
         }
 
-        if (text.isBlank())
+        if (text.isEmpty())
             setSuggestion(hint.getString());
         else
             setSuggestion(null);

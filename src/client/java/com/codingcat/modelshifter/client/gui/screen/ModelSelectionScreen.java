@@ -18,7 +18,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 //? <1.21 {
 /*import net.minecraft.client.gui.widget.OptionListWidget;
-*///?}
+ *///?}
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -26,7 +26,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.UUID;
 import java.util.function.Function;
 
 public class ModelSelectionScreen extends GameOptionsScreen {
@@ -37,7 +36,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
     //? <1.21 {
     /*private OptionListWidget listWidget;
-    *///?}
+     *///?}
     private PlayerShowcaseWidget previewWidget;
     @Nullable
     private final GameProfile targetPlayer;
@@ -72,6 +71,8 @@ public class ModelSelectionScreen extends GameOptionsScreen {
             }
         }
 
+        if (this.targetPlayer != null) return;
+
         ModelShifterButtonWidget playerOverridesButton = new ModelShifterButtonWidget(
                 width - 230,
                 5,
@@ -82,7 +83,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
         ConfigurationLoader loader = new ConfigurationLoader();
         Configuration config = loader.load(Configuration.class);
-        MultiOptionButtonWidget<ModeOption> settingsButton = new MultiOptionButtonWidget<>(
+        MultiOptionButtonWidget<ModeOption> displayModeButton = new MultiOptionButtonWidget<>(
                 width - 205,
                 5,
                 200,
@@ -99,7 +100,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
                 });
 
         this.addDrawableChild(playerOverridesButton);
-        this.addDrawableChild(settingsButton);
+        this.addDrawableChild(displayModeButton);
     }
 
     private AdditionalRendererState obtainState() {
