@@ -25,23 +25,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class PlayerShowcaseWidget extends TextWidget {
     private static final Identifier BACKGROUND = Identifier.of(ModelShifterClient.MOD_ID, "widget/preview_background");
     @Nullable
     private GuiPlayerEntityRenderer renderer;
-    private final Identifier skinTexture;
+    @NotNull
+    private final AtomicReference<Identifier> skinTexture;
     @NotNull
     private GameProfile gameProfile;
     private final PlayerEntityModel<?> playerEntityModel;
     private final TextMode textMode;
     private boolean contentVisible;
 
-    public PlayerShowcaseWidget(@NotNull GameProfile player, TextMode textMode, int x, int y, int width, int height) {
+    public PlayerShowcaseWidget(@NotNull GameProfile player, @NotNull AtomicReference<Identifier> skinTexture, TextMode textMode, int x, int y, int width, int height) {
         super(x, y, width, height, Text.empty(), MinecraftClient.getInstance().textRenderer);
-        MinecraftClient client = MinecraftClient.getInstance();
-        this.skinTexture = client.getSkinProvider().getSkinTextures(player).texture();
+        this.skinTexture = skinTexture;
         this.playerEntityModel = createModel();
         this.gameProfile = player;
         this.textMode = textMode;
@@ -53,8 +54,9 @@ public class PlayerShowcaseWidget extends TextWidget {
         this.contentVisible = contentVisible;
     }
 
-    public void setPlayer(GameProfile player) {
+    public void setPlayer(GameProfile player, Identifier skinTexture) {
         this.gameProfile = player;
+        this.skinTexture.set(skinTexture);
     }
 
     private PlayerModel getPlayerModel() {
@@ -142,20 +144,26 @@ public class PlayerShowcaseWidget extends TextWidget {
             if (tweakFunction != null)
                 tweakFunction.accept(matrices);
             renderer.setRenderColor(255, 255, 255, 255);
-            renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
+            renderer.render(skinTexture.get(), 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
         } else if (!ModelShifterClient.state.isRendererStateEnabled(gameProfile.getId()) && playerEntityModel != null) {
             size /= 1.2f;
             matrices.scale(size, size, -size);
             matrices.translate(0, 1.4f, 0);
             matrices.multiply(new Quaternionf().rotateZ((float) Math.PI));
             VertexConsumerProvider.Immediate vertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-            VertexConsumer consumer = vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinTexture));
+            VertexConsumer consumer = vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinTexture.get()));
             int overlay = OverlayTexture.packUv(OverlayTexture.getU(0), OverlayTexture.getV(false));
 
             playerEntityModel.render(matrices,
                     consumer,
                     LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
-                    overlay,/*? <1.21 { 1f, 1f, 1f, 1f } else {*/-1 /*}*/);
+                    overlay,
+                    //? <1.21 {
+                    /*1f,1f,1f,1f
+                    *///?} else {
+                    -1
+                    //?}
+            );
         }
 
         context.draw();

@@ -18,6 +18,7 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class ModelPreviewButtonWidget extends PressableWidget {
@@ -29,19 +30,19 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     private final PlayerModel model;
     @Nullable
     private GuiPlayerEntityRenderer renderer;
-    private final Identifier skinTexture;
+    private final AtomicReference<Identifier> skinTexture;
     private final Consumer<ModelPreviewButtonWidget> onPressConsumer;
     private boolean selected;
     private final ModelPreviewButtonWidget.Type type;
 
-    public ModelPreviewButtonWidget(int x, int y, int size, ModelPreviewButtonWidget.Type type, @Nullable PlayerModel model, Consumer<ModelPreviewButtonWidget> onPress) {
+    public ModelPreviewButtonWidget(int x, int y, int size, ModelPreviewButtonWidget.Type type, @Nullable PlayerModel model, AtomicReference<Identifier> skinTexture, Consumer<ModelPreviewButtonWidget> onPress) {
         super(x, y, size, size, Text.empty());
         this.type = type;
         this.model = model;
         if (model != null)
             this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getButtonAnimation());
         MinecraftClient client = MinecraftClient.getInstance();
-        this.skinTexture = client.getSkinProvider().getSkinTextures(client.getGameProfile()).texture();
+        this.skinTexture = skinTexture;
         this.onPressConsumer = onPress;
         this.selected = false;
         this.setTooltip(Tooltip.of(getModelName()));
@@ -122,7 +123,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         if (tweakFunction != null)
             tweakFunction.accept(matrices);
         renderer.setRenderColor(color, color, color, color);
-        renderer.render(skinTexture, 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
+        renderer.render(skinTexture.get(), 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
         context.draw();
         matrices.pop();
         context.disableScissor();
