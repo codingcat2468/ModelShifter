@@ -17,12 +17,16 @@ public class PlayerDependentStateHolder {
     private ModeOption displayMode;
     @NotNull
     private final AdditionalRendererState globalState;
-    private final HashMap<UUID, AdditionalRendererState> stateOverrideMap;
+    private HashMap<UUID, AdditionalRendererState> stateOverrideMap;
 
     public PlayerDependentStateHolder(@NotNull AdditionalRendererState globalState, Set<ConfigPlayerOverride> overrides, @NotNull ModeOption displayMode) {
-        this.stateOverrideMap = new HashMap<>(createFromOverrides(overrides));
+        this.reloadFromOverrides(overrides);
         this.globalState = globalState;
         this.displayMode = displayMode;
+    }
+
+    public void reloadFromOverrides(Set<ConfigPlayerOverride> overrides) {
+        this.stateOverrideMap = new HashMap<>(createFromOverrides(overrides));
     }
 
     private Map<UUID, AdditionalRendererState> createFromOverrides(Set<ConfigPlayerOverride> overrides) {

@@ -57,6 +57,7 @@ public class PlayerShowcaseWidget extends TextWidget {
     public void setPlayer(GameProfile player, Identifier skinTexture) {
         this.gameProfile = player;
         this.skinTexture.set(skinTexture);
+        this.update();
     }
 
     private PlayerModel getPlayerModel() {
@@ -127,6 +128,8 @@ public class PlayerShowcaseWidget extends TextWidget {
     }
 
     private void renderModel(DrawContext context) {
+        if (skinTexture.get() == null) return;
+
         MatrixStack matrices = context.getMatrices();
         context.enableScissor(getX(), getY(), getX() + getWidth(), getY() + getHeight());
         matrices.push();

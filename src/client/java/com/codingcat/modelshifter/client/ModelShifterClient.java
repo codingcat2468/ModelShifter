@@ -9,6 +9,8 @@ import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.Identifier;
 
+import java.util.HashSet;
+
 public class ModelShifterClient implements ClientModInitializer {
     public static final String MOD_ID = "modelshifter";
     public static final Identifier EMPTY_TEXTURE = Identifier.of(MOD_ID, "empty");
@@ -26,7 +28,7 @@ public class ModelShifterClient implements ClientModInitializer {
         Configuration config = loader.load(Configuration.class);
 
         ModeOption displayMode = ModeOption.byId(config.getDisplayMode());
-        state = new PlayerDependentStateHolder(config.getGlobalState(), config.getPlayerOverrides(), displayMode != null ? displayMode : ModeOption.ALL);
+        state = new PlayerDependentStateHolder(config.getGlobalState(), new HashSet<>(config.getPlayerOverrides()), displayMode != null ? displayMode : ModeOption.ALL);
         loader.write(config);
     }
 }

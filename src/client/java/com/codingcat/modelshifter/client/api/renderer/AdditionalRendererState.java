@@ -15,6 +15,8 @@ public class AdditionalRendererState {
     private PlayerModel playerModel;
 
     public AdditionalRendererState() {
+        this.rendererEnabled = false;
+        this.playerModel = null;
     }
 
     public AdditionalRendererState(boolean rendererEnabled, @Nullable PlayerModel playerModel) {
