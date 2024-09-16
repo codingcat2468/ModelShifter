@@ -60,10 +60,6 @@ public class PlayerDependentStateHolder {
         this.stateOverrideMap.put(uuid, hasUniqueState(uuid) ? state : new AdditionalRendererState(rendererEnabled, model));
     }
 
-    public void removePlayerState(UUID uuid) {
-        this.stateOverrideMap.remove(uuid);
-    }
-
     public FeatureRendererStates accessDisabledFeatureRenderers(PlayerEntity entity) {
         return getState(entity.getUuid()).accessFeatureRendererStates();
     }

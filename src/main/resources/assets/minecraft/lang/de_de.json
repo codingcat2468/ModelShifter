@@ -14,18 +14,24 @@
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Einstellungen für bestimmte Spieler",
+  "modelshifter.button.add_player": "Spieler hinzufügen",
+  "modelshifter.button.remove_player": "Spieler entfernen",
+  "modelshifter.button.select_model": "Modell auswählen",
   "modelshifter.button.display_mode": "Modelle anzeigen auf",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",
   "modelshifter.screen.model_selection.title_player": "Wähle ein Spieler-Modell für %s aus",
-  "modelshifter.screen.settings.title": "ModelShifter-Einstellungen",
+  "modelshifter.screen.player_overrides.title": "Wähle ein Modell für spezifische Spieler aus",
   "modelshifter.state.no_custom_model": "Spieler",
   "modelshifter.option.mode.all_players": "Jedem",
   "modelshifter.option.mode.only_self": "Nur mir selbst",
   "modelshifter.option.mode.only_other_players": "Nur andere Spieler",
   "modelshifter.text.made_by": "Modell erstellt von %s",
   "modelshifter.text.no_model_active": "Kein Modell aktiv",
-  "modelshifter.text.model_info": "Verwendet Modell %s"
+  "modelshifter.text.model_info": "Verwendet Modell %s",
+  "modelshifter.text.enter_player_name": "Gib den Namen eines Spielers ein...",
   "modelshifter.text.loading": "Lädt...",
   "modelshifter.text.no_players": "Noch keine Spieler",
+  "modelshifter.error.player.not_found": "Spieler nicht gefunden!",
+  "modelshifter.error.player.other": "Fehler aufgetreten, bitte warte etwas."
 }

@@ -14,18 +14,24 @@
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Settings for specific players",
+  "modelshifter.button.add_player": "Add player",
+  "modelshifter.button.remove_player": "Remove player",
+  "modelshifter.button.select_model": "Select Model",
   "modelshifter.button.display_mode": "Show Models On",
   "modelshifter.button.disable": "Disable Model",
   "modelshifter.screen.model_selection.title": "Select player model",
   "modelshifter.screen.model_selection.title_player": "Select a model for %s",
-  "modelshifter.screen.settings.title": "ModelShifter Settings",
+  "modelshifter.screen.player_overrides.title": "Select a model for specific players",
   "modelshifter.state.no_custom_model": "Player",
   "modelshifter.option.mode.all_players": "Everyone",
   "modelshifter.option.mode.only_self": "Only Myself",
   "modelshifter.option.mode.only_other_players": "Only Other Players",
   "modelshifter.text.made_by": "Model created by %s",
   "modelshifter.text.no_model_active": "No model active",
-  "modelshifter.text.model_info": "Using model %s"
+  "modelshifter.text.model_info": "Using model %s",
+  "modelshifter.text.enter_player_name": "Enter the name of a player...",
   "modelshifter.text.loading": "Loading...",
   "modelshifter.text.no_players": "No players yet",
+  "modelshifter.error.player.not_found": "Could not find player!",
+  "modelshifter.error.player.other": "Error, please try again later!"
 }
