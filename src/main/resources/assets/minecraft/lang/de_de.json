@@ -26,4 +26,6 @@
   "modelshifter.text.made_by": "Modell erstellt von %s",
   "modelshifter.text.no_model_active": "Kein Modell aktiv",
   "modelshifter.text.model_info": "Verwendet Modell %s"
+  "modelshifter.text.loading": "Lädt...",
+  "modelshifter.text.no_players": "Noch keine Spieler",
 }
