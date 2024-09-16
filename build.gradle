@@ -32,6 +32,10 @@ repositories {
             includeGroup("software.bernie.geckolib")
         }
     }
+    maven {
+        name = 'codemc-repo'
+        url 'https://repo.codemc.org/repository/maven-public/'
+    }
 }
 
 dependencies {
@@ -39,8 +43,8 @@ dependencies {
     mappings "net.fabricmc:yarn:${property('yarn_mappings')}:v2"
     modImplementation "net.fabricmc:fabric-loader:${property('loader_version')}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${property('fabric_version')}"
-
     modImplementation "software.bernie.geckolib:geckolib-fabric-${property('minecraft_version')}:${property('geckolib_version')}"
+    implementation "com.github.games647:craftapi:${project.craft_api_version}"
 }
 
 processResources {
