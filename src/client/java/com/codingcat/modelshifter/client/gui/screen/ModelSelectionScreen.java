@@ -11,6 +11,7 @@ import com.codingcat.modelshifter.client.gui.widget.PlayerShowcaseWidget;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
 import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
@@ -39,14 +40,11 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     *///?}
     private PlayerShowcaseWidget previewWidget;
     @Nullable
-    private final UUID targetPlayer;
-    @Nullable
-    private final String playerName;
+    private final GameProfile targetPlayer;
 
-    public ModelSelectionScreen(@Nullable UUID targetPlayer, @Nullable String playerName, Screen parent, GameOptions gameOptions) {
-        super(parent, gameOptions, targetPlayer != null ? TITLE_PLAYER.apply(playerName) : TITLE);
+    public ModelSelectionScreen(@Nullable GameProfile targetPlayer, Screen parent, GameOptions gameOptions) {
+        super(parent, gameOptions, targetPlayer != null ? TITLE_PLAYER.apply(targetPlayer.getName()) : TITLE);
         this.targetPlayer = targetPlayer;
-        this.playerName = playerName;
     }
 
     @Override
@@ -105,12 +103,12 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     }
 
     private AdditionalRendererState obtainState() {
-        return this.targetPlayer != null ? ModelShifterClient.state.getState(this.targetPlayer) : ModelShifterClient.state.getGlobalState();
+        return this.targetPlayer != null ? ModelShifterClient.state.getState(this.targetPlayer.getId()) : ModelShifterClient.state.getGlobalState();
     }
 
     private void setState(boolean rendererEnabled, @Nullable PlayerModel model) {
         if (this.targetPlayer != null)
-            ModelShifterClient.state.setPlayerState(this.targetPlayer, rendererEnabled, model);
+            ModelShifterClient.state.setPlayerState(this.targetPlayer.getId(), rendererEnabled, model);
         else
             ModelShifterClient.state.setGlobalState(rendererEnabled, model);
 
@@ -124,9 +122,10 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     //?}
 
     private PlayerShowcaseWidget addPlayerPreview() {
-        UUID player = MinecraftClient.getInstance().getGameProfile().getId();
+        GameProfile player = MinecraftClient.getInstance().getGameProfile();
         PlayerShowcaseWidget previewWidget = new PlayerShowcaseWidget(
                 targetPlayer != null ? targetPlayer : player,
+                PlayerShowcaseWidget.TextMode.MODEL,
                 width / 2, 0,
                 width / 2, height);
 
@@ -172,7 +171,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
         this.init();
         *///?} else {
         if (this.client != null)
-            this.client.setScreen(new ModelSelectionScreen(targetPlayer, playerName, parent, gameOptions));
+            this.client.setScreen(new ModelSelectionScreen(targetPlayer, parent, gameOptions));
         //?}
     }
 

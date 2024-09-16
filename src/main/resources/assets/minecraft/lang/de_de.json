@@ -24,5 +24,6 @@
   "modelshifter.option.mode.only_self": "Nur mir selbst",
   "modelshifter.option.mode.only_other_players": "Nur andere Spieler",
   "modelshifter.text.made_by": "Modell erstellt von %s",
-  "modelshifter.text.no_model_active": "Kein Modell aktiv"
+  "modelshifter.text.no_model_active": "Kein Modell aktiv",
+  "modelshifter.text.model_info": "Verwendet Modell %s"
 }
