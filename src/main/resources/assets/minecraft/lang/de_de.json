@@ -13,6 +13,7 @@
   "modelshifter.model.square": "Würfel",
 
   "modelshifter.button.open_screen": "ModelShifter",
+  "modelshifter.button.player_overrides": "Einstellungen für bestimmte Spieler",
   "modelshifter.button.display_mode": "Modelle anzeigen auf",
   "modelshifter.button.disable": "Modell Deaktivieren",
   "modelshifter.screen.model_selection.title": "Spieler-Modell auswählen",

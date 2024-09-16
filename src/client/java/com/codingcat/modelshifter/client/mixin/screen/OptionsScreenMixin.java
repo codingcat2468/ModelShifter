@@ -39,7 +39,7 @@ public abstract class OptionsScreenMixin extends Screen {
     private static final Text MODEL_SHIFTER_BTN = Text.translatable("modelshifter.button.open_screen");
 
     @Unique
-    private final ModelShifterButtonWidget BUTTON = new ModelShifterButtonWidget(0, 0, MODEL_SHIFTER_BTN, button ->
+    private final ModelShifterButtonWidget BUTTON = new ModelShifterButtonWidget(0, 0, MODEL_SHIFTER_BTN, false, button ->
             Objects.requireNonNull(client).setScreen(new ModelSelectionScreen(null, null, this, this.settings)));
 
     @Inject(

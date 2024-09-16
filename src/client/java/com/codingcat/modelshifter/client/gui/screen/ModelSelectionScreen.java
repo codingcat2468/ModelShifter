@@ -5,6 +5,7 @@ import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
 import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
+import com.codingcat.modelshifter.client.gui.widget.ModelShifterButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.MultiOptionButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.PlayerShowcaseWidget;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
@@ -30,6 +31,7 @@ import java.util.function.Function;
 public class ModelSelectionScreen extends GameOptionsScreen {
     private static final Text TITLE = Text.translatable("modelshifter.screen.model_selection.title");
     private static final Text DISPLAY_MODE_BUTTON = Text.translatable("modelshifter.button.display_mode");
+    private static final Text PLAYER_OVERRIDES_BUTTON = Text.translatable("modelshifter.button.player_overrides");
     private static final Function<String, Text> TITLE_PLAYER = name -> Text.translatable("modelshifter.screen.model_selection.title_player", name);
 
     //? <1.21 {
@@ -72,6 +74,14 @@ public class ModelSelectionScreen extends GameOptionsScreen {
             }
         }
 
+        ModelShifterButtonWidget playerOverridesButton = new ModelShifterButtonWidget(
+                width - 230,
+                5,
+                PLAYER_OVERRIDES_BUTTON,
+                true,
+                btn -> client.setScreen(new PlayerOverridesScreen(this, gameOptions))
+        );
+
         ConfigurationLoader loader = new ConfigurationLoader();
         Configuration config = loader.load(Configuration.class);
         MultiOptionButtonWidget<ModeOption> settingsButton = new MultiOptionButtonWidget<>(
@@ -89,6 +99,8 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
                     return modeOption.getDisplayName();
                 });
+
+        this.addDrawableChild(playerOverridesButton);
         this.addDrawableChild(settingsButton);
     }
 

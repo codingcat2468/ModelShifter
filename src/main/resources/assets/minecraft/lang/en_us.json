@@ -13,6 +13,7 @@
   "modelshifter.model.square": "Be Square",
 
   "modelshifter.button.open_screen": "ModelShifter",
+  "modelshifter.button.player_overrides": "Settings for specific players",
   "modelshifter.button.display_mode": "Show Models On",
   "modelshifter.button.disable": "Disable Model",
   "modelshifter.screen.model_selection.title": "Select player model",

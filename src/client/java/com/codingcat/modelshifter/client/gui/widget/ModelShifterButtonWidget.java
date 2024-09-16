@@ -15,13 +15,16 @@ import java.util.function.Consumer;
 
 public class ModelShifterButtonWidget extends PressableWidget {
     private static final ButtonTextures TEXTURES = new ButtonTextures(id("modelshifter_button"), id("modelshifter_button_focused"));
+    private static final ButtonTextures TEXTURES_PLAYERS = new ButtonTextures(id("modelshifter_button_players"), id("modelshifter_button_players_focused"));
     private final Consumer<ModelShifterButtonWidget> onPress;
     private final Text tooltip;
+    private final boolean isPlayersButton;
 
-    public ModelShifterButtonWidget(int x, int y, Text tooltip, Consumer<ModelShifterButtonWidget> onPress) {
+    public ModelShifterButtonWidget(int x, int y, Text tooltip, boolean isPlayersButton, Consumer<ModelShifterButtonWidget> onPress) {
         super(x, y, 20, 20, Text.empty());
         this.onPress = onPress;
         this.tooltip = tooltip;
+        this.isPlayersButton = isPlayersButton;
         this.setTooltip(Tooltip.of(tooltip));
     }
 
@@ -34,7 +37,8 @@ public class ModelShifterButtonWidget extends PressableWidget {
         context.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-        context.drawGuiTexture(TEXTURES.get(this.active, this.isSelected()), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        context.drawGuiTexture((this.isPlayersButton ? TEXTURES_PLAYERS : TEXTURES).get(this.active, this.isSelected()),
+                this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     @Override
