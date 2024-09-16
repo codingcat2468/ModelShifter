@@ -5,7 +5,6 @@ import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.render.GuiPlayerEntityRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
@@ -41,7 +40,6 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         this.model = model;
         if (model != null)
             this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getButtonAnimation());
-        MinecraftClient client = MinecraftClient.getInstance();
         this.skinTexture = skinTexture;
         this.onPressConsumer = onPress;
         this.selected = false;

@@ -15,10 +15,6 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-//? <1.21 {
-/*import net.minecraft.client.gui.widget.OptionListWidget;
- *///?}
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.SkinTextures;
 import net.minecraft.text.Text;
@@ -32,15 +28,12 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
-public class ModelSelectionScreen extends GameOptionsScreen {
+public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
     private static final Text TITLE = Text.translatable("modelshifter.screen.model_selection.title");
     private static final Text DISPLAY_MODE_BUTTON = Text.translatable("modelshifter.button.display_mode");
     private static final Text PLAYER_OVERRIDES_BUTTON = Text.translatable("modelshifter.button.player_overrides");
     private static final Function<String, Text> TITLE_PLAYER = name -> Text.translatable("modelshifter.screen.model_selection.title_player", name);
 
-    //? <1.21 {
-    /*private OptionListWidget listWidget;
-     *///?}
     private PlayerShowcaseWidget previewWidget;
     @Nullable
     private final GameProfile targetPlayer;
@@ -66,9 +59,6 @@ public class ModelSelectionScreen extends GameOptionsScreen {
     private void initialize() {
         if (client == null) return;
 
-        //? <1.21 {
-        /*this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, this));
-         *///?}
         this.previewWidget = this.addPlayerPreview();
         this.addButton(0, 0, null);
         int x = 1;
@@ -116,6 +106,7 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
     private void fetchSkin() {
         if (client == null) return;
+
         CompletableFuture<SkinTextures> texturesFuture = client.getSkinProvider()
                 .fetchSkinTextures(targetPlayer != null ? targetPlayer : client.getGameProfile());
         texturesFuture.thenAccept(textures -> skinTexture.set(textures.texture()));
@@ -133,12 +124,6 @@ public class ModelSelectionScreen extends GameOptionsScreen {
 
         ModelShifterClient.holder.applyState();
     }
-
-    //? >=1.21 {
-    @Override
-    protected void addOptions() {
-    }
-    //?}
 
     private PlayerShowcaseWidget addPlayerPreview() {
         GameProfile player = MinecraftClient.getInstance().getGameProfile();
@@ -194,13 +179,4 @@ public class ModelSelectionScreen extends GameOptionsScreen {
             this.client.setScreen(new ModelSelectionScreen(targetPlayer, parent, gameOptions));
         //?}
     }
-
-    //? <1.21 {
-
-    /*protected void initTabNavigation() {
-        super.initTabNavigation();
-        if (this.listWidget != null)
-            this.listWidget.position(this.width, this.layout);
-     }
-        *///?}
 }
