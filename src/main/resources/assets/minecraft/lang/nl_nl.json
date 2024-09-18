@@ -17,7 +17,7 @@
   "modelshifter.button.add_player": "Speler toevoegen",
   "modelshifter.button.remove_player": "Speler verwijderen",
   "modelshifter.button.select_model": "Selecteer Model",
-  "modelshifter.button.display_mode": "Toon Models Aan",
+  "modelshifter.button.display_mode": "Toon Modellen Aan",
   "modelshifter.button.disable": "Model uitzetten",
   "modelshifter.screen.model_selection.title": "Selecteer speler model",
   "modelshifter.screen.model_selection.title_player": "Selecteer speler model for %s",
