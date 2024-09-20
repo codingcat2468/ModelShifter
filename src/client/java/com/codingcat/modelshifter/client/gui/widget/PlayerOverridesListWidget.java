@@ -52,6 +52,11 @@ public class PlayerOverridesListWidget extends AlwaysSelectedEntryListWidget<Pla
     }
 
     @Override
+    public int getRowWidth() {
+        return getWidth();
+    }
+
+    @Override
     protected void drawSelectionHighlight(DrawContext context, int y, int entryWidth, int entryHeight, int borderColor, int fillColor) {
         int j = this.getRowLeft() + 5;
         int k = this.getRight() - (isScrollbarVisible() ? 10 : 3);

@@ -50,7 +50,7 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
     @Override
     public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
         int y2 = (entryHeight / 3) + 2;
-        int x1 = x + 20;
+        int x1 = x + (entryWidth / 14);
         int y1 = y + 3;
 
         if (skinTexture.get() != null)
@@ -61,7 +61,7 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
 
         context.drawTextWithShadow(client.textRenderer,
                 getPlayerName(),
-                x + 60, y + y2,
+                x + (int) (entryWidth / 3.4f), y + y2,
                 0xFFFFFF);
     }
 
