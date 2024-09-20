@@ -2,6 +2,8 @@ package com.codingcat.modelshifter.client.mixin.renderer;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
+import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
+import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererType;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,6 +18,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -23,6 +26,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HeldItemFeatureRenderer.class)
 public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
+    @Unique
+    private static final FeatureRendererType TYPE = FeatureRendererType.HELD_ITEM;
+
     public HeldItemFeatureRendererMixin(FeatureRendererContext<T, M> context) {
         super(context);
     }
@@ -32,8 +38,9 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
             cancellable = true)
     public void insertModifyRendering(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
         if (!(livingEntity instanceof AbstractClientPlayerEntity clientPlayer)) return;
+        FeatureRendererStates states = ModelShifterClient.state.accessFeatureRendererStates(clientPlayer);
         if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)
-                || !ModelShifterClient.state.accessDisabledFeatureRenderers(clientPlayer).disableHeldItem()) return;
+                || states.isRendererEnabled(TYPE)) return;
 
         ci.cancel();
     }
@@ -41,7 +48,9 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/ModelWithArms;setArmAngle(Lnet/minecraft/util/Arm;Lnet/minecraft/client/util/math/MatrixStack;)V"), method = "renderItem")
     public void insertModifyRendering(ModelWithArms instance, Arm arm, MatrixStack matrixStack, @Local(argsOnly = true) LivingEntity entity) {
         if (!(entity instanceof AbstractClientPlayerEntity clientPlayer)) return;
-        if (ModelShifterClient.state.isRendererEnabled(clientPlayer)) return;
+        FeatureRendererStates states = ModelShifterClient.state.accessFeatureRendererStates(clientPlayer);
+        if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)
+                || states.isRendererEnabled(TYPE)) return;
 
         ((ModelWithArms) this.getContextModel()).setArmAngle(arm, matrixStack);
     }
@@ -49,10 +58,10 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"), method = "renderItem")
     public void insertModifyRendering(LivingEntity entity, ItemStack stack, ModelTransformationMode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if (!(entity instanceof AbstractClientPlayerEntity clientPlayer)) return;
-        if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)) return;
-        PlayerModel model = ModelShifterClient.state.getState(clientPlayer.getUuid()).getPlayerModel();
+        FeatureRendererStates states = ModelShifterClient.state.accessFeatureRendererStates(clientPlayer);
+        if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)
+                || !states.isRendererEnabled(TYPE)) return;
 
-        if (model != null)
-            model.modifyHeldItemRendering(entity, matrices);
+        states.modifyRendering(TYPE, entity, matrices);
     }
 }
