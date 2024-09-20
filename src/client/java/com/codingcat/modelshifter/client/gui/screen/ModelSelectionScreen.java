@@ -84,31 +84,8 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
             }
         }
 
-        if (this.targetPlayer != null) return;
-
-        ModelShifterButtonWidget playerOverridesButton = new ModelShifterButtonWidget(
-                width - 230,
-                5,
-                PLAYER_OVERRIDES_BUTTON,
-                true,
-                btn -> client.setScreen(new PlayerOverridesScreen(this, gameOptions))
-        );
-
-
-        MultiOptionButtonWidget<ModeOption> displayModeButton = new MultiOptionButtonWidget<>(
-                width - 205,
-                5,
-                200,
-                20,
-                DISPLAY_MODE_BUTTON,
-                ModeOption.OPTIONS,
-                () -> ModelShifterClient.state.getDisplayMode(),
-                modeOption -> {
-                    ModelShifterClient.state.setDisplayMode(modeOption);
-                    ModelShifterClient.holder.applyState();
-
-                    return modeOption.getDisplayName();
-                });
+        if (this.targetPlayer == null)
+            this.addTopButtons();
 
         ButtonWidget pageButton = ButtonWidget.builder(getPageText(), button -> {
                     if ((currentPage + 1) >= pageCount)
@@ -119,11 +96,9 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                     button.setMessage(getPageText());
                     updatePage();
                 })
-                .dimensions(width - 85, height - 25, 80, 20)
+                .dimensions(width - 85, height - 26, 80, 20)
                 .build();
 
-        this.addDrawableChild(playerOverridesButton);
-        this.addDrawableChild(displayModeButton);
         this.addDrawableChild(pageButton);
     }
 
@@ -150,6 +125,37 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
 
     private Text getPageText() {
         return PAGE_BUTTON.apply(currentPage + 1, pageCount);
+    }
+
+    private void addTopButtons() {
+        if (client == null) return;
+
+        int w = Math.min((int) (width / 3.3d), 250);
+        MultiOptionButtonWidget<ModeOption> displayModeButton = new MultiOptionButtonWidget<>(
+                width - (w + 5),
+                5,
+                w,
+                20,
+                DISPLAY_MODE_BUTTON,
+                ModeOption.OPTIONS,
+                () -> ModelShifterClient.state.getDisplayMode(),
+                modeOption -> {
+                    ModelShifterClient.state.setDisplayMode(modeOption);
+                    ModelShifterClient.holder.applyState();
+
+                    return modeOption.getDisplayName();
+                });
+
+        ModelShifterButtonWidget playerOverridesButton = new ModelShifterButtonWidget(
+                displayModeButton.getX() - 25,
+                5,
+                PLAYER_OVERRIDES_BUTTON,
+                true,
+                btn -> client.setScreen(new PlayerOverridesScreen(this, gameOptions))
+        );
+
+        this.addDrawableChild(playerOverridesButton);
+        this.addDrawableChild(displayModeButton);
     }
 
     private PlayerShowcaseWidget addPlayerPreview() {

@@ -75,7 +75,9 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     }
 
     public void updateVisibility() {
-        this.active = isVisibleSupplier.get();
+        boolean visible = isVisibleSupplier.get();
+        this.active = visible;
+        this.setTooltip(visible ? Tooltip.of(getModelName()) : null);
     }
 
     @Override
