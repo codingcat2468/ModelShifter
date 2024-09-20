@@ -5,6 +5,7 @@ import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererType;
+import com.codingcat.modelshifter.client.impl.Creators;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 public class EndermanPlayerModel extends PlayerModel {
     public EndermanPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "enderman_player"), Set.of("bug_finder"));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "enderman_player"), Set.of(Creators.BUG));
     }
 
     @Override
