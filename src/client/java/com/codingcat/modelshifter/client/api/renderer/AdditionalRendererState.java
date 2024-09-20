@@ -5,6 +5,7 @@ import com.codingcat.modelshifter.client.api.config.serialize.JsonConfigSerializ
 import com.codingcat.modelshifter.client.api.config.serialize.JsonSerializerFactory;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
+import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.google.gson.JsonObject;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +43,7 @@ public class AdditionalRendererState implements JsonConfigSerializable<Additiona
 
     public FeatureRendererStates accessFeatureRendererStates() {
         if (getPlayerModel() == null) return null;
-        return getPlayerModel().getDisabledFeatureRenderers();
+        return getPlayerModel().getFeatureRendererStates();
     }
 
     public void setPlayerModel(@Nullable PlayerModel playerModel) {

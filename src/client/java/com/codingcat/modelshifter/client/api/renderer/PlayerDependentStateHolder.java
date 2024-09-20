@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.api.renderer;
 
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
+import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import com.mojang.authlib.GameProfile;
@@ -60,7 +61,7 @@ public class PlayerDependentStateHolder {
         this.stateOverrideMap.put(uuid, hasUniqueState(uuid) ? state : new AdditionalRendererState(rendererEnabled, model));
     }
 
-    public FeatureRendererStates accessDisabledFeatureRenderers(PlayerEntity entity) {
+    public FeatureRendererStates accessFeatureRendererStates(PlayerEntity entity) {
         return getState(entity.getUuid()).accessFeatureRendererStates();
     }
 

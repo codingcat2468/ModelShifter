@@ -1,9 +1,7 @@
 package com.codingcat.modelshifter.client.api.model;
 
-import com.codingcat.modelshifter.client.api.renderer.FeatureRendererStates;
+import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,35 +11,40 @@ import java.util.Set;
 public abstract class PlayerModel {
     private final Identifier identifier;
     private final Set<String> creators;
+    @NotNull
     private final FeatureRendererStates featureRendererStates;
     @NotNull
     private final GuiRenderInfo guiRenderInfo;
 
-    public PlayerModel(Identifier identifier, Set<String> creators, FeatureRendererStates featureRendererStates, @NotNull GuiRenderInfo guiRenderInfo) {
+    public PlayerModel(Identifier identifier, Set<String> creators) {
         this.identifier = identifier;
         this.creators = creators;
-        this.featureRendererStates = featureRendererStates;
-        this.guiRenderInfo = guiRenderInfo;
+        this.featureRendererStates = this.createFeatureRendererStates();
+        this.guiRenderInfo = this.createGuiRenderInfo();
     }
 
-    public abstract void modifyHeldItemRendering(LivingEntity entity, MatrixStack matrixStack);
+    protected @NotNull GuiRenderInfo createGuiRenderInfo() {
+        return new GuiRenderInfo();
+    }
 
-    public abstract void modifyElytraRendering(LivingEntity entity, MatrixStack matrixStack);
+    protected @NotNull FeatureRendererStates createFeatureRendererStates() {
+        return new FeatureRendererStates();
+    }
 
-    public Identifier getModelDataIdentifier() {
+    public final Identifier getModelDataIdentifier() {
         return this.identifier;
     }
 
-    public Set<String> getCreators() {
+    public final Set<String> getCreators() {
         return this.creators;
     }
 
     @NotNull
-    public GuiRenderInfo getGuiRenderInfo() {
+    public final GuiRenderInfo getGuiRenderInfo() {
         return this.guiRenderInfo;
     }
 
-    public @NotNull FeatureRendererStates getDisabledFeatureRenderers() {
+    public final @NotNull FeatureRendererStates getFeatureRendererStates() {
         return this.featureRendererStates;
     }
 
