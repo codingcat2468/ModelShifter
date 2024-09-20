@@ -101,18 +101,19 @@ public class PlayerShowcaseWidget extends TextWidget {
     }
 
     private void renderText(DrawContext context) {
+        float textSizeMultiplier = width / 320f;
         renderScaledText(context,
                 getText(true),
                 0xFFFFFF,
                 getX() + getWidth() - (getWidth() / 4f),
                 getY() + getHeight() - (getHeight() / 3f),
-                2f, true);
+                2f * textSizeMultiplier, true);
         renderScaledText(context,
                 getText(false),
                 0xADADAD,
                 getX() + getWidth() - (getWidth() / 4f),
-                getY() + getHeight() - (getHeight() / 3f) + 24,
-                1f, true);
+                getY() + getHeight() - (getHeight() / 3f) + (24 * textSizeMultiplier),
+                textSizeMultiplier, true);
     }
 
     public static void renderScaledText(DrawContext context, Text text, int color, double x, double y, float scale, boolean centered) {
@@ -163,7 +164,7 @@ public class PlayerShowcaseWidget extends TextWidget {
                     overlay,
                     //? <1.21 {
                     /*1f,1f,1f,1f
-                    *///?} else {
+                     *///?} else {
                     -1
                     //?}
             );
