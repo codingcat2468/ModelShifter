@@ -13,6 +13,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.SkinTextures;
 import net.minecraft.text.Text;
@@ -24,13 +25,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
     private static final Text TITLE = Text.translatable("modelshifter.screen.model_selection.title");
     private static final Text DISPLAY_MODE_BUTTON = Text.translatable("modelshifter.button.display_mode");
     private static final Text PLAYER_OVERRIDES_BUTTON = Text.translatable("modelshifter.button.player_overrides");
+    private static final BiFunction<Integer, Integer, Text> PAGE_BUTTON = (page, count) -> Text.translatable("modelshifter.button.page", page, count);
     private static final Function<String, Text> TITLE_PLAYER = name -> Text.translatable("modelshifter.screen.model_selection.title_player", name);
+    private int pageCount;
+    private int currentPage;
 
     private PlayerShowcaseWidget previewWidget;
     @Nullable
@@ -40,6 +45,8 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
 
     public ModelSelectionScreen(@Nullable GameProfile targetPlayer, Screen parent, GameOptions gameOptions) {
         super(parent, gameOptions, targetPlayer != null ? TITLE_PLAYER.apply(targetPlayer.getName()) : TITLE);
+        this.pageCount = 1;
+        this.currentPage = 0;
         this.targetPlayer = targetPlayer;
         MinecraftClient client1 = MinecraftClient.getInstance();
         Identifier defaultTexture = client1.getSkinProvider().getSkinTextures(targetPlayer != null ? targetPlayer
@@ -58,15 +65,22 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
         if (client == null) return;
 
         this.previewWidget = this.addPlayerPreview();
-        this.addButton(0, 0, null);
+        this.addButton(0, 0, -1, null);
         int x = 1;
         int y = 0;
+        int page = 0;
         for (Pair<Identifier, PlayerModel> model : ModelRegistry.entriesSorted()) {
-            this.addButton(x, y, model.getValue());
+            this.addButton(x, y, page, model.getValue());
             x++;
             if ((x * 80) + 24 > width / 1.8) {
                 x = 0;
                 y++;
+                if ((y * 80) + 45 > height - 100) {
+                    this.pageCount++;
+                    page++;
+                    x = 1;
+                    y = 0;
+                }
             }
         }
 
@@ -96,8 +110,21 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                     return modeOption.getDisplayName();
                 });
 
+        ButtonWidget pageButton = ButtonWidget.builder(getPageText(), button -> {
+                    if ((currentPage + 1) >= pageCount)
+                        currentPage = 0;
+                    else
+                        currentPage++;
+
+                    button.setMessage(getPageText());
+                    updatePage();
+                })
+                .dimensions(width - 85, height - 25, 80, 20)
+                .build();
+
         this.addDrawableChild(playerOverridesButton);
         this.addDrawableChild(displayModeButton);
+        this.addDrawableChild(pageButton);
     }
 
     private void fetchSkin() {
@@ -121,6 +148,10 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
         ModelShifterClient.holder.applyState();
     }
 
+    private Text getPageText() {
+        return PAGE_BUTTON.apply(currentPage + 1, pageCount);
+    }
+
     private PlayerShowcaseWidget addPlayerPreview() {
         GameProfile player = MinecraftClient.getInstance().getGameProfile();
         PlayerShowcaseWidget previewWidget = new PlayerShowcaseWidget(
@@ -133,18 +164,27 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
         return this.addDrawableChild(previewWidget);
     }
 
-    private void addButton(int posX, int posY, @Nullable PlayerModel model) {
+    private void addButton(int posX, int posY, int page, @Nullable PlayerModel model) {
         ModelPreviewButtonWidget buttonWidget = new ModelPreviewButtonWidget(
                 (posX * 80) + 24,
                 (posY * 80) + 45,
                 65,
                 model != null ? ModelPreviewButtonWidget.Type.NORMAL : ModelPreviewButtonWidget.Type.DISABLE_BUTTON,
                 model, skinTexture,
-                this::onButtonSelect);
+                this::onButtonSelect,
+                () -> page == -1 || (currentPage == page));
         if ((model != null && obtainState().isRendererEnabled() && Objects.requireNonNull(obtainState().getPlayerModel()).equals(model))
                 || (model == null && !obtainState().isRendererEnabled()))
             buttonWidget.setSelected(true);
+
         this.addDrawableChild(buttonWidget);
+    }
+
+    private void updatePage() {
+        for (Element element : this.children()) {
+            if (!(element instanceof ModelPreviewButtonWidget widget)) continue;
+            widget.updateVisibility();
+        }
     }
 
     private void onButtonSelect(ModelPreviewButtonWidget buttonWidget) {

@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.render.LightmapTextureManager;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -19,6 +20,7 @@ import org.joml.Quaternionf;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class ModelPreviewButtonWidget extends PressableWidget {
     private static final Identifier BUTTON_UNSELECTED = id("model_button");
@@ -31,10 +33,11 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     private GuiPlayerEntityRenderer renderer;
     private final AtomicReference<Identifier> skinTexture;
     private final Consumer<ModelPreviewButtonWidget> onPressConsumer;
+    private final Supplier<Boolean> isVisibleSupplier;
     private boolean selected;
     private final ModelPreviewButtonWidget.Type type;
 
-    public ModelPreviewButtonWidget(int x, int y, int size, ModelPreviewButtonWidget.Type type, @Nullable PlayerModel model, AtomicReference<Identifier> skinTexture, Consumer<ModelPreviewButtonWidget> onPress) {
+    public ModelPreviewButtonWidget(int x, int y, int size, ModelPreviewButtonWidget.Type type, @Nullable PlayerModel model, AtomicReference<Identifier> skinTexture, Consumer<ModelPreviewButtonWidget> onPress, Supplier<Boolean> isVisible) {
         super(x, y, size, size, Text.empty());
         this.type = type;
         this.model = model;
@@ -42,6 +45,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
             this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getButtonAnimation());
         this.skinTexture = skinTexture;
         this.onPressConsumer = onPress;
+        this.isVisibleSupplier = isVisible;
         this.selected = false;
         this.setTooltip(Tooltip.of(getModelName()));
     }
@@ -70,13 +74,28 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         return this.selected;
     }
 
+    public void updateVisibility() {
+        this.active = isVisibleSupplier.get();
+    }
+
     @Override
     public void onPress() {
+        if (!this.isVisibleSupplier.get()) return;
+
         this.onPressConsumer.accept(this);
     }
 
     @Override
+    public void playDownSound(SoundManager soundManager) {
+        if (!this.isVisibleSupplier.get()) return;
+
+        super.playDownSound(soundManager);
+    }
+
+    @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+        if (!this.isVisibleSupplier.get()) return;
+
         this.renderBackground(context);
         if (this.model != null) {
             this.renderModel(context);

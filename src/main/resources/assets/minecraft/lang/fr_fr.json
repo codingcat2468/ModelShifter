@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Paramètres pour des joueurs spécifiques",
+  "modelshifter.button.page": "Page %s / %s",
   "modelshifter.button.add_player": "Ajouter un joueur",
   "modelshifter.button.remove_player": "Enlever un joueur",
   "modelshifter.button.select_model": "Choisir le modèle",

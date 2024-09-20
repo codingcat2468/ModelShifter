@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "Avaa ModelShifter",
   "modelshifter.button.player_overrides": "Asetukset tietylle pelaajalle",
+  "modelshifter.button.page": "Sivu %s / %s",
   "modelshifter.button.add_player": "Lisää pelaaja",
   "modelshifter.button.remove_player": "Poista pelaaja",
   "modelshifter.button.select_model": "Valitse malli",

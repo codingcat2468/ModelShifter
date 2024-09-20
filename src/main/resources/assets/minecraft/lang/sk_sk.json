@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Nastavenie pre konkrétneho hráča",
+  "modelshifter.button.page": "Stránka %s / %s",
   "modelshifter.button.add_player": "Pridať hráča",
   "modelshifter.button.remove_player": "Odobrať hráča",
   "modelshifter.button.select_model": "Vybrať Model Na",

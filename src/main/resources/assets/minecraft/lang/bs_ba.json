@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Postavke za specifične igrače",
+  "modelshifter.button.page": "Stranica %s / %s",
   "modelshifter.button.add_player": "Dodaj igrača",
   "modelshifter.button.remove_player": "Makni igrača",
   "modelshifter.button.select_model": "Odaberi Model",

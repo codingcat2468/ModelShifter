@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "ModelShifter[模型转换器]",
   "modelshifter.button.player_overrides": "覆盖特定玩家设定",
+  "modelshifter.button.page": "页 %s / %s",
   "modelshifter.button.add_player": "添加玩家",
   "modelshifter.button.remove_player": "移除玩家",
   "modelshifter.button.select_model": "选择模型",

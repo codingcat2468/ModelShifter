@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Ustawienia dla konkretnych graczy",
+  "modelshifter.button.page": "Strona %s / %s",
   "modelshifter.button.add_player": "Dodaj gracza",
   "modelshifter.button.remove_player": "Usuń gracha",
   "modelshifter.button.select_model": "Wybjerz Model",

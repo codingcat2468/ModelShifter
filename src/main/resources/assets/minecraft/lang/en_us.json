@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Settings for specific players",
+  "modelshifter.button.page": "Page %s / %s",
   "modelshifter.button.add_player": "Add player",
   "modelshifter.button.remove_player": "Remove player",
   "modelshifter.button.select_model": "Select Model",

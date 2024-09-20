@@ -15,6 +15,7 @@
 
   "modelshifter.button.open_screen": "ModelShifter[モデル変換器]",
   "modelshifter.button.player_overrides": "特定プレイヤーの設定を上書きする",
+  "modelshifter.button.page": "ページ %s / %s",
   "modelshifter.button.add_player": "プレイヤーを追加",
   "modelshifter.button.remove_player": "プレイヤーを削除",
   "modelshifter.button.select_model": "モデルを選択",
