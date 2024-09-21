@@ -12,6 +12,7 @@
   "modelshifter.model.croissant": "クロワッサン",
   "modelshifter.model.square": "立方体",
   "modelshifter.model.dino": "恐竜",
+  "modelshifter.model.baby": "赤ちゃん",
 
   "modelshifter.button.open_screen": "ModelShifter[モデル変換器]",
   "modelshifter.button.player_overrides": "特定プレイヤーの設定を上書きする",

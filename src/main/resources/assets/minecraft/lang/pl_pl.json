@@ -11,7 +11,8 @@
   "modelshifter.model.frog": "Żaba",
   "modelshifter.model.croissant": "Rogalik",
   "modelshifter.model.square": "Kwadrat",
-  "modelshifter.model.dino": "dinozaur",
+  "modelshifter.model.dino": "Dinozaur",
+  "modelshifter.model.baby": "Dziecko",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Ustawienia dla konkretnych graczy",

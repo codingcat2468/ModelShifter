@@ -25,6 +25,7 @@ public class Models {
         register(10, "croissant", new CroissantPlayerModel());
         register(11, "square", new SquarePlayerModel());
         register(12, "dino", new DinoPlayerModel());
+        register(13, "baby", new BabyPlayerModel());
     }
 
     private static void register(int ordinal, String id, PlayerModel playerModel) {

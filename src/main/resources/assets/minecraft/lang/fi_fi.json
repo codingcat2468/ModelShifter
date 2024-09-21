@@ -12,6 +12,7 @@
   "modelshifter.model.croissant": "Croissant",
   "modelshifter.model.square": "Muutu neliöksi",
   "modelshifter.model.dino": "Dinosaurus",
+  "modelshifter.model.baby": "Vauva",
 
   "modelshifter.button.open_screen": "Avaa ModelShifter",
   "modelshifter.button.player_overrides": "Asetukset tietylle pelaajalle",

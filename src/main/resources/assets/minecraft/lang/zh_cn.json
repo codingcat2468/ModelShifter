@@ -12,6 +12,7 @@
   "modelshifter.model.croissant": "可颂",
   "modelshifter.model.square": "方块",
   "modelshifter.model.dino": "恐龙",
+  "modelshifter.model.baby": "婴儿",
 
   "modelshifter.button.open_screen": "ModelShifter[模型转换器]",
   "modelshifter.button.player_overrides": "覆盖特定玩家设定",
