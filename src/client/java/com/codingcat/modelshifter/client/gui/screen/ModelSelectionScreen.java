@@ -66,11 +66,10 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
 
         this.previewWidget = this.addPlayerPreview();
         this.addButton(0, 0, -1, null);
-        int x = 1;
+        int x = 0;
         int y = 0;
         int page = 0;
         for (Pair<Identifier, PlayerModel> model : ModelRegistry.entriesSorted()) {
-            this.addButton(x, y, page, model.getValue());
             x++;
             if ((x * 80) + 24 > width / 1.8) {
                 x = 0;
@@ -82,6 +81,8 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                     y = 0;
                 }
             }
+
+            this.addButton(x, y, page, model.getValue());
         }
 
         if (this.targetPlayer == null)
