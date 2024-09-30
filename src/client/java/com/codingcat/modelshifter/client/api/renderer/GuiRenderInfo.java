@@ -17,6 +17,8 @@ public class GuiRenderInfo {
     private Consumer<MatrixStack> buttonRenderTweakFunction = null;
     @Nullable
     private Consumer<MatrixStack> showcaseRenderTweakFunction = null;
+    @Nullable
+    private Consumer<MatrixStack> inventoryRenderTweakFunction = null;
 
     public @NotNull RawAnimation getButtonAnimation() {
         return this.buttonAnimation;
@@ -51,6 +53,15 @@ public class GuiRenderInfo {
 
     public GuiRenderInfo setShowcaseRenderTweakFunction(@Nullable Consumer<MatrixStack> showcaseRenderTweakFunction) {
         this.showcaseRenderTweakFunction = showcaseRenderTweakFunction;
+        return this;
+    }
+
+    public @Nullable Consumer<MatrixStack> getInventoryRenderTweakFunction() {
+        return this.inventoryRenderTweakFunction;
+    }
+
+    public GuiRenderInfo setInventoryRenderTweakFunction(@Nullable Consumer<MatrixStack> inventoryRenderTweakFunction) {
+        this.inventoryRenderTweakFunction = inventoryRenderTweakFunction;
         return this;
     }
 }
