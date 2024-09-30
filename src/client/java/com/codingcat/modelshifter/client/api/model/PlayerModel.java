@@ -30,6 +30,10 @@ public abstract class PlayerModel {
         this.animationController = this.createAnimationController();
     }
 
+    public float getLabelPositionOffset() {
+        return 0f;
+    }
+
     protected @NotNull ModelAnimationController<PlayerEntity> createAnimationController() {
         return ModelAnimationController.createDefaultController();
     }
