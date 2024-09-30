@@ -1,4 +1,4 @@
-package com.codingcat.modelshifter.client.api.renderer.animation;
+package com.codingcat.modelshifter.client.api.animation;
 
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animation.RawAnimation;

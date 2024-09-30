@@ -1,6 +1,6 @@
 package com.codingcat.modelshifter.client.api.model;
 
-import com.codingcat.modelshifter.client.api.renderer.animation.ModelAnimationController;
+import com.codingcat.modelshifter.client.api.animation.ModelAnimationController;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import net.minecraft.entity.player.PlayerEntity;

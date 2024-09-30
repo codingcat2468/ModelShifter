@@ -1,4 +1,4 @@
-package com.codingcat.modelshifter.client.api.renderer.animation;
+package com.codingcat.modelshifter.client.api.animation;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

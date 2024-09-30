@@ -2,7 +2,7 @@ package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
-import com.codingcat.modelshifter.client.api.renderer.animation.ModelAnimationController;
+import com.codingcat.modelshifter.client.api.animation.ModelAnimationController;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererType;
