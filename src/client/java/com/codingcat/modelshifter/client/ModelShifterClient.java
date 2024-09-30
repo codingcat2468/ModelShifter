@@ -2,11 +2,14 @@ package com.codingcat.modelshifter.client;
 
 import com.codingcat.modelshifter.client.api.renderer.DynamicAdditionalRendererHolder;
 import com.codingcat.modelshifter.client.api.renderer.PlayerDependentStateHolder;
+import com.codingcat.modelshifter.client.commands.ClientCommands;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
 import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
@@ -21,6 +24,13 @@ public class ModelShifterClient implements ClientModInitializer {
     public void onInitializeClient() {
         Models.registerAll();
         this.loadConfig();
+        this.registerCommands();
+    }
+
+    private void registerCommands() {
+        ClientCommands commands = new ClientCommands();
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->
+                commands.registerAll(dispatcher));
     }
 
     private void loadConfig() {
