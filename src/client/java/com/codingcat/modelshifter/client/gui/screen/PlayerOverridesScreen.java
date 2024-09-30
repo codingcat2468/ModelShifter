@@ -156,6 +156,7 @@ public class PlayerOverridesScreen extends AbstractCustomGameOptionsScreen {
         overridesSupplier.accept(config.getPlayerOverrides());
         loader.write(config);
         ModelShifterClient.state.reloadFromOverrides(new HashSet<>(config.getPlayerOverrides()));
+        ModelShifterClient.holder.applyState();
     }
 
     private void reloadOverrides() {
