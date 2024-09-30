@@ -9,6 +9,7 @@
     "renderer.CapeFeatureRendererMixin",
     "renderer.Deadmau5FeatureRendererMixin",
     "renderer.ElytraFeatureRendererMixin",
+    "renderer.EntityRenderDispatcherMixin",
     "renderer.EntityRendererMixin",
     "renderer.HeldItemFeatureRendererMixin",
     "renderer.PlayerEntityModelMixin",
