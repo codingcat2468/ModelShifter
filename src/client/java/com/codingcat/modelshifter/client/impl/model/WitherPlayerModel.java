@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.animation.ModelAnimationController;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
@@ -20,7 +21,8 @@ public class WitherPlayerModel extends PlayerModel {
     private static final String RUN_NAME = "move.run";
 
     public WitherPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "wither_player"), Set.of(Creators.BUG));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "wither_player"), Set.of(Creators.BUG),
+                new ModelDimensions(1.5f, 1.8f));
     }
 
     @Override

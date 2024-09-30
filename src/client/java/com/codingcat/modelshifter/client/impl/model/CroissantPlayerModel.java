@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
@@ -16,7 +17,8 @@ import java.util.Set;
 
 public class CroissantPlayerModel extends PlayerModel {
     public CroissantPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "croissant_player"), Set.of(Creators.BUG));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "croissant_player"), Set.of(Creators.BUG),
+                new ModelDimensions(0.6f, 1.5f, -0.5f));
     }
 
     @Override
@@ -42,10 +44,5 @@ public class CroissantPlayerModel extends PlayerModel {
         matrixStack.translate(-0.06f,0.3f,0.4f);
         if (entity.isInSneakingPose())
             matrixStack.translate(0f,-0.1f,-0.2f);
-    }
-
-    @Override
-    public float getLabelPositionOffset() {
-        return -0.5f;
     }
 }

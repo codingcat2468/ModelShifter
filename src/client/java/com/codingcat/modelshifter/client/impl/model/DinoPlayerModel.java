@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
@@ -16,7 +17,8 @@ import java.util.Set;
 
 public class DinoPlayerModel extends PlayerModel {
     public DinoPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "dino_player"), Set.of(Creators.DOMPLANTO));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "dino_player"), Set.of(Creators.DOMPLANTO),
+                new ModelDimensions(2f, 1.8f));
     }
 
     @Override

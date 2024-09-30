@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
@@ -15,7 +16,8 @@ import java.util.Set;
 
 public class ArmorStandPlayerModel extends PlayerModel {
     public ArmorStandPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "armor_stand_player"), Set.of(Creators.BUG));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "armor_stand_player"), Set.of(Creators.BUG),
+                new ModelDimensions(0.7f, 2f));
     }
 
     @Override

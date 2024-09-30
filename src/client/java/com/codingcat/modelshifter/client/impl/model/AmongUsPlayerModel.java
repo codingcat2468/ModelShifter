@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererType;
@@ -14,7 +15,8 @@ import java.util.Set;
 
 public class AmongUsPlayerModel extends PlayerModel {
     public AmongUsPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "among_us_player"), Set.of(Creators.EGBERT));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "among_us_player"), Set.of(Creators.EGBERT),
+                new ModelDimensions(0.7f, 1.6f, -0.4f));
     }
 
     @Override
@@ -27,13 +29,8 @@ public class AmongUsPlayerModel extends PlayerModel {
     }
 
     private static void modifyHeldItemRendering(LivingEntity entity, MatrixStack matrixStack) {
-        matrixStack.translate(0.3f,0.2f,0f);
+        matrixStack.translate(0.3f, 0.2f, 0f);
         if (entity.isInSneakingPose())
-            matrixStack.translate(0f,0f,-0.2f);
-    }
-
-    @Override
-    public float getLabelPositionOffset() {
-        return -0.4f;
+            matrixStack.translate(0f, 0f, -0.2f);
     }
 }

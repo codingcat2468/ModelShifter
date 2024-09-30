@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererType;
@@ -14,7 +15,8 @@ import java.util.Set;
 
 public class ChestPlayerModel extends PlayerModel {
     public ChestPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "chest_player"), Set.of(Creators.BUG));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "chest_player"), Set.of(Creators.BUG),
+                new ModelDimensions(1f, 1f, -0.8f));
     }
 
     @Override
@@ -36,10 +38,5 @@ public class ChestPlayerModel extends PlayerModel {
         matrixStack.translate(0f, 1f, 0.35f);
         if (entity.isInSneakingPose())
             matrixStack.translate(0f,0.2f,0f);
-    }
-
-    @Override
-    public float getLabelPositionOffset() {
-        return -0.8f;
     }
 }

@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
@@ -15,7 +16,8 @@ import java.util.Set;
 
 public class FlatPlayerModel extends PlayerModel {
     public FlatPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "2d_player"), Set.of(Creators.BUG));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "2d_player"), Set.of(Creators.BUG),
+                new ModelDimensions(0.6f, 2f));
     }
 
     @Override

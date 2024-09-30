@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
@@ -16,7 +17,8 @@ import java.util.Set;
 
 public class FrogPlayerModel extends PlayerModel {
     public FrogPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "frog_player"), Set.of(Creators.BUG));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "frog_player"), Set.of(Creators.BUG),
+                new ModelDimensions(0.5f, 0.5f, -1.2f));
     }
 
     @Override
@@ -56,10 +58,5 @@ public class FrogPlayerModel extends PlayerModel {
         matrixStack.translate(0f, 0.2f, -2f);
         if (entity.isInSneakingPose())
             matrixStack.translate(0f, -0.2f, 0f);
-    }
-
-    @Override
-    public float getLabelPositionOffset() {
-        return -1.2f;
     }
 }

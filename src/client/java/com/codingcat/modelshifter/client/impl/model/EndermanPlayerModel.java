@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.ModelDimensions;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
@@ -15,7 +16,8 @@ import java.util.Set;
 
 public class EndermanPlayerModel extends PlayerModel {
     public EndermanPlayerModel() {
-        super(Identifier.of(ModelShifterClient.MOD_ID, "enderman_player"), Set.of(Creators.BUG));
+        super(Identifier.of(ModelShifterClient.MOD_ID, "enderman_player"), Set.of(Creators.BUG),
+                new ModelDimensions(0.7f, 3.2f, 1.3f));
     }
 
     @Override
@@ -56,10 +58,5 @@ public class EndermanPlayerModel extends PlayerModel {
         matrixStack.translate(0f, -1.2f, -0.1f);
         if (entity.isInSneakingPose())
             matrixStack.translate(0f, 0.5f, 0f);
-    }
-
-    @Override
-    public float getLabelPositionOffset() {
-        return 1.3f;
     }
 }
