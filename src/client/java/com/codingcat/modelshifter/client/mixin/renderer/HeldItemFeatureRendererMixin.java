@@ -1,9 +1,9 @@
 package com.codingcat.modelshifter.client.mixin.renderer;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
-import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererType;
+import com.codingcat.modelshifter.client.util.MixinUtil;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -37,31 +37,22 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
             method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
             cancellable = true)
     public void insertModifyRendering(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        if (!(livingEntity instanceof AbstractClientPlayerEntity clientPlayer)) return;
-        FeatureRendererStates states = ModelShifterClient.state.accessFeatureRendererStates(clientPlayer);
-        if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)
-                || states.isRendererEnabled(TYPE)) return;
-
-        ci.cancel();
+        MixinUtil.ifRendererEnabled(TYPE, livingEntity, false, states -> ci.cancel());
     }
 
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/ModelWithArms;setArmAngle(Lnet/minecraft/util/Arm;Lnet/minecraft/client/util/math/MatrixStack;)V"), method = "renderItem")
     public void insertModifyRendering(ModelWithArms instance, Arm arm, MatrixStack matrixStack, @Local(argsOnly = true) LivingEntity entity) {
         if (!(entity instanceof AbstractClientPlayerEntity clientPlayer)) return;
         FeatureRendererStates states = ModelShifterClient.state.accessFeatureRendererStates(clientPlayer);
-        if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)
-                || states.isRendererEnabled(TYPE)) return;
+        if (ModelShifterClient.state.isRendererEnabled(clientPlayer)
+                || (states != null && states.isRendererEnabled(TYPE))) return;
 
         ((ModelWithArms) this.getContextModel()).setArmAngle(arm, matrixStack);
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"), method = "renderItem")
     public void insertModifyRendering(LivingEntity entity, ItemStack stack, ModelTransformationMode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if (!(entity instanceof AbstractClientPlayerEntity clientPlayer)) return;
-        FeatureRendererStates states = ModelShifterClient.state.accessFeatureRendererStates(clientPlayer);
-        if (!ModelShifterClient.state.isRendererEnabled(clientPlayer)
-                || !states.isRendererEnabled(TYPE)) return;
-
-        states.modifyRendering(TYPE, entity, matrices);
+        MixinUtil.ifRendererEnabled(TYPE, entity, true, states ->
+                states.modifyRendering(TYPE, entity, matrices));
     }
 }
