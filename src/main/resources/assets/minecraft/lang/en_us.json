@@ -36,5 +36,7 @@
   "modelshifter.text.loading": "Loading...",
   "modelshifter.text.no_players": "No players yet",
   "modelshifter.error.player.not_found": "Could not find player!",
-  "modelshifter.error.player.other": "Error, please try again later!"
+  "modelshifter.error.player.other": "Error, please try again later!",
+
+  "modelshifter.commmand.dev.reloadmodelregistry": "Successfully reloaded model registry!"
 }

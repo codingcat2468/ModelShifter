@@ -15,6 +15,10 @@ public class ModelRegistry {
         data.put(Pair.of(ordinal, id), model);
     }
 
+    public static void clear() {
+        data.clear();
+    }
+
     @NotNull
     public static Optional<PlayerModel> get(@NotNull Identifier id) {
         return data.entrySet().stream()
