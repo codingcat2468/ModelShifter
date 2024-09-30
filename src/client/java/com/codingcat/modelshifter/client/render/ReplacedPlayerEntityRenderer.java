@@ -1,6 +1,7 @@
 package com.codingcat.modelshifter.client.render;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
+import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.render.entity.ReplacedPlayerEntity;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -13,11 +14,11 @@ import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 
 public class ReplacedPlayerEntityRenderer extends GeoReplacedEntityRenderer<AbstractClientPlayerEntity, ReplacedPlayerEntity> {
     private final Identifier modelIdentifier;
-    public ReplacedPlayerEntityRenderer(EntityRendererFactory.Context renderManager, Identifier modelIdentifier) {
+    public ReplacedPlayerEntityRenderer(EntityRendererFactory.Context renderManager, PlayerModel model) {
         super(renderManager,
-                new DefaultedEntityGeoModel<ReplacedPlayerEntity>(modelIdentifier).withAltTexture(ModelShifterClient.EMPTY_TEXTURE),
-                new ReplacedPlayerEntity(null, false));
-        this.modelIdentifier = modelIdentifier;
+                new DefaultedEntityGeoModel<ReplacedPlayerEntity>(model.getModelDataIdentifier()).withAltTexture(ModelShifterClient.EMPTY_TEXTURE),
+                new ReplacedPlayerEntity(model::getCurrentAnimation, true,false));
+        this.modelIdentifier = model.getModelDataIdentifier();
     }
 
     public Identifier getModelIdentifier() {

@@ -21,7 +21,7 @@ public class GuiPlayerEntityRenderer extends GeoObjectRenderer<ReplacedPlayerEnt
 
     public GuiPlayerEntityRenderer(Identifier modelIdentifier, @NotNull RawAnimation animation) {
         super(new GuiPlayerModel(modelIdentifier));
-        this.replacedPlayerEntity = new ReplacedPlayerEntity(animation, true);
+        this.replacedPlayerEntity = new ReplacedPlayerEntity(player -> animation, false,true);
         this.renderColor = Color.WHITE;
     }
 

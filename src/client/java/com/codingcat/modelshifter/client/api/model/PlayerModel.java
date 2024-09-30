@@ -1,9 +1,13 @@
 package com.codingcat.modelshifter.client.api.model;
 
+import com.codingcat.modelshifter.client.api.renderer.animation.ModelAnimationController;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animation.RawAnimation;
 
 import java.util.Objects;
 import java.util.Set;
@@ -15,12 +19,19 @@ public abstract class PlayerModel {
     private final FeatureRendererStates featureRendererStates;
     @NotNull
     private final GuiRenderInfo guiRenderInfo;
+    @NotNull
+    private final ModelAnimationController<PlayerEntity> animationController;
 
     public PlayerModel(Identifier identifier, Set<String> creators) {
         this.identifier = identifier;
         this.creators = creators;
         this.featureRendererStates = this.createFeatureRendererStates();
         this.guiRenderInfo = this.createGuiRenderInfo();
+        this.animationController = this.createAnimationController();
+    }
+
+    protected @NotNull ModelAnimationController<PlayerEntity> createAnimationController() {
+        return ModelAnimationController.createDefaultController();
     }
 
     protected @NotNull GuiRenderInfo createGuiRenderInfo() {
@@ -37,6 +48,11 @@ public abstract class PlayerModel {
 
     public final Set<String> getCreators() {
         return this.creators;
+    }
+
+    @Nullable
+    public final RawAnimation getCurrentAnimation(PlayerEntity entity) {
+        return this.animationController.getAnimation(entity);
     }
 
     @NotNull

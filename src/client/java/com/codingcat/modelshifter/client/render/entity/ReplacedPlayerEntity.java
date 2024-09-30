@@ -2,26 +2,28 @@ package com.codingcat.modelshifter.client.render.entity;
 
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoReplacedEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.PlayState;
-import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class ReplacedPlayerEntity implements GeoReplacedEntity {
-    public static final RawAnimation SNEAK = RawAnimation.begin().thenPlayAndHold("move.sneak");
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private final RawAnimation overrideAnimation;
-    private final boolean ignorePausedGame;
+import java.util.function.Function;
 
-    public ReplacedPlayerEntity(@Nullable RawAnimation overrideAnimation, boolean ignorePausedGame) {
-        this.overrideAnimation = overrideAnimation;
+public class ReplacedPlayerEntity implements GeoReplacedEntity {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    @NotNull
+    private final Function<PlayerEntity, RawAnimation> animationFunction;
+    private final boolean ignorePausedGame;
+    private final boolean usePlayerEntity;
+
+    public ReplacedPlayerEntity(@NotNull Function<PlayerEntity, RawAnimation> animationFunction, boolean usePlayerEntity, boolean ignorePausedGame) {
+        this.animationFunction = animationFunction;
         this.ignorePausedGame = ignorePausedGame;
+        this.usePlayerEntity = usePlayerEntity;
     }
 
     @Override
@@ -32,20 +34,19 @@ public class ReplacedPlayerEntity implements GeoReplacedEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<GeoReplacedEntity>(this, 2, state -> {
-            if (this.overrideAnimation != null)
-                return state.setAndContinue(this.overrideAnimation);
+            if (!this.usePlayerEntity)
+                return getAnimation(null, state);
 
             if (!(state.getData(DataTickets.ENTITY) instanceof AbstractClientPlayerEntity player))
                 return PlayState.STOP;
-            if (player.isInSneakingPose())
-                return state.setAndContinue(SNEAK);
-            if (player.isSprinting())
-                return state.setAndContinue(DefaultAnimations.RUN);
-            if (state.isMoving())
-                return state.setAndContinue(DefaultAnimations.WALK);
 
-            return state.setAndContinue(DefaultAnimations.IDLE);
+            return getAnimation(player, state);
         }));
+    }
+
+    private PlayState getAnimation(@Nullable PlayerEntity player, AnimationState<GeoReplacedEntity> state) {
+        RawAnimation animation = this.animationFunction.apply(player);
+        return animation != null ? state.setAndContinue(animation) : PlayState.STOP;
     }
 
     @Override

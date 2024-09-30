@@ -5,7 +5,6 @@ import com.codingcat.modelshifter.client.impl.config.Configuration;
 import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
 import com.codingcat.modelshifter.client.render.ReplacedPlayerEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,7 +37,7 @@ public class DynamicAdditionalRendererHolder {
         this.additionalRendererSet.clear();
         PlayerModel globalModel = globalState.getPlayerModel();
         if (globalModel != null)
-            this.additionalRendererSet.add(createRendererInstance(globalModel.getModelDataIdentifier()));
+            this.additionalRendererSet.add(createRendererInstance(globalModel));
 
         for (UUID uuid : stateHolder.getStoredPlayers()) {
             if (!stateHolder.hasUniqueState(uuid)) continue;
@@ -58,8 +57,8 @@ public class DynamicAdditionalRendererHolder {
                 .setDisplayMode(stateHolder.getDisplayMode().getId()));
     }
 
-    public ReplacedPlayerEntityRenderer createRendererInstance(Identifier modelIdentifier) {
-        return new ReplacedPlayerEntityRenderer(context, modelIdentifier);
+    public ReplacedPlayerEntityRenderer createRendererInstance(PlayerModel model) {
+        return new ReplacedPlayerEntityRenderer(context, model);
     }
 
     private Predicate<ReplacedPlayerEntityRenderer> findRenderer(@NotNull PlayerModel model) {
@@ -69,7 +68,7 @@ public class DynamicAdditionalRendererHolder {
     private void tryAddRenderer(@NotNull PlayerModel model) {
         boolean rendererExists = additionalRendererSet.stream().anyMatch(findRenderer(model));
         if (!rendererExists)
-            this.additionalRendererSet.add(createRendererInstance(model.getModelDataIdentifier()));
+            this.additionalRendererSet.add(createRendererInstance(model));
     }
 
     @Nullable

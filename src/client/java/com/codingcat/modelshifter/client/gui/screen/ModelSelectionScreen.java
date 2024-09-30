@@ -100,6 +100,7 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                 .dimensions(width - 85, height - 26, 80, 20)
                 .build();
 
+        pageButton.active = pageCount > 1;
         this.addDrawableChild(pageButton);
     }
 
