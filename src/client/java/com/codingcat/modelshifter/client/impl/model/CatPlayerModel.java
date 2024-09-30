@@ -40,4 +40,9 @@ public class CatPlayerModel extends PlayerModel {
         if (entity.isInSneakingPose())
             matrixStack.translate(0f,0f,-0.2f);
     }
+
+    @Override
+    public float getLabelPositionOffset() {
+        return -1f;
+    }
 }

@@ -43,4 +43,9 @@ public class CroissantPlayerModel extends PlayerModel {
         if (entity.isInSneakingPose())
             matrixStack.translate(0f,-0.1f,-0.2f);
     }
+
+    @Override
+    public float getLabelPositionOffset() {
+        return -0.5f;
+    }
 }

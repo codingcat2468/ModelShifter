@@ -24,4 +24,9 @@ public class GhastPlayerModel extends PlayerModel {
     private static void modifyGuiButtonRendering(MatrixStack matrixStack) {
         matrixStack.translate(0f,-0.16f,0f);
     }
+
+    @Override
+    public float getLabelPositionOffset() {
+        return 0.2f;
+    }
 }
