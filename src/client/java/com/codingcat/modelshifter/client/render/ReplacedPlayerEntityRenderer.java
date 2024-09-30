@@ -8,6 +8,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
@@ -31,4 +32,7 @@ public class ReplacedPlayerEntityRenderer extends GeoReplacedEntityRenderer<Abst
         defaultRender(matrixStack, animatable, vertexConsumerProvider, type, null, f, g, i);
         this.currentEntity = null;
     }
+
+    @Override
+    protected void renderLabelIfPresent(AbstractClientPlayerEntity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta) {}
 }
