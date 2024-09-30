@@ -21,17 +21,16 @@ public abstract class PlayerModel {
     private final GuiRenderInfo guiRenderInfo;
     @NotNull
     private final ModelAnimationController<PlayerEntity> animationController;
+    @NotNull
+    private final ModelDimensions dimensions;
 
-    public PlayerModel(Identifier identifier, Set<String> creators) {
+    public PlayerModel(Identifier identifier, Set<String> creators, @NotNull ModelDimensions dimensions) {
         this.identifier = identifier;
         this.creators = creators;
+        this.dimensions = dimensions;
         this.featureRendererStates = this.createFeatureRendererStates();
         this.guiRenderInfo = this.createGuiRenderInfo();
         this.animationController = this.createAnimationController();
-    }
-
-    public float getLabelPositionOffset() {
-        return 0f;
     }
 
     protected @NotNull ModelAnimationController<PlayerEntity> createAnimationController() {
@@ -52,6 +51,11 @@ public abstract class PlayerModel {
 
     public final Set<String> getCreators() {
         return this.creators;
+    }
+
+    @NotNull
+    public final ModelDimensions getDimensions() {
+        return this.dimensions;
     }
 
     @Nullable

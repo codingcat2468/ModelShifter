@@ -27,6 +27,6 @@ public class EntityRendererMixin<T extends Entity> {
         PlayerModel model = ModelShifterClient.state.getState(clientPlayer.getUuid()).getPlayerModel();
         if (model == null) return;
 
-        matrices.translate(0f, model.getLabelPositionOffset(), 0f);
+        matrices.translate(0f, model.getDimensions().labelOffset(), 0f);
     }
 }
