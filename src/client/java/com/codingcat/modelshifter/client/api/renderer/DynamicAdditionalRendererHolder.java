@@ -29,14 +29,14 @@ public class DynamicAdditionalRendererHolder {
 
     public void applyState() {
         AdditionalRendererState globalState = stateHolder.getGlobalState();
+        this.additionalRendererSet.clear();
         if (!globalState.isRendererEnabled()) {
             writeConfig();
             return;
         }
 
-        this.additionalRendererSet.clear();
         PlayerModel globalModel = globalState.getPlayerModel();
-        if (globalModel != null)
+        if (globalState.isRendererEnabled() && globalModel != null)
             this.additionalRendererSet.add(createRendererInstance(globalModel));
 
         for (UUID uuid : stateHolder.getStoredPlayers()) {
