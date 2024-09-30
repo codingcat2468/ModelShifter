@@ -10,12 +10,13 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class ModelAnimationController<T> {
-    private static final String SNEAK_NAME = "move.sneak";
+    public static final String SNEAK_NAME = "move.sneak";
     private final HashSet<PredicateBasedAnimation<T>> animations;
 
     public ModelAnimationController() {
@@ -51,9 +52,16 @@ public class ModelAnimationController<T> {
         return this;
     }
 
-    public ModelAnimationController<T> replace(int priority, @NotNull Predicate<T> predicate, @NotNull Function<RawAnimation, @NotNull RawAnimation> appendData) {
+    public Optional<PredicateBasedAnimation<T>> get(int priority) {
+        return this.animations.stream()
+                .filter(animation -> animation.priority() == priority)
+                .findFirst();
+    }
+
+    public ModelAnimationController<T> replace(int priority, @NotNull Function<RawAnimation, @NotNull RawAnimation> appendData) throws NoSuchElementException {
+        Optional<PredicateBasedAnimation<T>> oldAnimation = this.get(priority);
         this.remove(priority);
-        return this.add(priority, predicate, appendData);
+        return this.add(priority, oldAnimation.orElseThrow().predicate(), appendData);
     }
 
     @Nullable
