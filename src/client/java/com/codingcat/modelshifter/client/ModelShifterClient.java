@@ -19,9 +19,11 @@ public class ModelShifterClient implements ClientModInitializer {
     public static final Identifier EMPTY_TEXTURE = Identifier.of(MOD_ID, "empty");
     public static PlayerDependentStateHolder state;
     public static DynamicAdditionalRendererHolder holder;
+    public static boolean isDev;
 
     @Override
     public void onInitializeClient() {
+        ModelShifterClient.isDev = FabricLoader.getInstance().isDevelopmentEnvironment();
         Models.registerAll();
         this.loadConfig();
         this.registerCommands();
