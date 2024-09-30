@@ -31,10 +31,11 @@ public class FrogPlayerModel extends PlayerModel {
     protected @NotNull GuiRenderInfo createGuiRenderInfo() {
         return new GuiRenderInfo()
                 .setButtonRenderTweakFunction(FrogPlayerModel::modifyGuiButtonRendering)
-                .setShowcaseRenderTweakFunction(FrogPlayerModel::modifyGuiShowcaseRendering);
+                .setShowcaseRenderTweakFunction(FrogPlayerModel::modifyGuiShowcaseInventoryRendering)
+                .setInventoryRenderTweakFunction(FrogPlayerModel::modifyGuiShowcaseInventoryRendering);
     }
 
-    private static void modifyGuiShowcaseRendering(MatrixStack matrixStack) {
+    private static void modifyGuiShowcaseInventoryRendering(MatrixStack matrixStack) {
         matrixStack.scale(1.3f, 1.3f, 1.3f);
     }
 

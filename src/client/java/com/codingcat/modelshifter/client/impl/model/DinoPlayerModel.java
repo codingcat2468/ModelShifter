@@ -30,11 +30,16 @@ public class DinoPlayerModel extends PlayerModel {
     protected @NotNull GuiRenderInfo createGuiRenderInfo() {
         return new GuiRenderInfo()
                 .setShowcaseRenderTweakFunction(DinoPlayerModel::modifyGuiRendering)
-                .setButtonRenderTweakFunction(DinoPlayerModel::modifyGuiRendering);
+                .setButtonRenderTweakFunction(DinoPlayerModel::modifyGuiRendering)
+                .setInventoryRenderTweakFunction(DinoPlayerModel::modifyGuiInventoryRendering);
     }
 
     private static void modifyGuiRendering(MatrixStack matrixStack) {
         matrixStack.scale(0.5f, 0.5f, 0.5f);
+    }
+
+    private static void modifyGuiInventoryRendering(MatrixStack matrixStack) {
+        matrixStack.scale(0.7f, 0.7f, 0.7f);
     }
 
     private static void modifyElytraRendering(LivingEntity entity, MatrixStack matrixStack) {

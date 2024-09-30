@@ -30,7 +30,13 @@ public class WitherPlayerModel extends PlayerModel {
     protected @NotNull GuiRenderInfo createGuiRenderInfo() {
         return new GuiRenderInfo()
                 .setButtonAnimation(DefaultAnimations.IDLE)
-                .setButtonRenderTweakFunction(WitherPlayerModel::modifyGuiButtonRendering);
+                .setButtonRenderTweakFunction(WitherPlayerModel::modifyGuiButtonRendering)
+                .setInventoryRenderTweakFunction(WitherPlayerModel::modifyGuiInventoryRendering);
+    }
+
+    private static void modifyGuiInventoryRendering(MatrixStack matrixStack) {
+        matrixStack.scale(0.8f,0.8f,0.8f);
+        matrixStack.translate(0f,0.2f,0f);
     }
 
     private static void modifyGuiButtonRendering(MatrixStack matrixStack) {

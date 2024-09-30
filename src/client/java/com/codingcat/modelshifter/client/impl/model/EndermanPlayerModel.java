@@ -2,8 +2,8 @@ package com.codingcat.modelshifter.client.impl.model;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
-import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.GuiRenderInfo;
+import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererStates;
 import com.codingcat.modelshifter.client.api.renderer.feature.FeatureRendererType;
 import com.codingcat.modelshifter.client.impl.Creators;
 import net.minecraft.client.util.math.MatrixStack;
@@ -29,7 +29,8 @@ public class EndermanPlayerModel extends PlayerModel {
     protected @NotNull GuiRenderInfo createGuiRenderInfo() {
         return new GuiRenderInfo()
                 .setButtonRenderTweakFunction(EndermanPlayerModel::modifyGuiButtonRendering)
-                .setShowcaseRenderTweakFunction(EndermanPlayerModel::modifyGuiShowcaseRendering);
+                .setShowcaseRenderTweakFunction(EndermanPlayerModel::modifyGuiShowcaseRendering)
+                .setInventoryRenderTweakFunction(EndermanPlayerModel::modifyGuiInventoryRendering);
     }
 
     private static void modifyGuiButtonRendering(MatrixStack matrixStack) {
@@ -38,6 +39,11 @@ public class EndermanPlayerModel extends PlayerModel {
 
     private static void modifyGuiShowcaseRendering(MatrixStack matrixStack) {
         matrixStack.scale(0.6f, 0.6f, 0.6f);
+    }
+
+    private static void modifyGuiInventoryRendering(MatrixStack matrixStack) {
+        matrixStack.scale(0.7f, 0.7f, 0.7f);
+        matrixStack.translate(0f,-0.2f,0f);
     }
 
     private static void modifyHeldItemRendering(LivingEntity entity, MatrixStack matrixStack) {

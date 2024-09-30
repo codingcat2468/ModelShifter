@@ -30,7 +30,12 @@ public class SquarePlayerModel extends PlayerModel {
     @Override
     protected @NotNull GuiRenderInfo createGuiRenderInfo() {
         return new GuiRenderInfo()
-                .setButtonAnimation(DefaultAnimations.WALK);
+                .setButtonAnimation(DefaultAnimations.WALK)
+                .setInventoryRenderTweakFunction(SquarePlayerModel::modifyGuiInventoryRendering);
+    }
+
+    private static void modifyGuiInventoryRendering(MatrixStack matrixStack) {
+        matrixStack.translate(0f,0.2f,0f);
     }
 
     private static void modifyHeldItemRendering(LivingEntity entity, MatrixStack matrixStack) {
