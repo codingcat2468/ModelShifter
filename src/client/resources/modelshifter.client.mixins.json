@@ -4,6 +4,7 @@
   "package": "com.codingcat.modelshifter.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "hud.DebugHudMixin",
     "renderer.ArmorFeatureRendererMixin",
     "renderer.CapeFeatureRendererMixin",
     "renderer.Deadmau5FeatureRendererMixin",

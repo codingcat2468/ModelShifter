@@ -104,4 +104,15 @@ public class PlayerDependentStateHolder {
 
         return this.globalState;
     }
+
+    public int getStateCount() {
+        return stateOverrideMap.size();
+    }
+
+    public int getActiveStateCount() {
+        return (int) stateOverrideMap.values()
+                .stream()
+                .filter(AdditionalRendererState::isRendererEnabled)
+                .count();
+    }
 }

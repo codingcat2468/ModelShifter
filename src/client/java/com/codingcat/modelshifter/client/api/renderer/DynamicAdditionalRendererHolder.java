@@ -76,4 +76,8 @@ public class DynamicAdditionalRendererHolder {
         Optional<ReplacedPlayerEntityRenderer> renderer = additionalRendererSet.stream().filter(findRenderer(model)).findFirst();
         return renderer.orElse(null);
     }
+
+    public int getRendererCount() {
+        return this.additionalRendererSet.size();
+    }
 }
