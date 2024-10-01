@@ -13,7 +13,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ReloadModelRegistryCommand implements ModCommand<FabricClientCommandSource> {
-    private static final Text RELOAD_SUCCESS = Text.translatable("modelshifter.commmand.dev.reloadmodelregistry");
+    private static final Text RELOAD_SUCCESS = Text.translatable("modelshifter.commmand.dev.reloadmodelregistry.success");
+    private static final Text RELOAD_FAILED = Text.translatable("modelshifter.commmand.dev.reloadmodelregistry.error");
 
     @Override
     public void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
@@ -33,6 +34,7 @@ public class ReloadModelRegistryCommand implements ModCommand<FabricClientComman
 
             return 1;
         } catch (Exception e) {
+            context.getSource().sendError(RELOAD_FAILED);
             return 0;
         }
     }

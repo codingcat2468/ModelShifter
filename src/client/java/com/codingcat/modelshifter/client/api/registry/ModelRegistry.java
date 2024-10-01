@@ -36,6 +36,11 @@ public class ModelRegistry {
     }
 
     @NotNull
+    public static Set<Map.Entry<Pair<Integer, Identifier>, PlayerModel>> entries() {
+        return data.entrySet();
+    }
+
+    @NotNull
     public static List<Pair<Identifier, PlayerModel>> entriesSorted() {
         return data.entrySet()
                 .stream()

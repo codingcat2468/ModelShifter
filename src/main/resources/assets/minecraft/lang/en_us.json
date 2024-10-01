@@ -38,5 +38,9 @@
   "modelshifter.error.player.not_found": "Could not find player!",
   "modelshifter.error.player.other": "Error, please try again later!",
 
-  "modelshifter.commmand.dev.reloadmodelregistry": "Successfully reloaded model registry!"
+  "modelshifter.commmand.model.success": "The model has been changed to %s",
+  "modelshifter.commmand.model.success.disabled": "The model has been disabled",
+  "modelshifter.commmand.model.error.not_found": "Model with ID %s could not be found",
+  "modelshifter.commmand.dev.reloadmodelregistry.success": "Successfully reloaded model registry!",
+  "modelshifter.commmand.dev.reloadmodelregistry.error": "Failed to reload model registry!"
 }

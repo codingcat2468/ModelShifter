@@ -10,6 +10,6 @@ import java.util.Set;
 public class ClientCommands implements ModCommandRegistry<FabricClientCommandSource> {
     @Override
     public Set<ModCommand<FabricClientCommandSource>> getCommands() {
-        return Set.of(new ReloadModelRegistryCommand());
+        return Set.of(new ModelCommand(), new ReloadModelRegistryCommand());
     }
 }
