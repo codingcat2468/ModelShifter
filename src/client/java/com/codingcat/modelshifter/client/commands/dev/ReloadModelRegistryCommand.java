@@ -36,4 +36,9 @@ public class ReloadModelRegistryCommand implements ModCommand<FabricClientComman
             return 0;
         }
     }
+
+    @Override
+    public boolean isDevOnly() {
+        return true;
+    }
 }
