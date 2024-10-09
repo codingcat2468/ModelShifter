@@ -13,6 +13,7 @@
   "modelshifter.model.square": "Kwadrat",
   "modelshifter.model.dino": "Dinozaur",
   "modelshifter.model.baby": "Dziecko",
+  "modelshifter.model.creaking": "Skrzypienie",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Ustawienia dla konkretnych graczy",

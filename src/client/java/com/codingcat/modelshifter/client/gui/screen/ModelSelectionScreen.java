@@ -71,10 +71,10 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
         int page = 0;
         for (Pair<Identifier, PlayerModel> model : ModelRegistry.entriesSorted()) {
             x++;
-            if ((x * 80) + 24 > width / 1.8) {
+            if (checkLineBreak(x)) {
                 x = 0;
                 y++;
-                if ((y * 80) + 45 > height - 100) {
+                if (checkPageBreak(y)) {
                     this.pageCount++;
                     page++;
                     x = 1;
@@ -102,6 +102,14 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
 
         pageButton.active = pageCount > 1;
         this.addDrawableChild(pageButton);
+    }
+
+    private boolean checkLineBreak(int x) {
+        return (x * 80) + 24 > width / 1.8;
+    }
+
+    private boolean checkPageBreak(int y) {
+        return (y * 80) + 45 > height - 100;
     }
 
     private void fetchSkin() {

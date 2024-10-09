@@ -13,6 +13,7 @@
   "modelshifter.model.square": "Würfel",
   "modelshifter.model.dino": "Dinosaurier",
   "modelshifter.model.baby": "Baby",
+  "modelshifter.model.creaking": "Knarzen",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Einstellungen für bestimmte Spieler",

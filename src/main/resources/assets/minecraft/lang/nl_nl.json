@@ -13,6 +13,7 @@
   "modelshifter.model.square": "Kubus",
   "modelshifter.model.dino": "Dinosaurus",
   "modelshifter.model.baby": "Baby",
+  "modelshifter.model.creaking": "Kraken",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Instellingen voor specifieke spelers",
