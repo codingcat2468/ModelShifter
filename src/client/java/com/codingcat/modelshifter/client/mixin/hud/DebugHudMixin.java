@@ -26,6 +26,8 @@ public class DebugHudMixin {
             at = @At(value = "RETURN", ordinal = 1),
             cancellable = true)
     public void injectMSDebugInfo(CallbackInfoReturnable<List<String>> cir) {
+        if (!ModelShifterClient.isDev) return;
+
         ArrayList<String> list = new ArrayList<>(cir.getReturnValue());
         PlayerDependentStateHolder stateHolder = ModelShifterClient.state;
         DynamicAdditionalRendererHolder rendererHolder = ModelShifterClient.holder;
