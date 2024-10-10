@@ -3,7 +3,11 @@ package com.codingcat.modelshifter.client.gui.widget.entry;
 import com.codingcat.modelshifter.client.gui.widget.PlayerOverridesListWidget;
 import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
 import com.mojang.authlib.GameProfile;
+//? >1.20.1 {
 import com.mojang.authlib.yggdrasil.ProfileResult;
+//?} else {
+/*import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+*///?}
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
@@ -45,11 +49,22 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
     }
 
     private void fetchProfileAndSkin() {
+        //? >1.20.1 {
         ProfileResult result = client.getSessionService().fetchProfile(override.player(), false);
         if (result == null) return;
 
         profile.set(result.profile());
         client.getSkinProvider().fetchSkinTextures(result.profile()).thenAccept(textures -> skinTexture.set(textures.texture()));
+        //?} else {
+        /*GameProfile result = client.getSessionService().fillProfileProperties(new GameProfile(override.player(), ""), false);
+        if (result == null) return;
+
+        profile.set(result);
+        client.getSkinProvider().loadSkin(result, (type, id, texture) -> {
+            if (type != MinecraftProfileTexture.Type.SKIN) return;
+            skinTexture.set(client.getSkinProvider().loadSkin(texture, type));
+        }, false);
+        *///?}
     }
 
     @Override

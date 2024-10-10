@@ -9,6 +9,7 @@ import com.codingcat.modelshifter.client.gui.widget.entry.PlayerOverridesListWid
 import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
 import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
+import com.codingcat.modelshifter.client.util.Util;
 import com.github.games647.craftapi.model.Profile;
 import com.github.games647.craftapi.resolver.MojangResolver;
 import com.github.games647.craftapi.resolver.RateLimitException;
@@ -119,7 +120,7 @@ public class PlayerOverridesScreen extends AbstractCustomGameOptionsScreen {
     }
 
     private void addPlayerPreview() {
-        GameProfile player = MinecraftClient.getInstance().getGameProfile();
+        GameProfile player = Util.getGameProfile();
         this.previewWidget = new PlayerShowcaseWidget(
                 player, new AtomicReference<>(),
                 PlayerShowcaseWidget.TextMode.PLAYER,

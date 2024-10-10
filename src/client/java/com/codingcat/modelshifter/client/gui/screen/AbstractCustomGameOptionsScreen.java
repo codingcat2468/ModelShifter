@@ -24,8 +24,12 @@ public abstract class AbstractCustomGameOptionsScreen extends GameOptionsScreen 
     protected void init() {
         super.init();
         this.listWidget = null;
-        //? <=1.20.4 {
-        /*this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
+        //? if <=1.20.4 {
+        /*//? <=1.20.1 {
+        this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, 32, this.height - 32, 25));
+        //?} else {
+        /^this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
+        ^///?}
         this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> {
             if (this.client == null) return;
 
@@ -72,14 +76,13 @@ public abstract class AbstractCustomGameOptionsScreen extends GameOptionsScreen 
             if (element.equals(this.listWidget)) continue;
             //? >=1.21 {
             if (element.equals(this.body)) continue;
-            //?}
+             //?}
             drawable.render(context, mouseX, mouseY, delta);
         }
     }
 
     //? <=1.20.4 {
-    /*@Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+    /*public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackgroundTexture(context);
     }
     *///?}

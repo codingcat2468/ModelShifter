@@ -4,6 +4,7 @@ import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.render.GuiPlayerEntityRenderer;
+import com.codingcat.modelshifter.client.util.Util;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -94,7 +95,13 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         super.playDownSound(soundManager);
     }
 
-    @Override
+    //? <=1.20.1 {
+    /*@Override
+    protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderWidget(context, mouseX, mouseY, delta);
+    }
+    *///?}
+
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if (!this.isVisibleSupplier.get()) return;
 
@@ -109,7 +116,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         context.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-        context.drawGuiTexture(this.type == Type.DISABLE_BUTTON ?
+        Util.drawGuiTexture(context, this.type == Type.DISABLE_BUTTON ?
                         (this.selected ? BUTTON_DISABLE_SELECTED : BUTTON_DISABLE_UNSELECTED) :
                         (this.selected ? BUTTON_SELECTED : BUTTON_UNSELECTED),
                 this.getX(), this.getY(), this.getWidth(), this.getHeight());

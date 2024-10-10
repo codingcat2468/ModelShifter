@@ -4,6 +4,7 @@ import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.render.GuiPlayerEntityRenderer;
+import com.codingcat.modelshifter.client.util.Util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -80,7 +81,13 @@ public class PlayerShowcaseWidget extends TextWidget {
         this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getShowcaseAnimation());
     }
 
-    @Override
+    //? <=1.20.1 {
+    /*@Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderWidget(context, mouseX, mouseY, delta);
+    }
+    *///?}
+
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context);
         if (!this.contentVisible) return;
@@ -93,7 +100,7 @@ public class PlayerShowcaseWidget extends TextWidget {
         context.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-        context.drawGuiTexture(BACKGROUND,
+        Util.drawGuiTexture(context, BACKGROUND,
                 getX() + getWidth() - (getWidth() / 2) - 16,
                 this.getY() + 32,
                 this.getWidth(),
@@ -163,10 +170,10 @@ public class PlayerShowcaseWidget extends TextWidget {
                     LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE,
                     overlay,
                     //? <1.21 {
-                    /*1f,1f,1f,1f
-                     *///?} else {
+                    /*1f, 1f, 1f, 1f
+                    *///?} else {
                     -1
-                    //?}
+                     //?}
             );
         }
 

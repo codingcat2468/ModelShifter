@@ -94,7 +94,11 @@ public class PlayerDependentStateHolder {
     }
 
     private boolean isSelf(UUID uuid) {
+        //? >1.20.1 {
         GameProfile profile = MinecraftClient.getInstance().getGameProfile();
+         //?} else {
+        /*GameProfile profile = MinecraftClient.getInstance().getSession().getProfile();
+        *///?}
         return uuid.equals(profile.getId());
     }
 

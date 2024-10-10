@@ -17,11 +17,17 @@ public class PlayerOverridesListWidget extends AlwaysSelectedEntryListWidget<Pla
     private final Consumer<PlayerOverridesListWidgetEntry> overrideSelected;
 
     public PlayerOverridesListWidget(MinecraftClient minecraftClient, int width, int height, int x, int y, int itemHeight, @NotNull Consumer<PlayerOverridesListWidgetEntry> overrideSelected) {
+        //? >1.20.1 {
         super(minecraftClient, width, height, y, itemHeight);
         this.setX(x);
+        //?} else {
+        /*super(minecraftClient, width, height, y, y + height, itemHeight);
+        this.setLeftPos(x);
+        *///?}
         this.overrideSelected = overrideSelected;
         //? <=1.20.4 {
         /*this.setRenderBackground(false);
+        this.setRenderHorizontalShadows(false);
         *///?}
     }
 
@@ -55,15 +61,26 @@ public class PlayerOverridesListWidget extends AlwaysSelectedEntryListWidget<Pla
         return this.getScrollbarPos();
     }
 
+    //? <=1.20.1 {
     @Override
+    protected void renderBackground(DrawContext context) {
+        this.drawNoItemsText(context);
+    }
+    //?} else {
+    /^@Override
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         this.drawNoItemsText(context);
         super.renderWidget(context, mouseX, mouseY, delta);
     }
+    ^///?}
     *///?}
 
     private int getScrollbarPos() {
+        //? >1.20.1 {
         return this.getRight() - 6;
+         //?} else {
+        /*return this.right - 6;
+        *///?}
     }
 
     private boolean scrollbarVisible() {
@@ -76,24 +93,41 @@ public class PlayerOverridesListWidget extends AlwaysSelectedEntryListWidget<Pla
 
     private void drawNoItemsText(DrawContext context) {
         if (getEntryCount() > 0) return;
+
+        //? >1.20.1 {
+        int x = getX();
+        int y = getY();
+        //?} else {
+        /*int x = left;
+        int y = top;
+        *///?}
         PlayerShowcaseWidget.renderScaledText(
                 context,
                 NO_PLAYERS,
                 0xC1C1C1,
-                getX() + (getWidth() / 2d),
-                getY() + (getHeight() / 2d),
+                x + (width / 2d),
+                y + (height / 2d),
                 1.6f, true);
     }
 
     @Override
     public int getRowWidth() {
+        //? >1.20.1 {
         return getWidth();
+        //?} else {
+        /*return width;
+        *///?}
     }
 
     @Override
     protected void drawSelectionHighlight(DrawContext context, int y, int entryWidth, int entryHeight, int borderColor, int fillColor) {
         int j = this.getRowLeft() + 5;
-        int k = this.getRight() - (scrollbarVisible() ? 10 : 3);
+        //? >1.20.1 {
+        int right2 = this.getRight();
+         //?} else {
+        /*int right2 = this.right;
+        *///?}
+        int k = right2 - (scrollbarVisible() ? 10 : 3);
         int l = y - 2;
         int m = y + entryHeight + 2;
         context.fill(j, l, k, m, borderColor);

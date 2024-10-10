@@ -5,8 +5,8 @@ import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
 import com.codingcat.modelshifter.client.api.renderer.DynamicAdditionalRendererHolder;
 import com.codingcat.modelshifter.client.api.renderer.PlayerDependentStateHolder;
+import com.codingcat.modelshifter.client.util.Util;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,7 +31,7 @@ public class DebugHudMixin {
         ArrayList<String> list = new ArrayList<>(cir.getReturnValue());
         PlayerDependentStateHolder stateHolder = ModelShifterClient.state;
         DynamicAdditionalRendererHolder rendererHolder = ModelShifterClient.holder;
-        GameProfile gameProfile = MinecraftClient.getInstance().getGameProfile();
+        GameProfile gameProfile = Util.getGameProfile();
         AdditionalRendererState state = stateHolder.getState(gameProfile.getId());
         Identifier modelId = null;
         if (state.getPlayerModel() != null) {
