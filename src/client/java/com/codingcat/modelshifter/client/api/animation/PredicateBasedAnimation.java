@@ -1,7 +1,11 @@
 package com.codingcat.modelshifter.client.api.animation;
 
 import org.jetbrains.annotations.NotNull;
+//? >1.20.4 {
 import software.bernie.geckolib.animation.RawAnimation;
+//?} else {
+/*import software.bernie.geckolib.core.animation.RawAnimation;
+*///?}
 
 import java.util.Objects;
 import java.util.function.Predicate;

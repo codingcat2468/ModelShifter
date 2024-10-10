@@ -20,9 +20,19 @@ import java.util.function.Consumer;
 @Mixin(InventoryScreen.class)
 public class InventoryScreenMixin {
     @Inject(
+            //? >1.20.4 {
             method = "drawEntity(Lnet/minecraft/client/gui/DrawContext;FFFLorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V",
+            //?} else {
+            /*method = "drawEntity(Lnet/minecraft/client/gui/DrawContext;FFILorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V",
+            *///?}
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderDispatcher;setRenderShadows(Z)V", ordinal = 0))
-    private static void injectModifyGuiRendering(DrawContext context, float x, float y, float size, Vector3f vector3f, Quaternionf quaternionf, Quaternionf quaternionf2, LivingEntity entity, CallbackInfo ci) {
+    private static void injectModifyGuiRendering(DrawContext context, float x, float y,
+                                                 //? >1.20.4 {
+                                                 float size,
+                                                 //?} else {
+                                                 /*int size,
+                                                 *///?}
+                                                 Vector3f vector3f, Quaternionf quaternionf, Quaternionf quaternionf2, LivingEntity entity, CallbackInfo ci) {
         GameProfile profile = MinecraftClient.getInstance().getGameProfile();
         if (!ModelShifterClient.state.isRendererEnabled(profile.getId())) return;
         PlayerModel model = ModelShifterClient.state.getState(profile.getId()).getPlayerModel();

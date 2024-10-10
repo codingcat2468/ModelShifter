@@ -15,10 +15,11 @@ import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 
 public class ReplacedPlayerEntityRenderer extends GeoReplacedEntityRenderer<AbstractClientPlayerEntity, ReplacedPlayerEntity> {
     private final Identifier modelIdentifier;
+
     public ReplacedPlayerEntityRenderer(EntityRendererFactory.Context renderManager, PlayerModel model) {
         super(renderManager,
                 new DefaultedEntityGeoModel<ReplacedPlayerEntity>(model.getModelDataIdentifier()).withAltTexture(ModelShifterClient.EMPTY_TEXTURE),
-                new ReplacedPlayerEntity(model::getCurrentAnimation, true,false));
+                new ReplacedPlayerEntity(model::getCurrentAnimation, true, false));
         this.modelIdentifier = model.getModelDataIdentifier();
     }
 
@@ -33,6 +34,14 @@ public class ReplacedPlayerEntityRenderer extends GeoReplacedEntityRenderer<Abst
         this.currentEntity = null;
     }
 
+    //? >1.20.4 {
     @Override
-    protected void renderLabelIfPresent(AbstractClientPlayerEntity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta) {}
+    protected void renderLabelIfPresent(AbstractClientPlayerEntity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float tickDelta) {
+    }
+
+    //?} else {
+    /*@Override
+    protected void renderLabelIfPresent(AbstractClientPlayerEntity entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    }
+    *///?}
 }

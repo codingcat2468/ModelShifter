@@ -10,10 +10,15 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
+//? >1.20.4 {
 import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.util.Color;
+//?} else {
+/*import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.Color;
+*///?}
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoObjectRenderer;
-import software.bernie.geckolib.util.Color;
 
 public class GuiPlayerEntityRenderer extends GeoObjectRenderer<ReplacedPlayerEntity> {
     private final ReplacedPlayerEntity replacedPlayerEntity;

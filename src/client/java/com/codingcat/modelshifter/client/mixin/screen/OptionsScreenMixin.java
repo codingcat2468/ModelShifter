@@ -2,11 +2,10 @@ package com.codingcat.modelshifter.client.mixin.screen;
 
 import com.codingcat.modelshifter.client.gui.screen.ModelSelectionScreen;
 import com.codingcat.modelshifter.client.gui.widget.ModelShifterButtonWidget;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
@@ -16,6 +15,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -46,16 +46,16 @@ public abstract class OptionsScreenMixin extends Screen {
             at = @At(value = "RETURN"),
             method = "init"
     )
-    public void injectButton(CallbackInfo ci, @Local(ordinal = 1) DirectionalLayoutWidget directionalLayoutWidget) {
+    public void injectButton(CallbackInfo ci) {
         setButtonPos();
         this.addDrawableChild(BUTTON);
     }
 
     @Inject(
             at = @At(value = "RETURN"),
-            method = "initTabNavigation"
+            method = "createTopRightButton"
     )
-    public void injectButton(CallbackInfo ci) {
+    public void injectButton(CallbackInfoReturnable<Widget> cir) {
         setButtonPos();
     }
 

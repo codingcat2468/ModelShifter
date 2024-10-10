@@ -1,5 +1,6 @@
 package com.codingcat.modelshifter.client.gui.widget.entry;
 
+import com.codingcat.modelshifter.client.gui.widget.PlayerOverridesListWidget;
 import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.yggdrasil.ProfileResult;
@@ -17,13 +18,17 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
     private final static Text LOADING = Text.translatable("modelshifter.text.loading");
     @NotNull
     private final ConfigPlayerOverride override;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    @NotNull
+    private final PlayerOverridesListWidget parentWidget;
     @NotNull
     private final MinecraftClient client;
     private final AtomicReference<Identifier> skinTexture;
     private final AtomicReference<GameProfile> profile;
 
-    public PlayerOverridesListWidgetEntry(@NotNull MinecraftClient client, @NotNull ConfigPlayerOverride override) {
+    public PlayerOverridesListWidgetEntry(@NotNull MinecraftClient client, @NotNull PlayerOverridesListWidget parentWidget, @NotNull ConfigPlayerOverride override) {
         this.client = client;
+        this.parentWidget = parentWidget;
         this.override = override;
         this.skinTexture = new AtomicReference<>();
         this.profile = new AtomicReference<>();
@@ -73,4 +78,12 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
     public Text getNarration() {
         return getPlayerName();
     }
+
+    //? <=1.20.4 {
+    /*@Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        this.parentWidget.setSelected(this);
+        return true;
+    }
+    *///?}
 }

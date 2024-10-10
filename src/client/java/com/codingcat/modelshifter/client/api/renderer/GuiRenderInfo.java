@@ -3,7 +3,11 @@ package com.codingcat.modelshifter.client.api.renderer;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+//? >1.20.4 {
 import software.bernie.geckolib.animation.RawAnimation;
+//?} else {
+/*import software.bernie.geckolib.core.animation.RawAnimation;
+*///?}
 import software.bernie.geckolib.constant.DefaultAnimations;
 
 import java.util.function.Consumer;

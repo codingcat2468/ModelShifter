@@ -45,8 +45,6 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
 
     public ModelSelectionScreen(@Nullable GameProfile targetPlayer, Screen parent, GameOptions gameOptions) {
         super(parent, gameOptions, targetPlayer != null ? TITLE_PLAYER.apply(targetPlayer.getName()) : TITLE);
-        this.pageCount = 1;
-        this.currentPage = 0;
         this.targetPlayer = targetPlayer;
         MinecraftClient client1 = MinecraftClient.getInstance();
         Identifier defaultTexture = client1.getSkinProvider().getSkinTextures(targetPlayer != null ? targetPlayer
@@ -66,6 +64,8 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
 
         this.previewWidget = this.addPlayerPreview();
         this.addButton(0, 0, -1, null);
+        this.pageCount = 1;
+        this.currentPage = 0;
         int x = 0;
         int y = 0;
         int page = 0;

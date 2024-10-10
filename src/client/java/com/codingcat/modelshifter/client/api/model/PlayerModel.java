@@ -7,7 +7,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+//? >1.20.4 {
 import software.bernie.geckolib.animation.RawAnimation;
+//?} else {
+/*import software.bernie.geckolib.core.animation.RawAnimation;
+*///?}
 
 import java.util.Objects;
 import java.util.Set;

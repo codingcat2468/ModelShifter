@@ -32,8 +32,13 @@ public abstract class PlayerEntityRendererMixin
     @Shadow
     public abstract Identifier getTexture(AbstractClientPlayerEntity abstractClientPlayerEntity);
 
+    //? >1.20.4 {
     @Shadow
     protected abstract void setupTransforms(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h, float i);
+    //?} else {
+    /*@Shadow
+    protected abstract void setupTransforms(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h);
+    *///?}
 
     @Inject(at = @At("RETURN"), method = "<init>")
     public void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
@@ -79,12 +84,24 @@ public abstract class PlayerEntityRendererMixin
 
 
     @Inject(at = @At("HEAD"),
+            //? >1.20.4 {
             method = "setupTransforms(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/util/math/MatrixStack;FFFF)V",
+            //?} else {
+            /*method = "setupTransforms(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/util/math/MatrixStack;FFF)V",
+            *///?}
             cancellable = true)
-    public void injectSetupTransforms(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h, float i, CallbackInfo ci) {
+    public void injectSetupTransforms(AbstractClientPlayerEntity abstractClientPlayerEntity, MatrixStack matrixStack, float f, float g, float h,
+                                      //? >1.20.4 {
+                                      float i,
+                                      //?}
+                                      CallbackInfo ci) {
         if (!ModelShifterClient.state.isRendererEnabled(abstractClientPlayerEntity)) return;
 
+        //? >1.20.4 {
         super.setupTransforms(abstractClientPlayerEntity, matrixStack, f, g, h, i);
+        //?} else {
+        /*super.setupTransforms(abstractClientPlayerEntity, matrixStack, f, g, h);
+        *///?}
         ci.cancel();
     }
 
