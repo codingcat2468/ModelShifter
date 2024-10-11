@@ -9,6 +9,7 @@ import com.codingcat.modelshifter.client.gui.widget.entry.PlayerOverridesListWid
 import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
 import com.codingcat.modelshifter.client.impl.config.Configuration;
 import com.codingcat.modelshifter.client.impl.config.ConfigurationLoader;
+import com.codingcat.modelshifter.client.impl.skin.SingleAsyncSkinProviderImpl;
 import com.codingcat.modelshifter.client.util.Util;
 import com.github.games647.craftapi.model.Profile;
 import com.github.games647.craftapi.resolver.MojangResolver;
@@ -22,8 +23,10 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class PlayerOverridesScreen extends AbstractCustomGameOptionsScreen {
@@ -116,13 +119,13 @@ public class PlayerOverridesScreen extends AbstractCustomGameOptionsScreen {
         }
 
         this.selectedPlayer = entry.getPlayerProfile();
-        this.previewWidget.setPlayer(selectedPlayer, entry.getSkinTexture());
+        this.previewWidget.setPlayer(selectedPlayer);
     }
 
     private void addPlayerPreview() {
         GameProfile player = Util.getGameProfile();
         this.previewWidget = new PlayerShowcaseWidget(
-                player, new AtomicReference<>(),
+                player, new SingleAsyncSkinProviderImpl(),
                 PlayerShowcaseWidget.TextMode.PLAYER,
                 width / 2, 0,
                 width / 2, height);
