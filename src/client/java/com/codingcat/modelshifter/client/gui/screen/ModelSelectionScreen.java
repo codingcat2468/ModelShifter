@@ -4,11 +4,13 @@ import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
 import com.codingcat.modelshifter.client.api.registry.ModelRegistry;
 import com.codingcat.modelshifter.client.api.renderer.AdditionalRendererState;
+import com.codingcat.modelshifter.client.api.skin.SingleAsyncSkinProvider;
 import com.codingcat.modelshifter.client.gui.widget.ModelPreviewButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.ModelShifterButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.MultiOptionButtonWidget;
 import com.codingcat.modelshifter.client.gui.widget.PlayerShowcaseWidget;
 import com.codingcat.modelshifter.client.impl.option.ModeOption;
+import com.codingcat.modelshifter.client.impl.skin.SingleAsyncSkinProviderImpl;
 import com.codingcat.modelshifter.client.util.Util;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
@@ -16,11 +18,6 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.option.GameOptions;
-//? >1.20.1 {
-import net.minecraft.client.util.SkinTextures;
-//?} else {
-/*import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-*///?}
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
@@ -28,9 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
@@ -45,31 +40,17 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
     private PlayerShowcaseWidget previewWidget;
     @Nullable
     private final GameProfile targetPlayer;
-    @NotNull
-    private final AtomicReference<Identifier> skinTexture;
+    private final SingleAsyncSkinProvider skinProvider;
 
     public ModelSelectionScreen(@Nullable GameProfile targetPlayer, Screen parent, GameOptions gameOptions) {
         super(parent, gameOptions, targetPlayer != null ? TITLE_PLAYER.apply(targetPlayer.getName()) : TITLE);
         this.targetPlayer = targetPlayer;
-        MinecraftClient client1 = MinecraftClient.getInstance();
-        //? >1.20.1 {
-        GameProfile mainProfile = MinecraftClient.getInstance().getGameProfile();
-        //?} else {
-        /*GameProfile mainProfile = MinecraftClient.getInstance().getSession().getProfile();
-         *///?}
-
-        GameProfile profile = targetPlayer != null ? targetPlayer : mainProfile;
-        //? >1.20.1 {
-        Identifier defaultTexture = client1.getSkinProvider().getSkinTextures(profile).texture();
-        //?} else {
-        /*Identifier defaultTexture = client1.getSkinProvider().loadSkin(profile);
-         *///?}
-        this.skinTexture = new AtomicReference<>(defaultTexture);
+        this.skinProvider = new SingleAsyncSkinProviderImpl(this.obtainPlayer());
     }
 
     @Override
     protected void init() {
-        fetchSkin();
+        this.skinProvider.fetchSkin();
         initialize();
         super.init();
     }
@@ -127,24 +108,13 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
         return (y * 80) + 45 > height - 100;
     }
 
-    private void fetchSkin() {
-        if (client == null) return;
-
-        //? >1.20.1 {
-        CompletableFuture<SkinTextures> texturesFuture = client.getSkinProvider()
-                .fetchSkinTextures(targetPlayer != null ? targetPlayer : client.getGameProfile());
-        texturesFuture.thenAccept(textures -> skinTexture.set(textures.texture()));
-        //?} else {
-        /*GameProfile mainProfile = MinecraftClient.getInstance().getSession().getProfile();
-        client.getSkinProvider().loadSkin(targetPlayer != null ? targetPlayer : mainProfile, (type, id, texture) -> {
-            if (type != MinecraftProfileTexture.Type.SKIN) return;
-            skinTexture.set(client.getSkinProvider().loadSkin(texture, type));
-        }, false);
-        *///?}
-    }
-
     private AdditionalRendererState obtainState() {
         return this.targetPlayer != null ? ModelShifterClient.state.getState(this.targetPlayer.getId()) : ModelShifterClient.state.getGlobalState();
+    }
+
+    @NotNull
+    private GameProfile obtainPlayer() {
+        return this.targetPlayer != null ? this.targetPlayer : Util.getGameProfile();
     }
 
     private void setState(boolean rendererEnabled, @Nullable PlayerModel model) {
@@ -192,10 +162,9 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
     }
 
     private PlayerShowcaseWidget addPlayerPreview() {
-        GameProfile player = Util.getGameProfile();
         PlayerShowcaseWidget previewWidget = new PlayerShowcaseWidget(
-                targetPlayer != null ? targetPlayer : player,
-                skinTexture,
+                obtainPlayer(),
+                this.skinProvider,
                 PlayerShowcaseWidget.TextMode.MODEL,
                 width / 2, 0,
                 width / 2, height);
@@ -209,7 +178,7 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                 (posY * 80) + 45,
                 65,
                 model != null ? ModelPreviewButtonWidget.Type.NORMAL : ModelPreviewButtonWidget.Type.DISABLE_BUTTON,
-                model, skinTexture,
+                model, this.skinProvider,
                 this::onButtonSelect,
                 () -> page == -1 || (currentPage == page));
         if ((model != null && obtainState().isRendererEnabled() && Objects.requireNonNull(obtainState().getPlayerModel()).equals(model))

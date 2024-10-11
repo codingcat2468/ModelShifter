@@ -1,18 +1,16 @@
 package com.codingcat.modelshifter.client.gui.widget.entry;
 
+import com.codingcat.modelshifter.client.api.skin.SingleAsyncSkinProvider;
 import com.codingcat.modelshifter.client.gui.widget.PlayerOverridesListWidget;
 import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
+import com.codingcat.modelshifter.client.impl.skin.SingleAsyncSkinProviderImpl;
 import com.mojang.authlib.GameProfile;
-//? >1.20.1 {
 import com.mojang.authlib.yggdrasil.ProfileResult;
-//?} else {
-/*import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-*///?}
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,14 +25,14 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
     private final PlayerOverridesListWidget parentWidget;
     @NotNull
     private final MinecraftClient client;
-    private final AtomicReference<Identifier> skinTexture;
+    private final SingleAsyncSkinProvider skinProvider;
     private final AtomicReference<GameProfile> profile;
 
     public PlayerOverridesListWidgetEntry(@NotNull MinecraftClient client, @NotNull PlayerOverridesListWidget parentWidget, @NotNull ConfigPlayerOverride override) {
         this.client = client;
         this.parentWidget = parentWidget;
         this.override = override;
-        this.skinTexture = new AtomicReference<>();
+        this.skinProvider = new SingleAsyncSkinProviderImpl();
         this.profile = new AtomicReference<>();
         new Thread(this::fetchProfileAndSkin, "Profile Fetcher Thread")
                 .start();
@@ -44,27 +42,13 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
         return this.profile.get();
     }
 
-    public @Nullable Identifier getSkinTexture() {
-        return this.skinTexture.get();
-    }
-
     private void fetchProfileAndSkin() {
         //? >1.20.1 {
         ProfileResult result = client.getSessionService().fetchProfile(override.player(), false);
         if (result == null) return;
 
         profile.set(result.profile());
-        client.getSkinProvider().fetchSkinTextures(result.profile()).thenAccept(textures -> skinTexture.set(textures.texture()));
-        //?} else {
-        /*GameProfile result = client.getSessionService().fillProfileProperties(new GameProfile(override.player(), ""), false);
-        if (result == null) return;
-
-        profile.set(result);
-        client.getSkinProvider().loadSkin(result, (type, id, texture) -> {
-            if (type != MinecraftProfileTexture.Type.SKIN) return;
-            skinTexture.set(client.getSkinProvider().loadSkin(texture, type));
-        }, false);
-        *///?}
+        skinProvider.setProfileAndFetch(result.profile());
     }
 
     @Override
@@ -73,9 +57,9 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
         int x1 = x + (entryWidth / 14);
         int y1 = y + 3;
 
-        if (skinTexture.get() != null)
-            PlayerSkinDrawer.draw(context, skinTexture.get(), x1, y1, 30);
 
+        if (skinProvider.hasSkin())
+            PlayerSkinDrawer.draw(context, skinProvider.getSkin(), x1, y1, 30);
         if (hovered)
             context.fill(x1, y1, x1 + 30, y1 + 30, 0x37FFFFFF);
 

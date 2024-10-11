@@ -2,6 +2,7 @@ package com.codingcat.modelshifter.client.gui.widget;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
+import com.codingcat.modelshifter.client.api.skin.SingleAsyncSkinProvider;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.render.GuiPlayerEntityRenderer;
 import com.codingcat.modelshifter.client.util.Util;
@@ -19,7 +20,6 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -32,19 +32,19 @@ public class ModelPreviewButtonWidget extends PressableWidget {
     private final PlayerModel model;
     @Nullable
     private GuiPlayerEntityRenderer renderer;
-    private final AtomicReference<Identifier> skinTexture;
+    private final SingleAsyncSkinProvider skinProvider;
     private final Consumer<ModelPreviewButtonWidget> onPressConsumer;
     private final Supplier<Boolean> isVisibleSupplier;
     private boolean selected;
     private final ModelPreviewButtonWidget.Type type;
 
-    public ModelPreviewButtonWidget(int x, int y, int size, ModelPreviewButtonWidget.Type type, @Nullable PlayerModel model, AtomicReference<Identifier> skinTexture, Consumer<ModelPreviewButtonWidget> onPress, Supplier<Boolean> isVisible) {
+    public ModelPreviewButtonWidget(int x, int y, int size, ModelPreviewButtonWidget.Type type, @Nullable PlayerModel model, SingleAsyncSkinProvider skinProvider, Consumer<ModelPreviewButtonWidget> onPress, Supplier<Boolean> isVisible) {
         super(x, y, size, size, Text.empty());
         this.type = type;
         this.model = model;
         if (model != null)
             this.renderer = new GuiPlayerEntityRenderer(model.getModelDataIdentifier(), model.getGuiRenderInfo().getButtonAnimation());
-        this.skinTexture = skinTexture;
+        this.skinProvider = skinProvider;
         this.onPressConsumer = onPress;
         this.isVisibleSupplier = isVisible;
         this.selected = false;
@@ -149,7 +149,7 @@ public class ModelPreviewButtonWidget extends PressableWidget {
         if (tweakFunction != null)
             tweakFunction.accept(matrices);
         renderer.setRenderColor(color, color, color, color);
-        renderer.render(skinTexture.get(), 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
+        renderer.render(skinProvider.getSkin(), 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
         context.draw();
         matrices.pop();
         context.disableScissor();

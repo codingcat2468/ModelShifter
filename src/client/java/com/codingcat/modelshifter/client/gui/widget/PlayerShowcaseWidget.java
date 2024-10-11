@@ -2,6 +2,7 @@ package com.codingcat.modelshifter.client.gui.widget;
 
 import com.codingcat.modelshifter.client.ModelShifterClient;
 import com.codingcat.modelshifter.client.api.model.PlayerModel;
+import com.codingcat.modelshifter.client.api.skin.SingleAsyncSkinProvider;
 import com.codingcat.modelshifter.client.impl.Models;
 import com.codingcat.modelshifter.client.render.GuiPlayerEntityRenderer;
 import com.codingcat.modelshifter.client.util.Util;
@@ -26,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class PlayerShowcaseWidget extends TextWidget {
@@ -34,16 +34,16 @@ public class PlayerShowcaseWidget extends TextWidget {
     @Nullable
     private GuiPlayerEntityRenderer renderer;
     @NotNull
-    private final AtomicReference<Identifier> skinTexture;
+    private final SingleAsyncSkinProvider skinProvider;
     @NotNull
     private GameProfile gameProfile;
     private final PlayerEntityModel<?> playerEntityModel;
     private final TextMode textMode;
     private boolean contentVisible;
 
-    public PlayerShowcaseWidget(@NotNull GameProfile player, @NotNull AtomicReference<Identifier> skinTexture, TextMode textMode, int x, int y, int width, int height) {
+    public PlayerShowcaseWidget(@NotNull GameProfile player, @NotNull SingleAsyncSkinProvider skinProvider, TextMode textMode, int x, int y, int width, int height) {
         super(x, y, width, height, Text.empty(), MinecraftClient.getInstance().textRenderer);
-        this.skinTexture = skinTexture;
+        this.skinProvider = skinProvider;
         this.playerEntityModel = createModel();
         this.gameProfile = player;
         this.textMode = textMode;
@@ -55,9 +55,9 @@ public class PlayerShowcaseWidget extends TextWidget {
         this.contentVisible = contentVisible;
     }
 
-    public void setPlayer(GameProfile player, Identifier skinTexture) {
+    public void setPlayer(GameProfile player) {
         this.gameProfile = player;
-        this.skinTexture.set(skinTexture);
+        this.skinProvider.setProfileAndFetch(player);
         this.update();
     }
 
@@ -136,8 +136,6 @@ public class PlayerShowcaseWidget extends TextWidget {
     }
 
     private void renderModel(DrawContext context) {
-        if (skinTexture.get() == null) return;
-
         MatrixStack matrices = context.getMatrices();
         context.enableScissor(getX(), getY(), getX() + getWidth(), getY() + getHeight());
         matrices.push();
@@ -155,14 +153,14 @@ public class PlayerShowcaseWidget extends TextWidget {
             if (tweakFunction != null)
                 tweakFunction.accept(matrices);
             renderer.setRenderColor(255, 255, 255, 255);
-            renderer.render(skinTexture.get(), 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
+            renderer.render(skinProvider.getSkin(), 0, 0, matrices, context.getVertexConsumers(), LightmapTextureManager.MAX_BLOCK_LIGHT_COORDINATE);
         } else if (!ModelShifterClient.state.isRendererStateEnabled(gameProfile.getId()) && playerEntityModel != null) {
             size /= 1.2f;
             matrices.scale(size, size, -size);
             matrices.translate(0, 1.4f, 0);
             matrices.multiply(new Quaternionf().rotateZ((float) Math.PI));
             VertexConsumerProvider.Immediate vertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-            VertexConsumer consumer = vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinTexture.get()));
+            VertexConsumer consumer = vertexConsumer.getBuffer(RenderLayer.getEntityTranslucent(skinProvider.getSkin()));
             int overlay = OverlayTexture.packUv(OverlayTexture.getU(0), OverlayTexture.getV(false));
 
             playerEntityModel.render(matrices,
