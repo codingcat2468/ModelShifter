@@ -14,6 +14,8 @@
   "modelshifter.model.dino": "Dinosaurus",
   "modelshifter.model.baby": "Vauva",
   "modelshifter.model.creaking": "Narisee",
+  "modelshifter.model.crab": "Rapu",
+  "modelshifter.model.fly": "Lentää",
 
   "modelshifter.button.open_screen": "Avaa ModelShifter",
   "modelshifter.button.player_overrides": "Asetukset tietylle pelaajalle",

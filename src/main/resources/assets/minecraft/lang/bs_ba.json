@@ -14,6 +14,8 @@
   "modelshifter.model.dino": "Dinosaurus",
   "modelshifter.model.baby": "Baby",
   "modelshifter.model.creaking": "Škripa",
+  "modelshifter.model.crab": "Crab",
+  "modelshifter.model.fly": "Letjeti",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Postavke za specifične igrače",
