@@ -5,7 +5,11 @@ import com.codingcat.modelshifter.client.gui.widget.PlayerOverridesListWidget;
 import com.codingcat.modelshifter.client.impl.config.ConfigPlayerOverride;
 import com.codingcat.modelshifter.client.impl.skin.SingleAsyncSkinProviderImpl;
 import com.mojang.authlib.GameProfile;
+//? >1.20.1 {
 import com.mojang.authlib.yggdrasil.ProfileResult;
+//?} else {
+/*import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+*///?}
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.PlayerSkinDrawer;
@@ -43,11 +47,18 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
     }
 
     private void fetchProfileAndSkin() {
+        //? >1.20.1 {
         ProfileResult result = client.getSessionService().fetchProfile(override.player(), false);
         if (result == null) return;
 
         profile.set(result.profile());
         skinProvider.setProfileAndFetch(result.profile());
+        //?} else {
+        /*GameProfile result = client.getSessionService().fillProfileProperties(new GameProfile(override.player(), ""), false);
+        if (result == null) return;
+        profile.set(result);
+        skinProvider.setProfileAndFetch(result);
+        *///?}
     }
 
     @Override
