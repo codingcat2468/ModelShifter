@@ -14,6 +14,8 @@
   "modelshifter.model.dino": "Dinosaure",
   "modelshifter.model.baby": "Bébé",
   "modelshifter.model.creaking": "Grincement",
+  "modelshifter.model.crab": "Crabe",
+  "modelshifter.model.fly": "Voler",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Paramètres pour des joueurs spécifiques",

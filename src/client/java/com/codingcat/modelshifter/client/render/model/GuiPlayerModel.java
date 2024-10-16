@@ -5,14 +5,15 @@ import com.codingcat.modelshifter.client.render.entity.ReplacedPlayerEntity;
 import net.minecraft.util.Identifier;
 //? >=1.21 {
 import software.bernie.geckolib.animation.AnimationState;
- //?}
+//?} else {
+/*import java.util.function.DoubleSupplier;
+*///?}
 //? >1.20.4 {
 import software.bernie.geckolib.loading.math.MathParser;
 import software.bernie.geckolib.loading.math.MolangQueries;
 //?} else {
 /*import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.core.molang.MolangQueries;
-import java.util.function.DoubleSupplier;
 *///?}
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 

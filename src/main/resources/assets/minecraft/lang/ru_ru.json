@@ -14,6 +14,8 @@
   "modelshifter.model.dino": "динозавр",
   "modelshifter.model.baby": "Малыш",
   "modelshifter.model.creaking": "Скрип",
+  "modelshifter.model.crab": "Краб",
+  "modelshifter.model.fly": "летать",
 
   "modelshifter.button.open_screen": "ModelShifter",
   "modelshifter.button.player_overrides": "Настройки для определённого игрока",
