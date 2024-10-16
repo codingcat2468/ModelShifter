@@ -43,7 +43,6 @@ public class PlayerOverridesListWidgetEntry extends AlwaysSelectedEntryListWidge
     }
 
     private void fetchProfileAndSkin() {
-        //? >1.20.1 {
         ProfileResult result = client.getSessionService().fetchProfile(override.player(), false);
         if (result == null) return;
 

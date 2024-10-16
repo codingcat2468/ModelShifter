@@ -182,8 +182,11 @@ public class ModelSelectionScreen extends AbstractCustomGameOptionsScreen {
                 this::onButtonSelect,
                 () -> page == -1 || (currentPage == page));
         if ((model != null && obtainState().isRendererEnabled() && Objects.requireNonNull(obtainState().getPlayerModel()).equals(model))
-                || (model == null && !obtainState().isRendererEnabled()))
+                || (model == null && !obtainState().isRendererEnabled())) {
             buttonWidget.setSelected(true);
+            this.currentPage = page;
+            this.updatePage();
+        }
 
         this.addDrawableChild(buttonWidget);
     }
