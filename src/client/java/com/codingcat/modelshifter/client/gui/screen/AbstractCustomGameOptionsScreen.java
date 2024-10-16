@@ -26,10 +26,10 @@ public abstract class AbstractCustomGameOptionsScreen extends GameOptionsScreen 
         this.listWidget = null;
         //? if <=1.20.4 {
         /*//? <=1.20.1 {
-        this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, 32, this.height - 32, 25));
-        //?} else {
-        /^this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
-        ^///?}
+        /^this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, 32, this.height - 32, 25));
+        ^///?} else {
+        this.listWidget = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
+        //?}
         this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> {
             if (this.client == null) return;
 
